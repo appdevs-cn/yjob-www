@@ -105,6 +105,7 @@ $subsitelist =array();
 foreach ($subsite as $key => $value) {
 	$subsitelist[] = $value;
 }
+$smarty->assign("jobSrot",$subsitelist);
 $smarty->assign("subsite",$subsitelist);
 $smarty->assign('jobs',$new_jobs);//print_r($jobs);exit;
 $smarty->assign('pagehtml',wapmulti($count, $perpage, $page, $theurl));

@@ -105,51 +105,49 @@
 				</div>		
 			</li>
             <li class=" s_job" data-go="naturejob"><h4>{#if $smarty.get.nature_cn#}{#$smarty.get.nature_cn#}{#else#}工作性质{#/if#}<em></em></h4>
-				<div class="city_filter_nav job_filter_nav " id="naturejobList">
-					{#qishi_get_classify set="列表名:nature,类型:QS_jobs_nature,显示数目:100"#}
-					<ul>
-						<li data-val="" data-txt="不限"><h2>不限</h2></li>
-						{#foreach from=$nature item=list#}
-						<li data-val="1,1065,{#$list.id#}" data-txt="{#$list.categoryname#}"><h2>{#$list.categoryname#}</h2></li>
-						{#/foreach#}
-						
-					</ul>
-				</div>		
-			</li>
-			<li data-go="orderjob" class="s_job"><h4>默认排序<em></em></h4>
-				<div class="city_filter_nav job_filter_nav" id="orderjobList">
-                                    {#qishi_get_classify set="列表名:jobSrot,类型:list_jobs_sort,显示数目:100"#}
-					<ul>
-						<li data-val="" data-txt="不限"><h2>不限</h2></li>
-						{#foreach from=$jobSrot item=list#}
-						<li {#if $list.id == 438 #}data-val="100"{#elseif $list.id == 439#}data-val="200"{#elseif $list.id == "440"#}data-val="300"{#else#}data-val="400"{#/if#} data-txt="{#$list.categoryname#}"><h2>{#$list.categoryname#}</h2></li>
-						{#/foreach#}
-						
-					</ul>
-				</div>	
-			</li>
-		</ul>
-		<input type="hidden" id="hdistrict" value="{#$smarty.get.district#}">
-                <input type="hidden" id="key" value="{#$smarty.get.key#}">
-                <input type="hidden" id="hsdistrict" value="{#$smarty.get.sdistrict#}">
-                <input type="hidden" id="hdistrict_cn" value="{#$smarty.get.district_cn#}">
-                <input type="hidden" id="htopclass" value="{#$smarty.get.topclass#}">
-                <input type="hidden" id="hcategory" value="{#$smarty.get.category#}">
-                <input type="hidden" id="hsubclass" value="{#$smarty.get.subclass#}">
-                <input type="hidden" id="hcategory_cn" value="{#$smarty.get.category_cn#}">
-                <input type="hidden" id="hwage" value="{#$smarty.get.wage#}">
-                <input type="hidden" id="hwage_cn" value="{#$smarty.get.wage_cn#}">
-                <input type="hidden" id="hsettr" value="{#$smarty.get.settr#}">
-                <input type="hidden" id="hsettr_cn" value="{#$smarty.get.settr_cn#}">
-                <input type="hidden" id="heducation" value="{#$smarty.get.education#}">
-                <input type="hidden" id="heducation_cn" value="{#$smarty.get.education_cn#}">
-                <input type="hidden" id="hexperience" value="{#$smarty.get.experience#}">
-                <input type="hidden" id="hexperience_cn" value="{#$smarty.get.experience_cn#}">
-                <input type="hidden" id="hnature" value="{#$smarty.get.nature#}">
-                <input type="hidden" id="hnature_cn" value="{#$smarty.get.nature_cn#}">
-                <input type="hidden" id="order_type" value="{#$smarty.get.order_type#}">
-                <input type="hidden" id="hscale" value="{#$smarty.get.scale#}">
-                <input type="hidden" id="hscale_cn" value="{#$smarty.get.scale_cn#}">
+                <div class="city_filter_nav job_filter_nav " id="naturejobList">
+                    {#qishi_get_classify set="列表名:nature,类型:QS_jobs_nature,显示数目:100"#}
+                    <ul>
+                            <li data-val="" data-txt="不限"><h2>不限</h2></li>
+                            {#foreach from=$nature item=list#}
+                            <li data-val="1,1065,{#$list.id#}" data-txt="{#$list.categoryname#}"><h2>{#$list.categoryname#}</h2></li>
+                            {#/foreach#}
+                    </ul>
+                </div>		
+            </li>
+            <li data-go="orderjob" class="s_job"><h4>默认排序<em></em></h4>
+                <div class="city_filter_nav job_filter_nav" id="orderjobList">
+                    <ul>
+                        <li data-val="0" data-txt="不限"><h2>不限</h2></li>
+                        <li data-val="100" data-txt="默认排序" ><h2>默认排序</h2></li>
+                        <li data-val="200" data-txt="离我最近"><h2>离我最近</h2></li>
+                        <li data-val="300" data-txt="最新发布"><h2>最新发布</h2></li>
+                        <li data-val="400" data-txt="工资最高"><h2>工资最高</h2></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+            <input type="hidden" id="hdistrict" value="{#$smarty.get.district#}">
+            <input type="hidden" id="key" value="{#$smarty.get.key#}">
+            <input type="hidden" id="hsdistrict" value="{#$smarty.get.sdistrict#}">
+            <input type="hidden" id="hdistrict_cn" value="{#$smarty.get.district_cn#}">
+            <input type="hidden" id="htopclass" value="{#$smarty.get.topclass#}">
+            <input type="hidden" id="hcategory" value="{#$smarty.get.category#}">
+            <input type="hidden" id="hsubclass" value="{#$smarty.get.subclass#}">
+            <input type="hidden" id="hcategory_cn" value="{#$smarty.get.category_cn#}">
+            <input type="hidden" id="hwage" value="{#$smarty.get.wage#}">
+            <input type="hidden" id="hwage_cn" value="{#$smarty.get.wage_cn#}">
+            <input type="hidden" id="hsettr" value="{#$smarty.get.settr#}">
+            <input type="hidden" id="hsettr_cn" value="{#$smarty.get.settr_cn#}">
+            <input type="hidden" id="heducation" value="{#$smarty.get.education#}">
+            <input type="hidden" id="heducation_cn" value="{#$smarty.get.education_cn#}">
+            <input type="hidden" id="hexperience" value="{#$smarty.get.experience#}">
+            <input type="hidden" id="hexperience_cn" value="{#$smarty.get.experience_cn#}">
+            <input type="hidden" id="hnature" value="{#$smarty.get.nature#}">
+            <input type="hidden" id="hnature_cn" value="{#$smarty.get.nature_cn#}">
+            <input type="hidden" id="order_type" value="{#$smarty.get.order_type#}">
+            <input type="hidden" id="hscale" value="{#$smarty.get.scale#}">
+            <input type="hidden" id="hscale_cn" value="{#$smarty.get.scale_cn#}">
 	</div>	
 	
 	<div class="new_job new_jobb" style="min-height:1000px; background:#fff;">
