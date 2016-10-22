@@ -358,26 +358,27 @@ $(document).ready(function(){
 
                     <div class="c-data-content com-job-ma clearfix">
 
-                        <div class="c-item f-left check-item"><input name="y_id[]" type="checkbox" id="y_id"  value="{#$li.id#}"/></div>
+                        <div class="c-item f-left check-item " style="margin-top:29px;"><input name="y_id[]" type="checkbox" id="y_id"  value="{#$li.id#}"/></div>
 
                 <div class="c-item f-left content1">
                         <div class="job-ma-block">
 <!--							<div><a href="/jobs/jobs-show.php?id={#$li.id#}" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>-->
-<div><a href="#" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>
-                                <p>Ó¦Æ¸¼òÀú£º<a href="company_recruitment.php?act=apply_jobs&jobsid={#$li.id#}&jobname={#$li.jobs_name_#}" class="data-ctrl underline">{#$li.countresume#}</a></p>
+<div style="margin-top:24px;"><a href="#" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>
+<!--                                <p>Ó¦Æ¸¼òÀú£º<a href="company_recruitment.php?act=apply_jobs&jobsid={#$li.id#}&jobname={#$li.jobs_name_#}" class="data-ctrl underline">{#$li.countresume#}</a></p>-->
                         </div>
                 </div>
         <div class="c-item f-left content1-1">
             &nbsp;
         </div>
-            <div class="c-item f-left content2"><span class="hasyuyue">{#$li.refurbish_time|date_format:"%Y-%m-%d %H:%M:%S"#}</span></div>
+            <div class="c-item f-left content2" ><span class="hasyuyue">{#$li.refurbish_time|date_format:"%Y-%m-%d %H:%M:%S"#}</span></div>
             <div class="c-item f-left content3">
                 <div class="job-ma-ctrl">
                     {#if $li.status == 100#}
                     <a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">ÐÞ¸Ä</a>&nbsp;<a url="?act=jobs_perform&display2=1&y_id={#$li.id#}" href="javascript:;" class="data-ctrl underline ctrl-close">¹Ø±Õ</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">É¾³ý</a><br>
                     <a  href="javascript:;" jobsid="{#$li.id#}" class="data-ctrl underline refresh">Ë¢ÐÂ</a>
                     {#else $li.status == 301 || $li.status == 302#}
-                     <a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">ÐÞ¸Ä</a>&nbsp;<a href="?act=jobs_perform&display1=1&y_id={#$li.id#}" class="data-ctrl underline">»Ö¸´</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">É¾³ý</a><br>
+                     <a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">ÐÞ¸Ä</a>&nbsp;<a href="?act=jobs_perform&display1=1&y_id={#$li.id#}" class="data-ctrl underline">»Ö¸´</a>&nbsp;
+<!--                     <a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">É¾³ý</a><br>-->
                     {#/if#}
                 </div>
             </div>

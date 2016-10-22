@@ -39,29 +39,6 @@
 <script charset="utf-8" src="{#$QISHI.site_template#}kindeditor/lang/zh_CN.js"></script>
 <script src="{#$QISHI.site_template#}js/lyz.calendar.min.js" type="text/javascript" language="javascript"></script>
 <script type="text/javascript">
-	$(function () {
-		$("#work_start").manhuaDate({
-			Event: "click", //可选
-			Left: 0, //弹出时间停靠的左边位置
-			Top: -16, //弹出时间停靠的顶部边位置
-			fuhao: "-", //日期连接符默认为-
-			isTime: false, //是否开启时间值默认为false
-			beginY: 1949, //年份的开始默认为1949
-			endY: 2100//年份的结束默认为2049
-		});
-		$("#work_end").manhuaDate({
-			Event: "click", //可选
-			Left: 0, //弹出时间停靠的左边位置
-			Top: -16, //弹出时间停靠的顶部边位置
-			fuhao: "-", //日期连接符默认为-
-			isTime: false, //是否开启时间值默认为false
-			beginY: 1949, //年份的开始默认为1949
-			endY: 2100//年份的结束默认为2049
-		});
-
-	});
-
-
 $(document).ready(function()
 
 {
@@ -1361,7 +1338,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
         
         <!--弹窗-->
         <style>
-		input.bdr1, select.bdr1{ border:#ccc solid 1px; padding:5px 15px 5px 9px; background:#fff;}
+		input.bdr1, select.bdr1{ border:#ccc solid 1px; padding:5px 15px 5px 9px; background:#fff; margin: 0 8px 10px 0;}
 		#setconfig{
 		border:#999999 solid 5px; width:660px; position:absolute; left:50%; margin-left:-330px; background:#fff; z-index:99; padding-bottom:20px; position:absolute; display:none;
 		}
@@ -1371,6 +1348,12 @@ imgcaptcha("#postcaptcha","#imgdiv");
 		#setconfig .setClose{
 			position:absolute; right:0; top:0; padding:5px 10px; cursor:pointer;
 		}
+		.ui-select-position>span{margin: 0 8px 10px;}
+		#searchResultPanel li>span:first-child{  color: #000}
+		#searchResultPanel li>span:last-child{ font-size: 12px; padding-left: 10px;}
+		#searchResultPanel li:hover{background: #4095EF;color: #fff;}
+		.ui-suggestion-area{position: relative}
+		#searchResultPanel{position: absolute;z-index: 1; background: #fff;top: 30px}
 		</style>
         <script>
 			function openSetConfig(){
@@ -1399,7 +1382,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 		  <tr>
 		    <td width="125" align="right"><span class="nec">督导人数：</span></td>
 		    <td>
-            <input id="dd_nums" name="dd_nums" type="text"  value=""  class="bdr1"/>&nbsp;人
+            <input default="" required="true" id="dd_nums" name="dd_nums" type="text"  value=""  class="bdr1"/>&nbsp;人
             </td>
 		    </tr>
 		  <tr>
@@ -1415,7 +1398,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 					<tbody>
 					<tr>
 						<td>
-							<input id="ddxz" name="ddxz" type="text" value="" class="bdr1" style="margin-right: 10px;" />
+							<input default="" required="true" id="ddxz" name="ddxz" type="text" value="" class="bdr1" style="margin-right: 10px;" />
 						</td>
 						<td width="80" style="padding:0px">
 							<div id="work_xzdw_menu" class="input_text_50_bg" >单位</div>
@@ -1459,7 +1442,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 			  <tr>
 		    <td width="125" align="right"><span class="nec">兼职人数：</span></td>
 		    <td>
-            <input id="stations_jz_nums" name="stations_jz_nums" type="text"  value=""  class="bdr1"/>&nbsp;人
+            <input default="" required="true" id="stations_jz_nums" name="stations_jz_nums" type="text"  value=""  class="bdr1"/>&nbsp;人
             </td>
 		    </tr>
 		  <tr>
@@ -1471,21 +1454,21 @@ imgcaptcha("#postcaptcha","#imgdiv");
 		  <tr>
 		    <td align="right"><span class="nec">薪      资：</span></td>
 		    <td>
-            <input id="jz_xz" name="jz_xz" type="text" value="" class="bdr1" />
+            <input default="" required="true" id="jz_xz" name="jz_xz" type="text" value="" class="bdr1" />
 
             </td>
 		    </tr>
 		  <tr>
 		    <td align="right"><span class="nec">开始日期：</span></td>
 		    <td>
-                <input type="text" value="" class="bdr1" id="work_start" name="work_start" />
+                <input default="" type="text" value="" class="bdr1" id="work_start" name="work_start" />
 
             </td>
 		    </tr>
             <tr>
 		    <td align="right"><span class="nec">结束日期：</span></td>
 		    <td>
-                <input type="text" value="" class="bdr1" id="work_end" name="work_end" />
+                <input default="" type="text" value="" class="bdr1" id="work_end" name="work_end" />
 
             </td>
 		    </tr>
@@ -1496,7 +1479,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 						<tbody>
 						<tr>
 							<td width="80" style="padding:0px">
-								<div id="work_start_hour_menu" class="input_text_50_bg" >请选择</div>
+								<div default="请选择" required="true" id="work_start_hour_menu" class="input_text_50_bg" >请选择</div>
 
 								<div class="menu" id="menu_start_hour" >
 									<ul>
@@ -1516,7 +1499,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 							</td>
 							<td width="20" style="padding:0px">时</td>
 							<td width="80" style="padding:0px">
-								<div id="work_start_minute_menu" class="input_text_50_bg" >请选择</div>
+								<div default="请选择" required="true" id="work_start_minute_menu" class="input_text_50_bg" >请选择</div>
 
 								<div class="menu" id="menu_start_minute" >
 									<ul>
@@ -1546,7 +1529,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 						<tr>
 							<td width="80" style="padding:0px">
 
-								<div id="work_our_menu" class="input_text_50_bg">请选择</div>
+								<div default="请选择" required="true" id="work_our_menu" class="input_text_50_bg">请选择</div>
 
 								<div class="menu" id="menu_our" >
 									<ul>
@@ -1566,7 +1549,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 							</td>
 							<td width="20" style="padding:0px">时</td>
 							<td width="80" style="padding:0px">
-								<div id="work_minute_menu" class="input_text_50_bg" >请选择</div>
+								<div default="请选择" required="true" id="work_minute_menu" class="input_text_50_bg" >请选择</div>
 
 								<div class="menu" id="menu_minute">
 									<ul>
@@ -1596,7 +1579,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 					<tbody>
 					<tr>
 						<td width="80" style="padding:0px">
-							<div id="work_jh_hour_menu" class="input_text_50_bg" >请选择</div>
+							<div default="请选择" required="true" id="work_jh_hour_menu" class="input_text_50_bg" >请选择</div>
 
 							<div class="menu" id="menu_jh_hour" >
 								<ul>
@@ -1616,7 +1599,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 						</td>
 						<td width="20" style="padding:0px">时</td>
 						<td width="80" style="padding:0px">
-							<div id="work_jh_minute_menu" class="input_text_50_bg" >请选择</div>
+							<div default="请选择" required="true" id="work_jh_minute_menu" class="input_text_50_bg" >请选择</div>
 
 							<div class="menu" id="menu_jh_minute" >
 								<ul>
@@ -1642,32 +1625,42 @@ imgcaptcha("#postcaptcha","#imgdiv");
             <tr>
 		    <td align="right"><span class="nec">集合地点：</span></td>
 		    <td>
-              <input type="text" name="work_jh_dd" id="work_jh_dd" class="bdr1"/>
+              <input default="" required="true" type="text" name="work_jh_dd" id="work_jh_dd" class="bdr1"/>
             </td>
 		    </tr>
             
             <tr>
-		    <td align="right"><span class="nec">工作地点：</span></td>
-		    <td>
-
+		    <td style="vertical-align: top;" align="right"><span class="nec">工作地点：</span></td>
+		    <td class="ui-select-position">
+				<span>
                 省份：
-            <select name="province" class="bdr1">
+            <select default="0" required="true" id="province" name="province" class="bdr1">
                 <option value="0" >请选择省份</option>
             </select>
-            城市：<select name="city" class="bdr1">
+					</span>
+				<span>
+            城市：<select default="0"  required="true" id="city" name="city" class="bdr1">
                 <option value="0" >请选择城市</option>
             </select>
+					</span>
         <br/>
-            县区：<select name="county" id="county" class="bdr1">
+				<span>
+            县区：<select default="0" required="true" name="county" id="county" class="bdr1">
                 <option value="0" >请选择区县</option>
             </select>
-                商圈：<select name="business" id="business" class="bdr1">
+					</span>
+				<span>
+                商圈：<select default="0" required="true" name="business" id="business" class="bdr1">
                 <option value="0" >请选择商圈</option>
             </select>
+					<input name="position_lng" id="position_lng" type="hidden" value=""/>
+					<input name="position_lat" id="position_lat" type="hidden" value=""/>
+			</span>
+				<div class="ui-suggestion-area">
+           			 <input type="text" name="fname" id="suggestId" class="bdr1"/>
+					  <ul id="searchResultPanel" style="border:1px solid #C0C0C0;width:auto;height:auto; display:none;z-index:1;"></ul>
 
-            <input type="text" name="fname" id="suggestId" class="bdr1"/>
-	<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;z-index:auto;"></div>
-            <!--<button onclick="setPlace()"/>-->
+					</div><!--<button onclick="setPlace()"/>-->
             </td>
 		    </tr>
             <tr>
@@ -1679,7 +1672,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
             <tr>
 		    <td align="right"></td>
 		    <td>
-            	<input name="a" type="button" onclick="addStations()" value="保存"/>
+            	<input name="a" id="saveBtn" type="button" value="保存"/>
             </td>
 		    </tr>
 	    </table>
@@ -1691,17 +1684,98 @@ imgcaptcha("#postcaptcha","#imgdiv");
         
         <script type="text/javascript">
 
+			$(function () {
+				$("#work_start").manhuaDate({
+					Event: "click", //可选
+					Left: 0, //弹出时间停靠的左边位置
+					Top: -16, //弹出时间停靠的顶部边位置
+					fuhao: "-", //日期连接符默认为-
+					isTime: false, //是否开启时间值默认为false
+					beginY: 1949, //年份的开始默认为1949
+					endY: 2100//年份的结束默认为2049
+				});
+
+				$("#work_end").manhuaDate({
+					Event: "click", //可选
+					Left: 0, //弹出时间停靠的左边位置
+					Top: -16, //弹出时间停靠的顶部边位置
+					fuhao: "-", //日期连接符默认为-
+					isTime: false, //是否开启时间值默认为false
+					beginY: 1949, //年份的开始默认为1949
+					endY: 2100//年份的结束默认为2049
+				});
+
+				$("#business").on('change',function () {
+					if($(this).val()!="0"){
+						getPosition($(this).find("option:selected").text(),$("#city").find("option:selected").text()+$("#county").find("option:selected").text()+$("#business").find("option:selected").text(),14,1);
+					}
+				});
+
+				$("#province").on('change',function () {
+					if($(this).val()!="0"){
+						getPosition($(this).find("option:selected").text(),$("#province").find("option:selected").text(),6);
+					}
+				});
+				$("#city").on('change',function () {
+					if($(this).val()!="0"){
+						getPosition($(this).find("option:selected").text(),$("#city").find("option:selected").text(),8);
+					}
+				});
+
+				$("#county").on('change',function () {
+					if($(this).val()!="0"){
+						getPosition($(this).find("option:selected").text(),$("#city").find("option:selected").text()+$("#county").find("option:selected").text(),12);
+					}
+				});
+
+				$("#saveBtn").on("click",function () {
+					var val_result = true;
+					$(this).closest("table").find('[required="true"]').each(function(ele){
+						if($(this).is('input') || $(this).is('select')){
+							if($(this).val() == $(this).attr("default")){
+								val_result = false;
+								console.log($(this));
+								return false;
+							}
+						}else{
+							if($(this).text()== $(this).attr("default")){
+								val_result = false;
+								console.log($(this));
+								return false;
+							}
+						}
+
+					});
+					if(!val_result){
+						alert("信息填写完整！(带*为必填项)")
+					}else{
+						addStations();
+					}
+				});
+				$("#suggestId").on("keyup",function () {
+					if($(this).val()!=""){
+						getSuggestionPlace($("#city").find("option:selected").text(),$(this).val(),$(this));
+					}
+				});
+				$("body").on("click",function (event) {
+					event.stopPropagation();
+					$("#searchResultPanel").hide();
+				})
+			});
         var map = new BMap.Map("map"); // 创建Map实例
         var point;
         //根据经纬度显示地区
-        function loadPlace(longitude, latitude, level) {
+        function loadPlace(longitude, latitude, le) {
             if (parseFloat(longitude) > 0 || parseFloat(latitude) > 0) {
-                level = level || 12;
+                var level = le || 12;
                 //绘制地图
-
+				map.clearOverlays();
                 point = new BMap.Point(longitude, latitude); //地图中心点
                 map.centerAndZoom(point, level); // 初始化地图,设置中心点坐标和地图级别。
                 map.setCurrentCity("北京");
+				var marker = new BMap.Marker(point);  // 创建标注
+				map.addOverlay(marker);               // 将标注添加到地图中
+				marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
                 map.enableScrollWheelZoom(true); //启用滚轮放大缩小
                 //向地图中添加缩放控件
                 var ctrlNav = new window.BMap.NavigationControl({
@@ -1725,8 +1799,53 @@ imgcaptcha("#postcaptcha","#imgdiv");
 
 
             }
-        }<!--
+        }
 
+			function getSuggestionPlace(city,query,element) {
+				var _city = city || "";
+				$.ajax({
+					url: "http://api.map.baidu.com/place/v2/suggestion?ak=1wvtkXp4ETKwIy3Byu2Ou3cOYBGuqdYL&output=json&region="+_city+"&query="+query,
+					dataType: 'jsonp',
+					success:function (data) {
+						if(data && data.result){
+							$("#searchResultPanel").empty();
+							for(var i in data.result){
+								var ele =  data.result[i];
+								if(i>10) break;
+								var _li = $("<li><span>"+ele.name+"</span><span>"+ ele.city + ele.district+"</span></li>");
+								$("#searchResultPanel").append(_li);
+								_li.on("click",function () {
+									element.val($(this).find("span").eq(1).text()+$(this).find("span").eq(0).text());
+									$("#searchResultPanel").hide();
+									$("#searchResultPanel").empty();
+
+									getPosition($("#city").find("option:selected").text(),element.val(),17);
+								});
+							}
+							$("#searchResultPanel").show();
+						}
+					}
+				});
+			}
+
+			function getPosition(city,address,level,flag) {
+				$.ajax({
+					url: "http://api.map.baidu.com/geocoder/v2/?ak=1wvtkXp4ETKwIy3Byu2Ou3cOYBGuqdYL&output=json&city="+city+"&address="+address,
+					dataType: 'jsonp',
+					success:function (data) {
+						if(data && data.result){
+							if(flag){
+								$("#position_lng").val(data.result.location.lng);
+								console.log(data.result.location.lng)
+								$("#position_lat").val(data.result.location.lat);
+								console.log(data.result.location.lat)
+							}
+							loadPlace(data.result.location.lng,data.result.location.lat,level);
+						}
+					}
+				});
+			}
+		
         function setPlace() {
             map.clearOverlays();    //清除地图上所有覆盖物
             var myGeo = new BMap.Geocoder();// 将地址解析结果显示在地图上,并调整地图视野
@@ -1784,7 +1903,6 @@ imgcaptcha("#postcaptcha","#imgdiv");
 	var _value = e.item.value;
         myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
         G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
-        alert('ss');
             setPlace();
 	});
 
@@ -1855,6 +1973,7 @@ imgcaptcha("#postcaptcha","#imgdiv");
 
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableall">
 
+		  <tr>
 		  <tr>
 
 			<td width="125" align="right"><span class="nec">联系人</span>：</td>

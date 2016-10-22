@@ -341,9 +341,9 @@ elseif ($act=='addjobs_save')
             $stationTmp['district_id'] = $dTmp[0];
             $bTmp = explode('|', $stationArr['businessId']);
             $stationTmp['business_district_id'] = $bTmp[0] = 1;
-            $stationTmp['address'] = iconv('utf-8', "gbk", $stationArr['provinceName'].$stationArr['cityName'].$stationArr['countyName'].$stationArr['businessName']);
-            $stationTmp['lng'] = $stationArr['lng'] = '100.1';
-            $stationTmp['lat'] = $stationArr['lat'] = '100.2';
+            $stationTmp['address'] = $stationArr['fname'];
+            $stationTmp['lng'] = $stationArr['position_lng'];
+            $stationTmp['lat'] = $stationArr['position_lat'];
             $stationTmp['start_date'] = $stationArr['work_start'];
             $stationTmp['end_date'] = $stationArr['work_end'];
             $stationTmp['work_start_time'] = $stationArr['work_start_time'];
@@ -354,9 +354,6 @@ elseif ($act=='addjobs_save')
         $addData['stations_info'][] = $stationTmp;
     }
     $addRst = https_request_api('job/create', $addData);
-    if($addRst['codes']) {
-        showmsg($addRst['msg']);
-    }
     $pid = $addRst['data']['id'];
     header("location:?act=jobs&addjobs_save_succeed=".$pid);
 }

@@ -136,7 +136,7 @@ $(function() {
 function addStations() {
     var jstr = '';
     jstr += 'provinceId='+$("[name='province']").val();
-    jstr += '&provinceName='+$("[name='province'] option:selected").text();;
+    jstr += '&provinceName='+$("[name='province'] option:selected").text();
     jstr += '&cityId='+$("[name='city']").val();
     jstr += '&cityName='+$("[name='city'] option:selected").text();
     jstr += '&countyId='+$("[name='county']").val();
@@ -156,10 +156,11 @@ function addStations() {
     jstr += '&work_end_time='+$("[name='work_end_hour']").val()+':'+$("[name='work_end_minute']").val();
     jstr += '&work_jh_time='+$("[name='work_jh_hour']").val()+':'+$("[name='work_jh_minute']").val();
     jstr += '&work_jh_dd='+$("[name='work_jh_dd']").val();
-    alert(jstr);
-    //var str= "<tr><td align=\"right\"></td> <td>"+ addrArr['provinceName']+'-'+addrArr['cityName']+'-'+addrArr['countyName']+'-'+addrArr['businessName']+','+addrArr['stations_jz_nums']+'人,'+addrArr['jz_xz']+'元/人,'+ addrArr['work_start']+'-'+ addrArr['work_end'] + "<a href=\"###\" onclick=\"openSetConfig();\">修改 </a> <a href=\"###\" onclick=\"copySets();\">复制</a> <a href=\"#\">删除</a> <input type=\"hidden\" name=\"stations[]\" value='"+jstr+"' /> </td></tr>";
+    jstr += '&position_lng='+$("#position_lng").val();
+    jstr += '&position_lat='+$("#position_lat").val();
+    var str1= "<tr><td align=\"right\"></td> <td>"+ $("[name='province'] option:selected").text()+'-'+$("[name='city'] option:selected").text()+'-'+$("[name='county'] option:selected").text()+'-'+$("[name='business'] option:selected").text()+','+$("[name='stations_jz_nums']").val()+'人,'+$("[name='jz_xz']").val()+'元/人,'+ $("[name='work_start']").val()+'-'+ $("[name='work_end']").val() + "<a href=\"#\">删除</a></td></tr>";
     var str= "<tr><td align=\"right\"></td> <td> <input type=\"hidden\" name=\"stations[]\" value='"+encodeURIComponent(jstr)+"' /> </td></tr>";
+    $('#configs').append(str1);
     $('#configs').append(str);
-
     closeSetConfig();
 }
