@@ -349,7 +349,7 @@ elseif ($act=='addjobs_save')
             $stationTmp['work_start_time'] = $stationArr['work_start_time'];
             $stationTmp['work_end_time'] = $stationArr['work_end_time'];
             $stationTmp['fall_in_time'] = $stationArr['work_jh_time'];
-            $stationTmp['fall_in_address'] = iconv('utf-8', "gbk", $stationArr['work_jh_dd']);
+            $stationTmp['fall_in_address'] = $stationArr['work_jh_dd'];
         }
         $addData['stations_info'][] = $stationTmp;
     }
