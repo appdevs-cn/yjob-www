@@ -102,6 +102,24 @@ $row['address']=$row['list'][0]['adress'];
 $row['contact']['landline_tel'] = $landline_tel;
 $row['sex_cn'] = $row['sex_cn'] == 200 ? 'ÄÐ' : ($row['sex_cn'] == 300 ? 'Å®' : '²»ÏÞ') ;
 $tagSql = "SELECT * FROM ".table('category')." where c_alias='QS_jobtag'";
+$dateCount = ceil(($row['list'][0]['end_date'] - $row['list'][0]['start_date']) / 86400);
+$row['dateStr'] = "<style>
+	#data_time{position:fixed; width:750px; left:50%; margin-left:-375px; bottom:0; display:none; z-index:999;}
+	.date_time_title{ height:80px; background:#f5f5f5; border-bottom:#c8c8c8 solid 1px; line-height:80px; font-size:24px; padding:0 30px; text-align:center;}
+	.date_time_title .cancel{ position:absolute; left:30px; top:0;}
+	.date_time_title .submit{ position:absolute; right:30px; top:0;}
+	.kalendae .k-days span.k-out-of-month{ opacity:0; }
+	.kalendae .k-days span.k-active{ color:#ddd;}
+	.kalendae .k-days span.k-selected{ color:#none;}"."\n";
+for($i = 0; $i <= $dateCount; $i++) {
+    $row['dateStr'] .= ".kalendae .k-days span[data-date='".date('Y-m-d', $row['list'][0]['start_date']+ $i *86400)."']";
+    if($i != $dateCount) {
+        $row['dateStr'] .= ','."\n";
+    } else {
+        $row['dateStr'] .= "{ color:#333;}"."\n";
+    }
+}
+$row['dateStr'] .= "\n</style>";
 $tagArr = $db->getall($tagSql);
 if($row['position_high']) {
     $row['position_high'] = array_flip(explode(",", $row['position_high']));

@@ -401,28 +401,8 @@ var YDB = new YDBOBJ();
     YDB.SetMenuBar(0);
 </script>
 	<!--选择日期-->
-    
-	
-
+        {#$show.dateStr#}
 	<!--选择日期-->
-    
-	
-    <style>
-	#data_time{position:fixed; width:750px; left:50%; margin-left:-375px; bottom:0; display:none; z-index:999;}
-	.date_time_title{ height:80px; background:#f5f5f5; border-bottom:#c8c8c8 solid 1px; line-height:80px; font-size:24px; padding:0 30px; text-align:center;}
-	.date_time_title .cancel{ position:absolute; left:30px; top:0;}
-	.date_time_title .submit{ position:absolute; right:30px; top:0;}
-	
-	.kalendae .k-days span.k-out-of-month{ opacity:0; }
-	.kalendae .k-days span.k-active{ color:#ddd;}
-	.kalendae .k-days span.k-selected{ color:#none;}
-	.kalendae .k-days span[data-date='2016-08-15'],
-	.kalendae .k-days span[data-date='2016-09-2'],
-	.kalendae .k-days span[data-date='2016-09-12'],
-	.kalendae .k-days span[data-date='2016-09-22'],
-	.kalendae .k-days span[data-date='2016-09-14'],
-	.kalendae .k-days span[data-date='2016-09-16']{ color:#333;}
-	</style>
 	<div class="data_time" id="data_time">  
     	<div class="date_time_title">
         	<div class="cancel" onClick="closeDiv('data_time');closeDiv('job_mask');">取消</div>
