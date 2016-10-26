@@ -344,8 +344,8 @@ elseif ($act=='addjobs_save')
             $stationTmp['address'] = $stationArr['fname'];
             $stationTmp['lng'] = $stationArr['position_lng'];
             $stationTmp['lat'] = $stationArr['position_lat'];
-            $stationTmp['start_date'] = $stationArr['work_start'];
-            $stationTmp['end_date'] = $stationArr['work_end'];
+            $stationTmp['start_date'] = strtotime($stationArr['work_start']);
+            $stationTmp['end_date'] = strtotime($stationArr['work_end']);
             $stationTmp['work_start_time'] = $stationArr['work_start_time'];
             $stationTmp['work_end_time'] = $stationArr['work_end_time'];
             $stationTmp['fall_in_time'] = $stationArr['work_jh_time'];
