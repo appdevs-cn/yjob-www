@@ -269,7 +269,8 @@ $(function(){
                              $.post("personal_ajax.php", {"act":"changeStatus","sids":eids, "status":100},
                                 function (data,textStatus)
                                  {
-                                    //location.reload();
+                                     alert('审核成功！');
+                                    location.reload();
                                  }
                             );
 				var c = 'c3_2';
@@ -280,7 +281,8 @@ $(function(){
                              $.post("personal_ajax.php", {"act":"changeStatus","sids":eids, "status":200},
                                 function (data,textStatus)
                                  {
-                                    //location.reload();
+                                    alert('审核成功！');
+                                    location.reload();
                                  }
                             );
 				var c = 'c3_3';
@@ -506,7 +508,7 @@ $(function(){
 		function (data,textStatus)
 		 {
                      alert(data);
-                     //location.reload();
+                     location.reload();
 		 }
 	);
 	});

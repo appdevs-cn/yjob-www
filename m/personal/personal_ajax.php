@@ -15,8 +15,8 @@ if($act == 'sign')
     $data['enroll_id'] = $_POST['enrollId'];
     $data['job_id'] = $_POST['jobId'];
     $data['sign_time'] = strtotime($_POST['signTime']);
-    $data['sign_address'] = iconv("utf8", "gbk", $_POST['signAddr']);
-    $data['remark'] = iconv("utf8", "gbk", $_POST['signDesc']);
+     $data['sign_address'] = iconv("utf-8", "gbk", $_POST['signAddr']);
+    $data['remark'] = iconv("utf-8", "gbk", $_POST['signDesc']);
     $data['sign_type'] = $_POST['type'];
     if($_POST['pics']) {
         $data['sign_pic'] = implode("\n", $_POST['pics']);
