@@ -350,8 +350,8 @@ elseif ($act=='addjobs_save')
             $stationTmp['work_end_time'] = $stationArr['work_end_time'];
             $stationTmp['fall_in_time'] = $stationArr['work_jh_time'];
             $stationTmp['fall_in_address'] = $stationArr['work_jh_dd'];
+            $addData['stations_info'][] = $stationTmp;
         }
-        $addData['stations_info'][] = $stationTmp;
     }
     $addRst = https_request_api('job/create', $addData);
     $pid = $addRst['data']['id'];

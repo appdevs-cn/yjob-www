@@ -2,3 +2,5 @@
 /temp/
 *.txt
 data/sessions
+upload
+.idea
