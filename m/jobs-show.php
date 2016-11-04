@@ -141,6 +141,7 @@ $favData['job_id'] = $_GET['id'];
 $favData['uid'] = $_SESSION['uid'];
 $resumeInfo = get_resume_basic_by_uids($_SESSION['uid']);
 $isFavRst = https_request_api('job/isFav', $favData);
+$row['job_desc'] = html_entity_decode($row['job_desc']);
 $row['is_fav'] = !$isFavRst['codes'] ? $isFavRst['data'] : 0;
 //ÊÇ·ñ±¨Ãû
 $isEnrollRst = https_request_api('enroll/isEnroll', $favData);
