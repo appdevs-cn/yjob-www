@@ -86,7 +86,7 @@ foreach ($recommend_jobs as $key => $value)
 $smarty->assign('recommend_jobs',$recommend_jobs);
 //最新职位
 $postData['page'] = 1;
-$postData['size'] = 5;
+$postData['size'] = 100;
 $postData['order_type'] = 300;
 $jobTmp = https_request_api('job/search', $postData);
 $new_jobs = $jobTmp['data'];
