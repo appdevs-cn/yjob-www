@@ -1,0 +1,117 @@
+{#include file="sys/crm_header.htm"#}
+<link href="css/date_input.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.date_input.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+//日期
+	$(function() { 
+	$(".date_input").date_input(); 
+	}); 
+}); 
+</script>
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<div class="toptit">帐户基本信息
+  </div>
+  <form id="form1" name="form1" method="post" action="?act=employee_edit_save">
+    <input type="hidden" name="id" value="{#$employee.id#}">
+  {#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+    <tr>
+      <td width="120" height="30" align="right">员工姓名： </td>
+      <td >
+    <input name="name" type="text" class="input_text_200" value="{#$employee.name#}"  >   </td>
+    </tr>
+    <tr>
+      <td width="120" align="right" >性别：</td>
+      <td >
+       <input type="radio" value="男" name="sex" {#if $employee.sex=="男"#}checked{#/if#}>男
+       <input type="radio" value="女" name="sex" {#if $employee.sex=="女"#}checked{#/if#}>女</td>
+    </tr>
+    <tr>
+      <td align="right">生日：</td>
+      <td>
+        <input name="birthday" type="text" class="input_text_200 date_input" value="{#$employee.birthday|date_format:"%Y-%m-%d"#}"></td>
+    </tr>
+    <tr>
+      <td align="right" >学历：</td>
+      <td ><input name="education" type="text" class="input_text_100" value="{#$employee.education#}"></td>
+    </tr>
+    <tr>
+      <td align="right">email：</td>
+      <td><input name="email" type="text" class="input_text_200" value="{#$employee.email#}"></td>
+    </tr>
+    <tr>
+      <td align="right" >电话：</td>
+      <td><input name="phone" type="text" class="input_text_200" value="{#$employee.phone#}"></td>
+    </tr>
+    <tr>
+      <td align="right">手机：</td>
+      <td  ><input name="mobile" type="text" class="input_text_200" value="{#$employee.mobile#}"></td>
+    </tr>
+    <tr>
+      <td align="right" >部门：</td>
+      <td>
+        <select name="department">
+          {#foreach from=$departments item=list#}
+          <option value="{#$list.c_id#}" {#if $list.c_id==$employee.department#}selected{#/if#}>{#$list.c_name#}</option>
+          {#/foreach#}
+        </select></td>
+    </tr>
+    <tr>
+      <td align="right">职位：</td>
+      <td ><input name="job_position" type="text" class="input_text_200" value="{#$employee.job_position#}"></td>
+    </tr>
+    <tr>
+      <td align="right">月薪：</td>
+      <td ><input name="wage" type="text" class="input_text_100" value="{#$employee.wage#}"></td>
+    </tr>
+    <style type="text/css">
+      .input_text_300{
+          -moz-border-bottom-colors: none;
+          -moz-border-left-colors: none;
+          -moz-border-right-colors: none;
+          -moz-border-top-colors: none;
+          background-color: #F9F9F9;
+          border-color: #666666 #CCCCCC #CCCCCC #666666;
+          border-image: none;
+          border-style: solid;
+          border-width: 1px;
+          font-size: 12px;
+          height: 16px;
+          line-height: 16px;
+          padding: 3px;
+          width: 300px;
+      }
+    </style>
+    <tr>
+      <td align="right">联系地址：</td>
+      <td><input name="address" type="text" class="input_text_300" value="{#$employee.address#}"></td>
+    </tr>
+    <tr>
+      <td align="right">邮编：</td>
+      <td ><input name="postalcode" type="text" class="input_text_100" value="{#$employee.postalcode#}"></td>
+    </tr>
+    <tr>
+      <td align="right" >备注：</td>
+      <td > <textarea name="remark" class="input_text_400" style="height:60px;">{#$employee.remark#}</textarea></td>
+    </tr>
+  </table>
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+  <tr>
+    <td width="120" height="30" align="right"    >&nbsp;</td>
+    <td   >
+    
+            <input name="submit32" type="submit" class="admin_submit"    value="保存"/>
+      <input name="submit222" type="button" class="admin_submit"    value="返 回" onclick="Javascript:window.history.go(-1)"/>    </td>
+    </tr>
+  </table>
+  </form>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

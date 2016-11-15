@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+	<title>{#$show.jobs_name#} - {#$QISHI.site_name#}</title>
+	<meta name="description" content="{#$page.description#},{#$show.companyname#}招聘职位{#$show.jobs_name#}" id="description">
+	<meta name="keywords" content="{#$page.keywords#},{#$QISHI.site_name#},{#$show.companyname#},{#$show.nature_cn#},{#$show.category_cn#},{#$show.trade_cn#},{#$show.district_cn#},{#$show.tag_cn#},{#$show.experience_cn#},{#$show.education_cn#}">
+<link rel="stylesheet" href="/layout/blue/css/glide.css">
+<link rel="stylesheet" href="/layout/blue/css/common.css">
+<link rel="stylesheet" href="/layout/blue/css/style.css">
+<link rel="stylesheet" href="/layout/blue/css/wallet.css">
+<script language="javascript" src="http://static.ydbimg.com/API/YdbOnline.js"></script>
+<script type="text/javascript">
+var YDB = new YDBOBJ();
+    YDB.SetMenuBar(0);
+</script>
+</head>
+<div class="layout pb100">
+	<div class="blur">
+		<div class="city_nav wallet">
+		<div class="hd">
+			<h5>职位详情</h5>
+			<em><a href="#"></a></em>
+			<span class="fx" onClick="openDiv('job_mask',99999); openDiv('alert',9999999);"><img src="/layout/blue/imgs/wz46.png"/></span>
+		</div>				
+			
+	</div>
+	
+	<div class="job_head">
+		<div class="ico">
+		{#$show.category_cn#}
+		</div>
+		<div class="txt">
+			
+			<h2>{#$show.jobs_name#}</h2>
+			<h4>{#$show.start_riqi#}-{#$show.end_riqi#}</h4>
+		</div>
+		<div class="sub">
+			{#if $show.wage_amount>0#}
+				<h2>{#$show.wage_amount#} {#$show.wage_cn#}</h2>
+			{#else#}
+				<h2>{#$show.wage_cn#}</h2>
+			{#/if#}
+			<h4>已报<span>{#$show.counts#}</span>名</h4>
+		</div>
+	</div>
+	
+	<div class="job_body">
+		<div class="hd">
+			<h4>任职要求</h4>
+		</div>
+		<div class="bd">
+			<dl>
+				<dt>工作地点：</dt>
+				<dd>{#$show.district_cn#}</dd>				
+			</dl>
+			<dl>
+				<dt>工作日期：</dt>
+				<dd>{#$show.start_riqi#}-{#$show.end_riqi#}</dd>
+			</dl>
+			<dl>
+				<dt>工作时间：</dt>
+				<dd>{#$show.start_shijian#}-{#$show.end_shijian#}</dd>
+			</dl>
+			<dl>
+				<dt>性别限制：</dt>
+				<dd>{#$show.sex_cn#}</dd>
+			</dl>
+			<dl>
+				<dt>年龄限制：</dt>
+				<dd>{#$show.age#}</dd>
+			</dl>
+			<dl>
+				<dt>薪 <span></span><span></span>资：</dt>
+				{#if $show.wage_amount>0#}
+					<dd>{#$show.wage_amount#} {#$show.wage_cn#}</dd>
+				{#else#}
+					<dd>{#$show.wage_cn#}</dd>
+				{#/if#}
+			</dl>
+	
+			<dl>
+				<dt>招聘人数：</dt>
+				<dd>{#$show.amount#}人</dd>
+			</dl>
+		</div>
+	</div>
+	
+	<div class="job_body ">
+		<div class="hd">
+			<h4>职位描述</h4>
+		</div>
+		<div class="txt">
+				<p>{#$show.contents#}</p>	
+		</div>
+	</div>
+	
+	<div class="job_body job_last ">
+		<div class="hd">
+			<h4>职位标签</h4>
+		</div>
+		<div class="tags">
+			<ul>
+				{#foreach from=$show.tag_cn item=tagli#}
+<li>{#$tagli#}</li>
+				{#/foreach#}
+	
+			</ul>
+		</div>
+	</div>
+	<div class="h_hight">
+		
+	</div>
+	<div class="job_foot">
+		<ul>
+			<li class="hasjs">
+				<a href="#" onClick="openDiv('sc',1);return false;">
+					<div class="ico1">
+					
+				</div>
+				<h4 >收藏职位</h4>
+				</a>
+			</li>
+			<li class="line">
+				<span></span>
+			</li>
+			<li>
+						{#if $is_show_tel#}
+						<a href="tel:{#if $show.contact.telephone#}{#$show.contact.telephone#}{#else#}{#$show.contact.landline_tel#}{#/if#}"><div class="ico2"></div>
+				<h4>电话联系</h4></a>
+						{#else#}
+						<a href="login.php"><div class="ico2"></div>
+				<h4>电话联系</h4></a>
+						{#/if#}	
+
+			</li>
+		</ul>
+		<div class="apply">
+			<a href="#" onClick="openDiv('bm',1); return false;">立即报名</a>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+<!--弹窗-->
+<div class="job_mask" id="job_mask">
+	
+</div>
+
+<div class="alert" id="alert" >
+	<div class="close-alert">
+	</div>
+	<ul>
+		<li>
+			<a href="#"><div class="ico">
+				<img src="/layout/blue/imgs/wz39.png"/>
+			</div>
+			<h4>QQ</h4></a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz40.png"/>
+			</div>
+			<h4>微信</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz41.png"/>
+			</div>
+			<h4>微博</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz42.png"/>
+			</div>
+			<h4>朋友圈</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz40.png"/>
+			</div>
+			<h4>微信</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz41.png"/>
+			</div>
+			<h4>微博</h4>
+			</a>
+		</li>
+	</ul>
+
+
+
+	<div class="dialog" id="sc">
+		<div class="ico">
+		<img src="/layout/blue/imgs/wz43.png"/>
+		</div>
+	    <h4>收藏成功</h4>
+	</div>
+   
+   <div class="dialog" id="bm">
+		<div class="ico">
+		<img src="/layout/blue/imgs/wz44.png"/>
+		</div>
+	    <h4>报名成功</h4>
+	</div>
+	
+	
+	
+	<div class="alert_last">
+		<ul>
+			<li class="frist">您的简历未完善<br/>
+简历达到80%以上即可报名~</li>
+<li><a href="#">立即完善</a></li>
+<li class="last"><h4>取消</h4></li>
+		</ul>
+	</div>
+</div><!--loyout结束-->
+
+<script language="javascript" src="http://static.ydbimg.com/API/YdbOnline.js"></script>
+<script type="text/javascript">
+var YDB = new YDBOBJ();
+    YDB.SetMenuBar(0);
+</script>
+
+<div id="page_description" style="display:none;">{#$show.contents#}</div>
+
+<script type="text/javascript" src="/layout/blue/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/layout/blue/js/jquery.glide.js"></script>
+<script type="text/javascript" src="/layout/blue/js/script.js"></script>
+<script language="javascript">
+$().ready(function(e) {
+	var uaua = navigator.userAgent.toLowerCase();
+	if(uaua.indexOf('ck 2.0')>=0){
+		$('.city_nav>.hd>.fx').removeAttr('onclick').unbind('click').bind('click',function(e){
+			var title = document.title;
+			var content = $('#page_description').text();
+			var url = window.location.href;
+			YDB.Share(title,content,'',url);
+		});
+	}
+});
+</script>
+</body>
+</html>
+

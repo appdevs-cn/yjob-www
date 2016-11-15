@@ -1,0 +1,38 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+  <form method="post" name="date_from" action="?act=lastyear_deal30day">
+<div class="seltpye_y">
+	<table>
+		<tr>
+			<td>选择比较时间</td>
+			<td>
+				<select name="choosetime">
+					{#foreach from=$select_years item=list#}
+					<option value="{#$list.key#}" {#if $choosetime==$list.key#}selected{#/if#}>{#$list.value#}</option>
+					{#/foreach#}
+				</select>
+			</td>
+			<td><input name="" type="submit"  class="admin_submit"  value="搜索"/></td>
+		</tr>
+	</table>
+</div>
+</form>
+	<div class="toptit">{#$choosetime#}年同期30天成交客户趋势 <span style="border:1px solid;width:50px;height:30px;background-color: #CC0000;margin-left:50px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;{#$choosetime#}年<span style="border:1px solid;width:50px;height:30px;background-color: #00CC00;margin-left:50px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;今年</div>
+ 
+   <script language="JavaScript" src="js/FusionCharts.js"></script>
+<div id="chartdiv"  > 
+        FusionCharts. 
+		</div>
+<script type="text/javascript">
+		   var chart = new FusionCharts("data/statement/area2D.swf", "ChartId", "800", "260");
+		   chart.setDataURL("data/statement/lastyear_deal30day.xml");		   
+		   chart.render("chartdiv");
+</script>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

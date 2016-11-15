@@ -1,0 +1,22 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+ 
+	<div class="toptit">客户有效性  </div>
+ 
+   <script language="JavaScript" src="js/FusionCharts.js"></script>
+<div id="chartdiv"  > 
+        FusionCharts. 
+		</div>
+<script type="text/javascript">
+		   var chart = new FusionCharts("data/statement/Pie2D.swf", "ChartId", "500", "500");
+		   chart.setDataURL("data/statement/clientstatistical.xml");		   
+		   chart.render("chartdiv");
+</script>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

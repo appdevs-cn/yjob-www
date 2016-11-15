@@ -1,0 +1,1017 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+
+<title>{#$title#}</title>
+
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+
+<meta name="author" content="骑士CMS" />
+
+<meta name="copyright" content="74cms.com" />
+
+<link href="{#$QISHI.site_template#}css/user_common.css" rel="stylesheet" type="text/css" />
+
+<link href="{#$QISHI.site_template#}css/user_company.css" rel="stylesheet" type="text/css" />
+
+<link href="{#$QISHI.site_template#}css/ui-dialog.css" rel="stylesheet" type="text/css" />
+
+<script src="{#$QISHI.site_template#}js/jquery.js" type="text/javascript" language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/dialog-min.js" type="text/javascript" language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/dialog-min-common.js" type="text/javascript" language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type="text/javascript" language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.reasontip-min.js" type='text/javascript' language="javascript"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	// 发布职位 成功提示弹出
+	var addjobs_save_succeed="{#$jobs_one.id#}";
+	if(addjobs_save_succeed>0)
+
+	{
+		var d=dialog({
+
+	        title: '系统提示',
+
+	        content: $(".addjob-success-dialog"),
+
+	        cancelDisplay: false,
+
+	        cancel: function () {
+
+	        	window.location.href="?act=jobs";
+
+	        }
+
+	    }).showModal();
+
+	}
+
+	// 单个关闭
+
+	$(".ctrl-close").click(function(event) {
+
+		var mycoDialog=dialog(),
+
+		url = $(this).attr("url");
+
+		mycoDialog.title('系统提示');
+
+		mycoDialog.content('<div class="del-dialog"><div class="tip-block"><span class="del-tips-text close-tips-text">关闭后将不对外展示招聘信息，您确定要关闭吗？</span></div></div><div class="center-btn-wrap"><input type="button" value="确定" class="btn-65-30blue btn-big-font DialogSubmit" /><input type="button" value="取消" class="btn-65-30grey btn-big-font DialogClose" /></div>');
+
+	    mycoDialog.width('300');
+
+	    mycoDialog.showModal();
+
+	    /* 关闭 */
+
+	    $(".DialogClose").live('click',function() {
+
+	      mycoDialog.close().remove();
+
+	    });
+
+	    // 确定
+
+	    $(".DialogSubmit").click(function() {
+
+	    	if (url) {window.location.href=url};
+
+	    });
+
+	});
+
+	/*
+
+		顶部筛选 36 
+
+	*/
+
+	$('.data-filter').on('click', function(e){
+
+		$(this).find('.filter-down').toggle();
+
+		// 动态设置下拉列表宽度
+
+		var fWidth = $(this).find('.filter-span').outerWidth(true) - 2;
+
+		$(this).find(".filter-down").width(fWidth);
+
+		// 点击其他位置收起下拉
+
+		$(document).one("click",function(){
+
+			$('.filter-down').hide();
+
+		});
+
+		e.stopPropagation();
+
+		//点击下拉时收起其他下拉
+
+		$(".data-filter").not($(this)).find('.filter-down').hide();
+
+	});
+
+	vtip_reason("{#$QISHI.site_dir#}","jobs_reason");
+
+	// 单个刷新
+
+	$('.refresh').on('click', function()
+
+	{
+
+		var jobsid = $(this).attr("jobsid"),
+                
+		ajax_url = "company_ajax.php?act=jobs_refresh_ajax&jobsid="+jobsid,
+
+		msg = '';
+
+		var myDialog = dialog();
+
+		myDialog.title('刷新提示');
+
+		myDialog.content("加载中...");
+
+		myDialog.width('300');
+
+		myDialog.showModal();
+
+		jQuery.ajax({
+
+			url: ajax_url,
+
+			success: function (data) {
+
+				myDialog.content(data);
+
+				/* 关闭 */
+
+				$(".DialogClose").live('click',function() {
+
+				myDialog.close().remove();
+
+				});
+
+				/* 确定操作 */
+
+				$(".DialogSubmit").click(function() 
+
+				{
+
+					window.location.href="company_jobs.php?act=jobs_perform&y_id="+jobsid+"&refresh=1";
+
+				});
+
+			}
+
+		});
+
+	});
+
+	// 批量刷新
+
+	$("#refresh_all").on('click', function(){
+
+		var length=$("#form1 :checkbox[name='y_id[]'][checked]").length;
+
+		$.get("company_ajax.php?act=jobs_all_refresh_ajax",{length:length},
+
+		function(result)
+
+		{
+
+			var myDialog=dialog();
+
+				myDialog.title('刷新提示');
+
+				myDialog.content(result);
+
+				myDialog.width('300');
+
+				myDialog.showModal();
+
+				/* 关闭 */
+
+				$(".DialogClose").live('click',function() {
+
+					myDialog.close().remove();
+
+					return false;
+
+				});
+
+				// 确定
+
+				$(".DialogSubmit").click(function() 
+
+				{
+
+					$("#form1").submit();
+
+				});
+
+		});
+
+	});
+
+	/*批量 关闭职位 */
+
+	$("#display2").click(function(){
+
+		var length=$("#form1 .check-control :checkbox[checked]").length;
+
+		if(length>0)
+
+		{
+
+			var cof = confirm("您是否要关闭您选中的职位，您共选中"+length+"个职位,确定关闭吗？");
+
+			if(cof) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+
+		} else {
+			alert("您没有选中职位！");
+
+			return false;
+
+		}
+	});
+
+	// 删除弹出
+
+	delete_dialog('.ctrl-del','#form1');
+});
+
+</script>
+
+</head>
+
+<body {#if $QISHI.body_bgimg#}style="background:url({#$QISHI.site_domain#}{#$QISHI.site_dir#}data/{#$QISHI.updir_images#}/{#$QISHI.body_bgimg#}) repeat-x center 38px;"{#/if#}>
+
+{#include file="user/header.htm"#}
+
+
+
+<div class="page_location link_bk">当前位置：<a href="{#$QISHI.site_dir#}">首页</a> > <a href="{#$userindexurl#}">会员中心</a> > 职位管理</div>
+
+<div class="usermain">
+
+  <div class="leftmenu  com link_bk">
+  	 {#include file="member_company/left.htm"#}
+  </div>
+
+  <div class="rightmain">
+
+ 	<div class="bbox1 link_bk my_account">
+
+		<div class="topnav">
+
+			<div class="topnav get_resume">
+
+                            <div class="titleH1"><div class="h1-title">管理职位</div></div>
+
+                            <div class="navs link_bk">
+
+                                <a href="?act={#$act#}&status=100" {#if $smarty.get.status=="100"#}class="se"{#/if#}>
+
+                                发布中职位<span >({#$jobs_total[1]#})</span></a>
+
+                                <a href="?act={#$act#}&status=200" {#if $smarty.get.status=="200"#}class="se"{#/if#}>
+
+                                审核中职位<span >({#$jobs_total[2]#})</span></a>
+
+                                <a href="?act={#$act#}&status=300" {#if $smarty.get.status=="300"#}class="se"{#/if#}>未显示职位<span class="check">({#$jobs_total[3]#})</span></a>
+
+                                <a href="?act={#$act#}" {#if $smarty.get.status==""#}class="se"{#/if#}>
+
+                                全部职位<span >({#$jobs_total[0]#})</span></a>
+
+                                <div class="clear"></div>
+
+                            </div>
+			</div>
+		</div>
+
+<form id="form1" name="form1" method="post" action="?act=jobs_perform">
+		<!-- 新的发布中职位 -->
+    {#if $smarty.get.jobtype==""#}
+        
+    <style>
+    .c-data-top.com-job-ma .top-item1, .c-data-content.com-job-ma .content1{
+            width:350px;
+    }
+    .content1-1,
+    .top-item1-1{
+            width:200px;
+    }
+    .content1-1 a,
+    .top-item1-1 a{
+            color:#0180cf;
+    }
+    </style>
+
+    <div class="company-data-list">
+
+            <div class="c-data-top com-job-ma clearfix">
+
+                    <div class="item f-left check-item"><input type="checkbox" name="chkAll"   id="chk" title="全选/反选" /></div>
+
+                    <div class="item f-left top-item1">职位名称</div>
+                    <div class="item f-left top-item1-1">&nbsp;</div>
+
+                    <div class="item f-left top-item2">
+                        <span class="filter-span">最后刷新时间<i class="filter-icon"></i></span>
+                    </div>
+
+                    <div class="item f-left top-item3">
+                        <span class="filter-span">&nbsp;&nbsp;操&nbsp;&nbsp;作<i class="filter-icon"></i></span>
+                    </div>
+
+            </div>
+
+            <style>
+            select.bdr1{ border:#ccc solid 1px; background:#fff;}
+            </style>
+            {#if $jobs#}
+
+            {#foreach from=$jobs item=li#}
+
+            <div class="c-data-row check-control">
+
+                    <div class="c-data-content com-job-ma clearfix">
+
+                        <div class="c-item f-left check-item"><input name="y_id[]" type="checkbox" id="y_id"  value="{#$li.id#}"/></div>
+
+                <div class="c-item f-left content1">
+                        <div class="job-ma-block">
+<!--							<div><a href="/jobs/jobs-show.php?id={#$li.id#}" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>-->
+<div><a href="#" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>
+                                <p>应聘简历：<a href="company_recruitment.php?act=apply_jobs&jobsid={#$li.id#}&jobname={#$li.jobs_name_#}" class="data-ctrl underline">{#$li.countresume#}</a></p>
+                        </div>
+                </div>
+        <div class="c-item f-left content1-1">
+            &nbsp;
+        </div>
+            <div class="c-item f-left content2"><span class="hasyuyue">{#$li.refurbish_time|date_format:"%Y-%m-%d %H:%M:%S"#}</span></div>
+            <div class="c-item f-left content3">
+                <div class="job-ma-ctrl">
+                    {#if $li.status == 100#}
+                    <a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a url="?act=jobs_perform&display2=1&y_id={#$li.id#}" href="javascript:;" class="data-ctrl underline ctrl-close">关闭</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a><br>
+                    <a  href="javascript:;" jobsid="{#$li.id#}" class="data-ctrl underline refresh">刷新</a>
+                    {#else $li.status == 301 || $li.status == 302#}
+                     <a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a href="?act=jobs_perform&display1=1&y_id={#$li.id#}" class="data-ctrl underline">恢复</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a><br>
+                    {#/if#}
+                </div>
+            </div>
+
+            </div>
+
+            </div>
+
+            {#/foreach#}
+
+            <script type="text/javascript">
+
+                    /*查看预约*/
+
+                    $(".appointmentShow").live('click', function()
+
+                    {
+
+                            var id =$(this).attr('data');
+
+                            var myDialog = dialog();
+
+                        jQuery.ajax({
+
+                            url: 'company_ajax.php?act=auto_refresh&id='+id,
+
+                            success: function (data) {
+
+                                myDialog.content(data);
+
+                                myDialog.title('预约详情');
+
+                                myDialog.width('500');
+
+                                myDialog.showModal();
+
+                            }
+
+                        });
+
+                    });
+
+                    $(".appointmentSee").die().live('click', function(event) {
+
+                            var appointDia =  dialog({
+
+                                    title: '预约刷新',
+
+                                    content: $('.yuyue-dialog'),
+
+                                    width: '420px'
+
+                            });
+
+                            appointDia.showModal();
+
+                            $(".DialogClose").live('click',function() {
+
+                          appointDia.close().remove();
+
+                        });
+
+                            var jobNameIdArray = $(this).attr('data').split(",");
+
+                            $("#appointJobName").html(jobNameIdArray[0]).attr("jobid",jobNameIdArray[1]);
+
+                            $("#aloneIntegralDays").keyup(function() {
+
+                                    var dayCount = parseInt($(this).val()), thepointAll = parseInt($("#consumptionPoint").html()), thepointEvery = parseInt($("#everyDayConsumptionPoint").html());
+
+                                    dayCount ? dayCount = dayCount : dayCount = 0;
+
+                                    $("#aloneIntegral").html(dayCount*thepointEvery);
+
+                                    $("#theConsumptionPoint").html(dayCount*thepointEvery);
+
+                                    if (thepointAll < dayCount*thepointEvery) { // 本次消耗积分大于总积分不能预约
+
+                                            $('input[name=toMakeAppointment]').removeClass('toMakeAppointment');
+
+                                            $("#theNoEnouPoint").show();
+
+                                    } else {
+
+                                            $('input[name=toMakeAppointment]').addClass('toMakeAppointment');
+
+                                            $("#theNoEnouPoint").hide();
+
+                                    }
+
+                            });
+
+                            $(".toMakeAppointment").die().live('click', function(event) {
+
+                                    if (!$("#aloneIntegralDays").val()) {
+
+                                            alert("填写预约天数！");
+
+                                            $("#aloneIntegralDays").focus();
+
+                                            return false;
+
+                                    }
+
+                                    var dataCode = $("#appointJobName").attr('jobid')+","+$("#aloneIntegralDays").val()+","+$("#theConsumptionPoint").html();
+
+                                    $.get('company_recruitment.php?act=refresh_appointment', {data_arr:dataCode}, function(data){
+
+                                            appointDia.content(data);
+
+                                    });
+
+                            });
+
+                            $(".batchAppoint").click(function(e) {
+
+                                    appointDia.content($('.yuyue-all-dialog'));
+
+                                    appointDia.width("540px");
+
+                                    var oldDataPool = new Array(), oldListHtmArray = $(".yue-left-block .yue-item");
+
+                                    $.each(oldListHtmArray, function(index, val) {
+
+                                            var oldHtmId = $(this).attr('reid'), oldHtmCn = $(this).find(".appoint").attr('data');
+
+                                            oldDataPool.push(oldHtmId+','+oldHtmCn);
+
+                                    });
+
+                                    $(".appoint").die().live('click', function() {
+
+                                            var yitObj = $(this).closest('.yue-item'), jobName = $(this).attr('data'), jobId = yitObj.attr('reid'), rightListHtm = '';
+
+                                            oldDataPool.splice(jQuery.inArray(jobId+','+jobName,oldDataPool),1);
+
+                                            yitObj.remove();
+
+                                            rightListHtm += '<div class="hasyue-item clearfix" reid="'+jobId+'"><div class="hasyue-job f-left">'+jobName+'</div><a href="javascript:;" class="notyue-btn f-left cancelAppoint" data="'+jobName+'">取消</a><div class="yue-time f-right"><input class="batchAppDays" type="text" /> 天</div></div>';
+
+                                            $(".yue-right-block").append(rightListHtm);
+
+                                            // 批量预约时计算消耗积分
+
+                                            $(".batchAppDays").die().live('keyup', function(event) {
+
+                                                    var pvdysa= parseInt($("#bacMoreTime").html()), evallPointVal = 0;
+
+                                                    $(".yue-right-block .batchAppDays").each(function(index, el) {
+
+                                                            var evdysa = parseInt($(this).val());
+
+                                                            evdysa ? evdysa = evdysa : evdysa = 0;
+
+                                                            evallPointVal += pvdysa*evdysa;
+
+                                                    });
+
+                                                    $("#bAlPiont").html(evallPointVal);
+
+                                                    if (parseInt($("#bAlPiontLast").html()) < evallPointVal) {
+
+                                                            $("#noEnouPoint").show();
+
+                                                            $('input[name=aKeyAppoint]').removeClass('aKeyAppoint');
+
+                                                    } else {
+
+                                                            $("#noEnouPoint").hide();
+
+                                                            $('input[name=aKeyAppoint]').addClass('aKeyAppoint');
+
+                                                    }
+
+                                            });
+
+                                            // 一键预约
+
+                                            $(".aKeyAppoint").die().live('click', function(event) {
+
+                                                    if (!$(".yue-right-block .hasyue-item").length > 0) {
+
+                                                            alert("请先预约职位！");return false;
+
+                                                    };
+
+                                                    var isalertPoi = 0;
+
+                                                    $(".yue-right-block .batchAppDays").each(function(index, el) {
+
+                                                            isalertPoi += parseInt($(this).val());
+
+                                                    });
+
+                                                    if (!isalertPoi > 0) {
+
+                                                            alert("请填写预约天数！");return false;
+
+                                                    };
+
+                                                    var aPArray = new Array();
+
+                                                    $(".yue-right-block .hasyue-item").each(function(ind, eldd) {
+
+                                                            var ajid = $(this).attr('reid'), ajname = $(this).find(".batchAppDays").val(),
+
+                                                                    ajpoint = parseInt($(this).find('.batchAppDays').val());
+
+                                                            ajpoint ? ajpoint = ajpoint : ajpoint = 0;
+
+                                                            var ajpointAll = ajpoint*parseInt($("#bacMoreTime").html())
+
+                                                            aPArray[ind] = ajid+","+ajname+","+ajpointAll;
+
+                                                    });
+
+                                                    $.get('company_recruitment.php?act=refresh_appointment', {data_arr:aPArray}, function(data) {
+
+                                                            appointDia.content(data);
+
+                                                    });
+
+                                            });
+
+                                            $(".cancelAppoint").die().live('click', function() {
+
+                                                    var oldYitObj = $(this).closest('.hasyue-item'), oldJobName = $(this).attr('data'), oldJobId = oldYitObj.attr('reid'), leftListHtm = '<div class="yue-title clearfix"><span class="f-left">可预约职位</span></div>';
+
+                                                    oldDataPool.push(oldJobId+','+oldJobName);
+
+                                                    oldYitObj.remove();
+
+                                                    $.each(oldDataPool, function(index, val) {
+
+                                                            var leftHtmArray = val.split(",");
+
+                                                            leftListHtm += '<div class="yue-item clearfix" reid="'+leftHtmArray[0]+'"><p class="yue-job f-left">'+leftHtmArray[1]+'</p><a href="javascript:;" class="yue-btn f-right appoint" data="'+leftHtmArray[1]+'">预约</a></div>';
+
+                                                    })
+
+                                                    $(".yue-left-block").html(leftListHtm);
+
+                                            });
+
+                                    });
+
+                            })
+
+                    });
+
+            </script>
+            <div class="c-data-row last">
+
+                    <div class="c-data-content apply_jobs clearfix">
+
+                            <div class="c-item f-left check-item"><input type="checkbox" name="chkAll"   id="chk2" title="全选/反选" /></div>
+
+                            <div class="data-last-btn f-left">
+
+                                    {#if $QISHI.operation_mode=="3"#}
+
+                                    <input type="hidden" name="refresh" id="refresh" value="1" />
+
+                                    <input type="button" name="refresh" class="btn-65-30blue"  value="刷新职位"  id="refresh_all"/>
+
+                                    {#else#}
+
+                                    <input type="hidden" name="refresh" id="refresh" value="1" />
+
+                                    <input type="button" name="refresh" class="btn-65-30blue"  value="刷新职位"  id="refresh_all"/>
+
+                                    {#/if#}
+
+                                    <input type="submit" value="关闭" name="display2" class="btn-65-30blue" id="display2"/>
+
+                                    <input type="button" name="delete" class="btn-65-30blue ctrl-del" value="删除" id="delete" act="?act=jobs_perform&delete=1"/>
+
+                            </div>
+
+                    </div>
+
+            </div>
+
+            {#else#}
+
+            <div class="c-data-row emptytip">没有找到对应的职位信息</div>
+
+            {#/if#}
+
+    </div>
+
+		{#/if#}
+
+		<!-- 审核中的 职位 -->
+
+		{#if $smarty.get.jobtype=="2"#}
+
+		<div class="company-data-list">
+
+			<div class="c-data-top com-job-ma clearfix">
+
+				<div class="item f-left check-item"><input type="checkbox" name="chkAll"   id="chk"/></div>
+
+				<div class="item f-left top-item1">职位名称</div>
+
+				<div class="item f-left top-item2">工作地区</div>
+
+				<div class="item f-left top-item3" style="text-align: center;">操作</div>
+
+			</div>
+
+			{#if $jobs#}
+
+			{#foreach from=$jobs item=li#}
+
+			<div class="c-data-row">
+
+				<div class="c-data-content com-job-ma3 clearfix">
+
+					<div class="c-item f-left check-item"><input type="checkbox" name="y_id[]" id="y_id"  value="{#$li.id#}" class="checkbox" /></div>
+
+					<div class="c-item f-left content1" style="width:535px;">
+
+						<div class="job-ma-block">
+
+							<div><a href="{#$li.jobs_url#}" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.jobs_name#}</a></div>
+
+							<p>应聘简历：{#$li.countresume#} | 更新时间：{#$li.refreshtime|date_format:"%Y-%m-%d %H:%M"#}</p>
+
+						</div>
+
+					</div>
+
+					<div class="c-item f-left content2" style="width:218px;">{#$li.district_cn#}</div>
+
+					<div class="c-item f-left content3">
+
+						<a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			{#/foreach#}
+
+			<div class="c-data-row last">
+
+				<div class="c-data-content apply_jobs clearfix">
+
+					<div class="c-item f-left check-item"><input type="checkbox" name="chkAll"   id="chk2"/></div>
+
+					<div class="data-last-btn f-left">
+
+						<input type="button" name="delete" class="btn-65-30blue ctrl-del" value="删除" id="delete" act="?act=jobs_perform&delete=1"/>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			{#else#}
+
+			<div class="c-data-row emptytip">没有找到对应的职位信息</div>
+
+			{#/if#}
+
+		</div>
+
+		{#/if#}
+
+		<!-- 未显示 职位 -->
+
+		{#if $smarty.get.jobtype=="3"#}
+
+		<div class="company-data-list">
+
+			<div class="c-data-top com-job-ma clearfix">
+
+				<div class="item f-left check-item"><input type="checkbox" name="chkAll"   id="chk"/></div>
+
+				<div class="item f-left top-item1">职位名称</div>
+
+				<div class="item f-left top-item2">
+
+					<div class="data-filter span4">
+
+						<span class="filter-span">职位状态<i class="filter-icon"></i></span>
+
+						<ul class="filter-down">
+
+							<li><a href="{#"state:0"|qishi_parse_url#}">全部</a></li>
+
+							<li><a href="{#"state:1"|qishi_parse_url#}">未通过</a></li>
+
+							<li><a href="{#"state:2"|qishi_parse_url#}">已关闭</a></li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+				<div class="item f-left top-item3" style="text-align: center;">操作</div>
+
+			</div>
+
+			{#if $jobs#}
+
+			{#foreach from=$jobs item=li#}
+
+			<div class="c-data-row">
+
+				<div class="c-data-content com-job-ma3 clearfix">
+
+					<div class="c-item f-left check-item"><input type="checkbox" name="y_id[]" id="y_id"  value="{#$li.id#}" class="checkbox" /></div>
+
+					<div class="c-item f-left content1" style="width:535px;">
+
+						<div class="job-ma-block">
+
+							<div><a href="{#$li.jobs_url#}" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.jobs_name#}</a></div>
+
+							<p>应聘简历：{#$li.countresume#} | 更新时间：{#$li.refreshtime|date_format:"%Y-%m-%d %H:%M"#}</p>
+
+						</div>
+
+					</div>
+
+					<div class="c-item f-left content2" style="width:218px;">{#$li.status_cn#}</div>
+
+					<div class="c-item f-left content3">
+
+						{#if $li.status==2#}
+
+						<a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a href="?act=jobs_perform&display1=1&y_id={#$li.id#}" class="data-ctrl underline">恢复</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a>
+
+						{#else#}
+
+						<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a>
+
+						{#/if#}
+
+					</div>
+
+				</div>
+
+			</div>
+
+			{#/foreach#}
+
+			<div class="c-data-row last">
+
+				<div class="c-data-content apply_jobs clearfix">
+
+					<div class="c-item f-left check-item"><input type="checkbox" name="chkAll"   id="chk2"/></div>
+
+					<div class="data-last-btn f-left">
+
+						<input type="button" name="delete" class="btn-65-30blue ctrl-del" value="删除" id="delete" act="?act=jobs_perform&delete=1"/>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			{#else#}
+
+			<div class="c-data-row emptytip">没有找到对应的职位信息</div>
+
+			{#/if#}
+
+		</div>
+
+		{#/if#}
+
+		<!-- 全部职位 职位 -->
+
+		{#if $smarty.get.jobtype=="1"#}
+
+		<div class="company-data-list">
+
+			<div class="c-data-top com-job-ma clearfix">
+
+				<div class="item f-left check-item"><input type="checkbox" id="chk" name="chkAll"></div>
+
+				<div class="item f-left top-item1">职位名称</div>
+
+				<div class="item f-left top-item2">
+
+					<div class="data-filter span4">
+
+						<span class="filter-span">职位状态<i class="filter-icon"></i></span>
+
+						<ul class="filter-down">
+
+							<li><a href="{#"state:0"|qishi_parse_url#}">全部</a></li>
+
+							<li><a href="{#"state:1"|qishi_parse_url#}">发布中</a></li>
+
+							<li><a href="{#"state:2"|qishi_parse_url#}">审核中</a></li>
+
+							<li><a href="{#"state:3"|qishi_parse_url#}">未通过</a></li>
+
+							<li><a href="{#"state:4"|qishi_parse_url#}">已关闭</a></li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+				<div class="item f-left top-item3" style="text-align: center;">操作</div>
+
+			</div>
+
+			{#if $jobs#}
+
+			{#foreach from=$jobs item=li#}
+
+			<div class="c-data-row">
+
+				<div class="c-data-content com-job-ma3 clearfix">
+
+					<div class="c-item f-left check-item"><input type="checkbox" name="y_id[]" id="y_id"  value="{#$li.id#}" class="checkbox" /></div>
+
+					<div class="c-item f-left content1" style="width:535px;">
+
+						<div class="job-ma-block">
+
+							<div><a href="{#$li.jobs_url#}" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.jobs_name#}</a></div>
+
+							<p>应聘简历：{#$li.countresume#} | 更新时间：{#$li.refreshtime|date_format:"%Y-%m-%d %H:%M"#}{#if $li.status==1#}  <a  href="javascript:;" jobsid="{#$li.id#}" class="data-ctrl underline refresh">[刷新]</a>{#/if#}</p>
+
+						</div>
+
+					</div>
+
+					<div class="c-item f-left content2" style="width:218px;"><span style="{#if $li.status==2 || $li.status==4#}color:red;{#elseif $li.status==3#}color:#FFB443;{#else#}{#/if#}">{#$li.status_cn#}</span></div>
+
+					<div class="c-item f-left content3">
+
+						{#if $li.status==100#}
+
+						<a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a href="?act=jobs_perform&display2=1&y_id={#$li.id#}" class="data-ctrl underline">关闭</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a>
+
+						{#elseif $li.status==301 || $li.status==302 #}
+
+						<a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a href="?act=jobs_perform&display1=1&y_id={#$li.id#}" class="data-ctrl underline">恢复</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a>
+
+						{#elseif $li.status==3#}
+
+						<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a>
+
+						{#else#}
+
+						<a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a>
+
+						{#/if#}
+
+					</div>
+
+				</div>
+
+			</div>
+
+			{#/foreach#}
+
+			<div class="c-data-row last">
+
+				<div class="c-data-content apply_jobs clearfix">
+
+					<div class="c-item f-left check-item"><input type="checkbox" name="chkAll"   id="chk2" title="全选/反选" /></div>
+
+					<div class="data-last-btn f-left">
+
+						<input type="button" name="delete" class="btn-65-30blue ctrl-del" value="删除" id="delete" act="?act=jobs_perform&delete=1"/>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			{#else#}
+
+			<div class="c-data-row emptytip">没有找到对应的职位信息</div>
+
+			{#/if#}
+
+		</div>
+
+		{#/if#}
+
+
+
+		</form>
+
+		{#if $page#}
+
+		<table border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+
+          </tr>
+
+      	</table>
+
+		{#/if#}
+
+  	</div>
+
+  </div>
+
+
+
+  <div class="clear"></div>
+
+</div>
+
+{#include file="user/footer.htm"#}
+
+<!-- 发布职位成功弹出 -->
+
+<div class="addjob-success-dialog" style="display:none">
+
+	<div class="success-tip">职 位 发 布 成 功<a href="?act=addjobs" class="underline">继续发布职位</a></div>
+</div>
+
+</body>
+
+</html>

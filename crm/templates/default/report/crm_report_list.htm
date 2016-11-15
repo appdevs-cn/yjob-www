@@ -1,0 +1,181 @@
+{#include file="sys/crm_header.htm"#}
+<script type="text/javascript" src="js/jquery.userinfotip-min.js"></script>
+ <script src="js/jquery.date_input.js" type='text/javascript' language="javascript"></script>
+<link href="css/date_input.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+$(document).ready(function()
+{
+	//日期
+	$(function() { 
+	$(".date_input").date_input(); 
+	});
+	//批量无效	
+	$("#Butfail").click(function(){
+		if (confirm('你确定要将所选客户设置为无效客户吗？'))
+		{
+			$("form[name=form1]").attr("action","?act=set_fail");
+			$("form[name=form1]").submit()
+		}
+	});
+	//批量删除	
+	$("#Butdel").click(function(){
+		if (confirm('删除后不可以恢复，您确定要删除吗？'))
+		{
+			$("form[name=form1]").attr("action","?act=del_report");
+			$("form[name=form1]").submit()
+		}
+	});
+	//导出
+	$("#Butexport").click(function(){
+		if (confirm('您确定要导出为excel吗？'))
+		{
+			$("form[name=form1]").attr("action","?act=report_export");
+			$("form[name=form1]").submit()
+		}
+	});
+	//perpage
+	$("#Butpage").click(function(){
+		$("form[name=date_from]").submit()
+	});
+});
+</script>
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<form method="post" name="date_from" action="?act=report_list">
+<div class="seltpye_y">
+	
+	<table>
+		<tr>
+			<td>开始时间</td>
+			<td><input name="starttime" type="text"  class="input_text_200 date_input"  value="{#$start_time#}"/></td>
+			<td>结束时间</td>
+			<td><input name="endtime" type="text"  class="input_text_200 date_input"  value="{#$end_time#}"/></td>
+			<td><input name="" type="submit"  class="admin_submit"  value="搜索"/></td>
+		</tr>
+	</table>
+</div>
+<div class="seltpye_y">
+
+	<div class="tit link_lan">
+	<strong>报表列表</strong>
+	<a href="?">[恢复默认]</a>
+	<div class="choose_perpage">每页显示<input type="text" name="perpage" value="{#$perpage#}" class="input_text_40">
+	<a href="javascript:void(0);" style="text-decoration: none;" id="Butpage"><font size="2" color="#003399">[确定]</font></a></div>
+	</div>	
+	<div class="clear"></div>
+</div>
+</form>
+  <form id="form1" name="form1" method="post" action="?act=perform">
+  {#$inputtoken#}
+  <table width="100%" border="0" cellpadding="0" cellspacing="0"  id="list" class="link_lan">
+    <tr>
+      <td  class="admin_list_tit admin_list_first">
+      <label id="chkAll"><input type="checkbox" name=" " title="全选/反选" id="chk"/>客户编号</label>	  </td>
+	 
+	  
+      
+	  <td width="10%" align="center"    class="admin_list_tit">客户名称</td> 
+	   <td width="5%" align="center"    class="admin_list_tit">联系人</td> 
+	  <td  width="10%" align="center" class="admin_list_tit">电话</td>  
+      <td width="8%" align="center" class="admin_list_tit">邮箱</td>
+	     
+      <td width="8%" align="center" class="admin_list_tit">客户录入时间</td>
+	   <td width="9%" align="center" class="admin_list_tit">最后跟进</td>
+	   <td width="8%" align="center" class="admin_list_tit">下次跟进</td>
+	   <td width="5%" align="center" class="admin_list_tit">客户状态</td>
+	   <td width="5%" align="center" class="admin_list_tit">客户需求</td>
+	   <td width="5%" align="center" class="admin_list_tit">备注</td>
+	   <td width="7%" align="center" class="admin_list_tit">客户经理</td>
+	   <td width="10%" align="center" class="admin_list_tit">生成报表时间</td>
+    </tr>
+	{#foreach from=$clist item=list#}
+      <tr >
+      <td class="admin_list admin_list_first" >
+        <input name="y_id[]" type="checkbox" id="y_id" value="{#$list.id#}" />
+		{#$list.client_number#}
+		</td>
+		<td align="center"  class="admin_list"><a href="crm_myclient.php?act=myclient_edit&id={#$list.client_number#}">{#$list.client_name#}</a></td>
+		<td align="center"  class="admin_list">{#$list.contact#}</td>
+		<td align="center"  class="admin_list">{#$list.tel#}</td>
+		<td align="center"  class="admin_list {#if $list.email<>''#}vtip{#/if#}" title='{#$list.email#}'><font color="red">&nbsp;&nbsp;[详情]</font></td>
+		<td align="center"  class="admin_list">{#$list.client_addtime|date_format:"%Y-%m-%d"#}</td>
+        <td align="center" class="admin_list {#if $list.last_followtime<>'0'#}vtip{#/if#}" title='{#$list.last_follow_text#}'>
+		{#if $list.last_followtime<>'0'#}
+		{#$list.last_followtime|date_format:"%Y-%m-%d"#}<font color="red">&nbsp;&nbsp;[详情]</font>
+		{#else#}
+		未跟进
+		{#/if#}		</td>
+		
+        <td align="center" class="admin_list">
+		{#if $list.next_followtime<>'0'#}
+		{#$list.next_followtime|date_format:"%Y-%m-%d"#}
+		{#else#}
+		未设置
+		{#/if#}
+		
+		</td>
+		<td align="center" class="admin_list">
+		{#$list.client_status#}
+		</td>
+		<td align="center" class="admin_list {#if $list.client_demand!=''#}vtip{#/if#}" title='{#$list.client_demand#}'>
+		
+		{#if $list.client_demand!=""#}
+		<font color="red">&nbsp;&nbsp;[详情]</font>
+		{#else#}
+		未填写
+		{#/if#}
+		</td>
+		<td align="center" class="admin_list {#if $list.client_remark!=''#}vtip{#/if#}" title='{#$list.client_remark#}'>
+		
+		{#if $list.client_remark!=""#}
+		<font color="red">&nbsp;&nbsp;[详情]</font>
+		{#else#}
+		未填写
+		{#/if#}
+		</td>
+		
+		<td align="center" class="admin_list">
+		
+		{#if $list.crm_id#}
+		{#$list.admin_name#}
+		{#else#}
+		未知
+		{#/if#}
+		</td>
+		<td align="center" class="admin_list">
+		{#if $list.addtime<>'0'#}
+		<font color="blue">{#$list.addtime|date_format:"%Y-%m-%d %H:%M:%S"#}</font>
+		{#else#}
+		未设置
+		{#/if#}
+		
+		</td>
+      </tr>
+      {#/foreach#}
+    </table>
+<span id="Opdeliver"></span>
+  </form>
+	{#if !$clist#}
+	<div class="admin_list_no_info">没有任何信息！</div>
+	{#/if#}
+  
+	<table width="100%" border="0" cellspacing="10" cellpadding="0" class="admin_list_btm">
+      <tr>
+        <td>
+		<input type="button" name="" value="删除" class="admin_submit" id="Butdel"/>
+		<input type="button" name="" value="导出" class="admin_submit" id="Butexport"/>
+		</td>
+      </tr>
+  </table>
+<div class="page link_bk">{#$page#}</div>
+</div>
+
+
+
+<!-- -->
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

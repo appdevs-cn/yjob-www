@@ -1,0 +1,74 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+	{#include file="contacts/crm_contacts_nav.htm"#}
+  <div class="clear"></div>
+</div>
+ 
+ <div class="toptit">修改联系人</div>
+ 
+    <form id="form1" name="form1" method="post"   action="?act=editsave" >
+	{#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+    <tr>
+      <td height="30" align="right"  >分组：</td>
+      <td >
+        <select name="group">
+          <option value="0">选择分组</option>
+          {#foreach from=$group item=list#}
+          <option value="{#$list.id#}" {#if $list.id==$contacts.group_id#}selected{#/if#}>{#$list.group_name#}</option>
+          {#/foreach#}
+        </select> 
+       </td>
+    </tr>
+       <tr>
+      <td width="120" height="30" align="right"  >姓名：</td>
+      <td  ><input name="fullname" type="text" class="input_text_200"   maxlength="100" value="{#$contacts.fullname#}"/>
+       </td>
+    </tr>
+	    
+
+	    <tr>
+      <td height="30" align="right"  >电话：</td>
+      <td   ><input name="tel" type="text" class="input_text_200"   value="{#$contacts.tel#}"/>
+       </td>
+    </tr>
+	
+	  <tr>
+      <td height="30" align="right"  >email：</td>
+      <td   ><input name="email" type="text" class="input_text_200"   value="{#$contacts.email#}"/>
+       </td>
+    </tr>
+	
+	 <tr>
+      <td height="30" align="right"  >QQ：</td>
+      <td   ><input name="qq" type="text" class="input_text_200"   value="{#$contacts.qq#}"/>
+       </td>
+    </tr>
+	
+	<tr>
+      <td height="30" align="right"  >网址：</td>
+      <td   ><input name="web" type="text" class="input_text_200"   value="{#$contacts.web#}"/>
+       </td>
+    </tr>
+	
+	<tr>
+      <td height="30" align="right"  >地址：</td>
+      <td   ><input name="address" type="text" class="input_text_200"   value="{#$contacts.address#}"/>
+       </td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >&nbsp;</td>
+      <td height="50"  >
+	  <input name="id" type="hidden" value="{#$contacts.id#}" />
+            <input name="submit3" type="submit" class="admin_submit"    value="保存"/>
+        <input name="submit22" type="button" class="admin_submit"    value="返回" onclick="Javascript:window.history.go(-1)"/>
+       </td>
+    </tr>
+  </table>
+    </form>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

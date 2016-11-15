@@ -1,0 +1,96 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit">欢迎登陆客户关系管理系统！</div>
+  <div class="clear"></div>
+</div>
+<span id="version"></span>
+{#if $admindir_warning#}
+<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#FF9900"  style=" margin-bottom:6px;">
+  <tr>
+    <td bgcolor="#FFFFCC">&nbsp;{#$admindir_warning#}</td>
+  </tr>
+</table>
+{#/if#}
+{#if $install_warning#}
+<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#FF9900"  style=" margin-bottom:6px;">
+  <tr>
+    <td bgcolor="#FFFFCC">&nbsp;{#$install_warning#}</td>
+  </tr>
+</table>
+{#/if#}
+
+<div class="toptit">客户统计</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="link_lan" style="padding-left:15px; line-height:220%; margin-bottom:10px; color:#666666">
+      <tr>
+        <td width="300"  >有效客户：&nbsp;<a href="crm_myclient.php" id="t1">...</a></td>
+		  
+        <td  >无效客户：&nbsp;<a href="crm_myclient.php?act=fail_list" id="t2">...</a></td>
+      </tr>
+      <tr>
+        <td  >3天内需要跟进客户：&nbsp;<a href="crm_myclient.php?nexttime=3" id="t3">...</a></td>
+		  
+        <td  >7天内需要跟进客户：&nbsp;<a href="crm_myclient.php?nexttime=7" id="t4">...</a></td>
+      </tr>
+      <tr>
+        <td  >7天内新增客户：&nbsp;<a href="crm_myclient.php" id="t5">...</a>		  </td>
+        <td  >30天内新增客户：&nbsp;<a href="crm_myclient.php" id="t6">...</a></td>
+      </tr>
+  </table>
+<div class="toptit">骑士cms人才系统</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style=" line-height:220%; color:#666666; padding-left:15px;"><table border="0" cellpadding="0" cellspacing="0" class="link_lan">
+      <tr>
+        <td width="300"  >系统当前版本：v{#$system_info.version#}.{#$system_info.release#}</td>
+        <td  >认证授权：<span id="certification">载入中...</span>
+        </td>
+      </tr>
+      <tr>
+        <td  >版权所有：骑士cms<br /></td>
+        <td  > 官方论坛：<a href="http://www.74cms.com" target="_blank">www.74cms.com</a></td>
+      </tr>
+      <tr>
+        <td  >程序开发：74cms程序开发组</td>
+        <td  >官方论坛：<a href="http://www.74cms.com/bbs" target="_blank">www.74cms.com/bbs/</a></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<div class="toptit">系统信息</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="  color:#666666; padding-left:15px;line-height:220%;">
+	<table border="0" cellpadding="0" cellspacing="0" class="link_lan">
+      <tr>
+        <td width="300"  >操作系统：{#$system_info.os#}</td>
+        <td  >PHP 版本：{#$system_info.php_ver#}</td>
+      </tr>
+      <tr>
+        <td  >服务器软件：{#$system_info.web_server#}<br /></td>
+        <td  >MySQL 版本：{#$system_info.mysql_ver#}</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</div>
+<span id="announcement" class="link_lan" style="display:none"></span>
+<script type="text/javascript">
+		var tsTimeStamp= new Date().getTime();
+		$.get("crm_ajax.php", {"act":"total"},
+			function (data,textStatus)
+			 {
+				 var str=data.split(",");
+				 var i=1;
+				 for (x in str)
+					{
+					$("#t"+i).html(str[x]);
+					i++;
+					}
+			 }
+		);
+</script>
+<script src="http://www.74cms.com/plus/external.php?version={#$system_info.version#}&release={#$system_info.release#}&certification={#$site_domain#}&announcement=1" language="javascript"></script>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

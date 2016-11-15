@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="gb2312">
+		<title>个人会员中心-报名职位</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="author" content="骑士CMS" />
+		<meta name="copyright" content="74cms.com" />
+		<link rel="stylesheet" href="../css/user-common.css" />
+		<link rel="stylesheet" href="../css/personal.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.3.js" ></script>
+		<script type="text/javascript" src="../js/jquery.common.js" ></script>
+		<script type="text/javascript" src="../js/wapcheckall.js" ></script>
+		<script type='text/javascript' src="../js/jquery.pinterest.js" ></script>
+		<!-- <script type="text/javascript">
+			$(document).ready(function() {
+				wapcheckall("?act=");
+				pinterest("{#$QISHI.wap_domain#}/plus/ajax.php?act=ajax_apply_list&offset=");
+			});
+		</script> -->
+	</head>
+	<body class="global-bg">
+		<div class="global-container">
+			<header class="global-header flex-box">
+				<div class="header-left flex1"><div class="prev" id="pageback"></div></div>
+				<div class="header-center flex2"><span class="title-only">报名职位</span></div>
+				{#include file="m/personal/navi.html"#}
+			</header>
+			
+			{#if $jobs#}
+				<div id="container">
+					<section class="title flex-box">
+					<form id="form1" name="form1" method="post" action="?act=baomingzhiwei">
+						<div class="clear" style="margin-top:10px;width:100%;">
+							<div style="height:30px;width:100%;border:none;margin-right:10px;">
+								<input type="text" style="height:24px;width:120px;margin-right:6px;float:left;" name="zhi" />
+								<select name="tiaojian" style="width:60px;height:28px;float:left;" id="">
+									<option value="1" selected="selected">公司名称</option>
+									
+									<option value="3">职位名称</option>
+								</select>
+								<input type="submit" style="height:28px;width:80px;float:right;" value="搜索" />
+							</div>
+						</div>
+					</form>
+					</section>
+					{#foreach from=$jobs  item=list#}
+						<article class="classifylist box thisurl" url="">
+							<section class="title flex-box">
+								<div class="name" style="width:100px;margin-right:10px;font-size:14px;"><a href="{#$QISHI.site_dir#}m/jobs-show.php?id={#$list.id#}">{#$list.jobs_name#}</a></div>
+								<!-- <div class="status flex2">
+									<form action="?act=ksbm_tz" method="post">
+										{#if $list.tongzhiqy==2#}
+											<input  name="tzzt" style="margin-right:10px;width:80px;color:green;line-height:16px;text-align:center;height:20px;font-size:12px;" type="button" value="已通知">
+										{#else#}
+											<input type="submit"  value="未通知" style="margin-left:0;width:80px;color:red;line-height:16px;text-align:center;height:20px;font-size:12px;"><br />
+										{#/if#}
+										<input type="hidden" name="id" value="{#$list.id#}"/>
+										<input type="hidden" name="apid" value="{#$list.apid#}"/>
+										<input type="hidden" name="tongzhiqy" value="{#$list.tongzhiqy#}"/>
+									</form>
+								</div> -->
+								<div class="name1" style="margin-left:20px;"><a href="{#$QISHI.site_dir#}m/company-show.php?id={#$list.company_id#}">{#$list.companyname#}</a></div>
+								<div class="status flex2">
+									<form action="?act=ksbm_bm" method="post">
+									
+									{#if $list.bmzt==1#}
+										 {#if $list.work_start-$time>$times#}
+										<input  type="submit" name="bmzt" style="margin-left:0;width:80px;color:green;line-height:16px;text-align:center;height:20px;font-size:12px;" value="取消报名">
+										{#else#}
+									   
+										<a href="javascript:;"style="margin-left:0;width:80px;color:green;line-height:10px;text-align:center;" >取消报名(已过时)</a>
+										{#/if#}
+									{#/if#}
+									{#if !$list.bmzt#}
+									<input type="submit" name="bmzt" value="快速报名" style="width:80px;color:red;line-height:16px;text-align:center;height:20px;font-size:12px;">
+									{#/if#}
+									{#if $list.bmzt==2#}
+									<input type="button" name="" value="已取消" style="width:80px;color:red;line-height:16px;text-align:center;height:20px;font-size:12px;">
+									{#/if#}
+									<input type="hidden" name="id" value="{#$list.id#}"/>
+									
+									
+									<input type="hidden" name="idd" value="{#$resume.id#}"/>
+									</form>
+								</div>
+							</section>
+							
+						</article>
+					{#/foreach#}
+				</div>
+			{#else#}
+				<article class="nodata">
+				
+					<div class="txt flex-box">您输入的信息有误！</div>
+				
+				</article>
+				
+			{#/if#}
+		</div>
+	</body>
+</html>

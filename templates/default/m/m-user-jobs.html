@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="h_nickname">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+<title>全部工作</title>
+<link rel="stylesheet" href="http://static.yjob.net/layout/blue/css/common1.css">
+<link rel="stylesheet" href="http://static.yjob.net/layout/blue/css/style1.css">
+<link rel="stylesheet" href="http://static.yjob.net/layout/user/m/css/three.css">
+</head>
+<body>
+<div class="layout">
+	
+	<div class="mycenter yapiskan ">
+		<div class="return" id="return">
+			<img src="http://static.yjob.net/layout/user/m/imgs/img_wz1.png"/>
+		</div>	
+	    <h2>全部工作</h2>		
+	</div>
+	
+	<div class="all_work pb100">
+		<div class="head">
+			<ul>
+				<li class="selected">上岗</li>
+				<li>审核<i></i></li>
+				<li>完成<i></i></li>
+				<li>其他<i></i></li>
+			</ul>
+			<div class="f-line">
+			
+		    </div>
+		</div>
+		
+		<div class="body">
+                    <ul>
+                        {#foreach from=$enrollList[200] item=ainfo#}
+                            <li>
+                                <em ></em>
+                                <div class="hd">
+                                    <div class="ico">
+                                            {#$ainfo.category_name#}
+                                    </div>
+                                    <div class="txt">
+                                        <a href="{#$cinfo.url#}">
+                                            <h2>{#$ainfo.job_name#}</h2>
+                                            <h4>报名日期：{#$ainfo.work_date|date_format:"%m.%d"#}</h4>	
+                                        </a>	
+                                    </div>
+                                </div>
+                                <div class="btn">
+                                    <dl>						
+                                        <dd><a href="{#$ainfo.url#}"><i></i>查看详情</a></dd>
+                                        <dd><span data-eid="{#$ainfo.eid#}"><i></i>取消报名</span></dd>	
+                                    </dl>
+                                </div>
+                                <div class="sub">
+                                    <dl>
+                                        {#if $ainfo.ptype == 200#}
+                                            <dd><a href="/m/personal/user.php?act=work_manage&id={#$ainfo.eid #}"><img src="http://static.yjob.net/layout/user/m/imgs/wz94.png"/></a></dd>
+                                        {#else#}
+                                            <dd><a href="/m/personal/user.php?act=work_card&id={#$ainfo.eid #}"><img src="http://static.yjob.net/layout/user/m/imgs/wz95.png"/></a></dd>
+                                        {#/if#}
+                                    </dl>
+                                </div>
+                            </li>
+                        {#/foreach#}
+                    </ul>
+		</div>
+		<div class="body" style="display: none;">
+			<ul>
+                            {#foreach from=$enrollList[100] item=binfo#}
+                                <li>
+                                    <em></em>
+                                    <div class="hd">
+                                            <div class="ico ico2">
+                                                    {#$binfo.category_name#}
+                                            </div>
+                                            <div class="txt">
+                                            <a href="{#$cinfo.url#}">
+                                            <h2>{#$binfo.job_name#}</h2>
+                                            <h4>报名日期：{#$binfo.work_date|date_format:"%m.%d"#}</h4>	
+                                            </a>						
+                                            </div>
+                                    </div>
+                                    <div class="btn">
+                                        <dl>						
+                                            <dd><a href="{#$binfo.url#}"><i></i>查看详情</a></dd>
+                                            <dd><span data-eid="{#$binfo.eid#}" ><i></i>取消报名</span></dd>	
+                                        </dl>
+                                    </div>
+                                    <div class="sub">
+                                            <dl>							
+                                                    <dd><a href="#"><img src="http://static.yjob.net/layout/user/m/imgs/wz95_1.png"/></a></dd>
+                                            </dl>
+                                    </div>
+				</li>
+                            {#/foreach#}
+				
+			</ul>
+		</div>
+		<div class="body" style="display: none;">
+			<ul>
+                        {#foreach from=$enrollList[300] item=cinfo#}
+                            <li>
+                                <em></em>
+                                <div class="hd">
+                                    <div class="ico ico3">
+                                        {#$cinfo.category_name#}
+                                    </div>
+                                    <div class="txt">
+                                        <a href="{#$cinfo.url#}">
+                                            <h2>{#$cinfo.job_name#}</h2>
+                                            <h4>报名日期：{#$cinfo.work_date|date_format:"%m.%d"#}</h4>	
+                                        </a>				
+                                    </div>
+                                </div>
+                                <div class="btn">
+                                    <dl>						
+                                        <dd><a href="{#$cinfo.url#}"><i></i>查看详情</a></dd>
+                                        <dd class='pj'><span><i></i>查看评价</span></dd>	
+
+                                    </dl>
+                                </div>
+                            </li>
+                         {#/foreach#}
+			</ul>
+		</div>
+		<div class="body" style="display: none;">
+			<ul>
+                            {#foreach from=$enrollList[0] item=dinfo#}
+                                <li>
+                                    <div class="hd">
+                                        <div class="ico ico4">
+                                                {#$dinfo.category_name#}
+                                        </div>
+                                        <div class="txt">
+                                                <a href="{#$cinfo.url#}">
+                                                <h2>{#$dinfo.job_name#}</h2>
+                                            <h4>报名日期：{#$dinfo.work_date|date_format:"%m.%d"#}</h4>
+                                                </a>						
+                                        </div>
+                                    </div>
+                                    <div class="qx">
+                                            {#if $dinfo.status == 400#}已弃用{#elseif $dinfo.status == 500#}已取消{#elseif $dinfo.status == 600 #}已备用{#/if#}
+                                    </div>					
+                                </li>
+                            {#/foreach#}
+			</ul>
+		</div>
+		
+	</div>
+		
+	<div class="navs">
+		<ul>
+                    <li>
+                        <a href="{#$QISHI.wap_domain#}">
+                        <div class="ico n1">
+                        </div>
+                        <h4>首页</h4>
+                        </a>
+                    </li>
+                    <li class="selected">
+                            <a href="{#$QISHI.wap_domain#}/user-jobs.php">
+                            <div class="ico n2">
+                            </div>
+                            <h4>工作</h4>
+                            </a>
+                    </li>
+                    <li>
+                            <a href="{#$QISHI.wap_domain#}/msssage">
+                            <div class="ico n3">
+                            </div>
+                            <h4>消息</h4>
+                            </a>
+                    </li>
+                    <li>
+                            <a href="{#$QISHI.wap_domain#}/login.php">
+                            <div class="ico n4">
+                            </div>
+                            <h4>我的</h4>
+                            </a>
+                    </li>
+		</ul>
+		
+	</div>	
+	
+</div><!--loyout结束-->
+<script type="text/javascript" src="http://static.yjob.net/layout/user/m/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="http://static.yjob.net/layout/user/m/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="http://static.yjob.net/layout/user/m/js/script.js"></script>
+<script>
+	$(function(){
+	/*导航滑动*/
+	function loadNavSlide(){
+		var navSelected = $('.all_work .head li.selected');
+		$('.all_work .head .f-line').css({left: navSelected[0].offsetLeft + 'px','width':navSelected.width()});
+		
+ 		$('.all_work .head li').hover(function(){
+			$('.all_work .head li').removeClass('selected');
+			$(this).addClass('selected');
+			$('.all_work .head .f-line').stop().animate({left: $(this)[0].offsetLeft + 'px','width':$(this).width()},500,'easeOutBack');
+		});
+	}	
+	/*load*/
+	loadNavSlide();/*导航滑动*/	
+	
+	
+
+})
+</script>
+</body>
+</html>
+

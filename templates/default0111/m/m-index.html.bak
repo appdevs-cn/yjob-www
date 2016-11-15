@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+{#qishi_pageinfo set="列表名:page,调用:QS_index"#}
+<title>{#$page.title#}</title>
+<meta name="description" content="{#$page.description#}" id="description">
+<meta name="keywords" content="{#$page.keywords#}">
+<link rel="stylesheet" href="/layout/blue/css/glide.css">
+<link rel="stylesheet" href="/layout/blue/css/common.css">
+<link rel="stylesheet" href="/layout/blue/css/style.css">
+	<script type="text/javascript" src="./js/jquery-1.11.3.js" ></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#recommend").hide();
+			$("#emergency").show();
+			$("#emer").addClass('curr');
+			$("#emer").on('click', function(){
+				$(this).addClass('curr');
+				$("#recom").removeClass('curr');
+				$("#recommend").hide();
+				$("#emergency").show();
+			});
+			$("#recom").on('click', function(){
+				$(this).addClass('curr');
+				$("#emer").removeClass('curr');
+				$("#recommend").show();
+				$("#emergency").hide();
+			});
+			$('.thisurl').click( function () {window.location.href =  $(this).attr('data-url');});
+			$(".search-block input").on("focus",function(e){
+				if($("body").has("#search_div").length){
+					searchBar.show();
+				}else{
+					searchBar.init();
+				}
+				$("#search_div .search input").focus();
+			});
+			if("{#$redirect_to_subsite#}"){
+				
+				window.location.href="{#$redirect_url#}";
+				/*layer.confirm('系统检测到您当前所在地区为{#$redirect_disname#},<br />是否跳转到{#$redirect_sitename#}？', {
+				    btn: ['确定','取消'] //按钮
+				}, function(){
+				    window.location.href="{#$redirect_url#}";
+				}, function(){
+				});*/
+			}
+		});
+	</script>
+
+</head>
+<body>
+<div class="layout">
+	
+	
+	
+	<div class="header">
+		<div class="citys">
+			<h4><a href="selectcity.php#">{#if $QISHI.subsite_id>0#}{#$QISHI.subsite_districtname#}{#else#}主站{#/if#}</a></h4>
+		</div>
+		
+		
+		
+		<div class="search">
+			<input type="button" class="btn" id="" name="" />
+			<input type="text" id="" class="txt" value="" placeholder="请输入搜索内容" />
+		</div>
+		
+		<div class="filter">
+			<h4><a href="#"><img src="/layout/blue/imgs/wz4.png"/></a></h4>
+	</div><!--header结束-->
+	
+	<!--弹窗-->
+			<div class="mask">
+				
+			</div>
+			<div class="search_page"><!--搜索开始-->
+				
+				<div class="header header_n1">				
+		
+					<form action="" method="post">
+					<div class="return">
+					</div>
+					
+					<div class="search">
+						<input type="button" class="btn" id="" name="" />
+						<input type="text" id="" class="txt" value="" placeholder="请输入搜索内容" />
+					</div>
+					
+					<div class="word">
+						<input type="submit" name="" id="" value="搜索" />
+					</div>
+					</form>
+		
+				</div>
+				<!--header结束-->
+	
+				<div class="city_nav search_nav">
+					<ul>
+						<li>
+							<h6>热门搜索 :</h6>
+						<div class="hot_city">
+							<dl>						
+								<dd><a href="#">传单派发</a></dd>
+								<dd><a href="#">促销导购</a></dd>
+								<dd><a href="#">话务客服</a></dd>
+								<dd><a href="#">礼仪活动</a></dd>
+								<dd><a href="#">活动充场</a></dd>
+								<dd><a href="#">外卖送餐</a></dd>
+							</dl>
+						</div>							
+						</li>
+						<li>
+							<h6>历史搜索 :</h6>
+						<div class="city_sub h_job">
+							<dl>						
+								<dd><a href="#">礼仪</a></dd>
+								<dd><a href="#">长职</a></dd>
+								<dd><a href="#">暑假工</a></dd>
+								<dd><a href="#">包食宿</a></dd>
+							</dl>
+						</div>							
+						</li>
+					</ul>
+				</div>
+			</div> <!--搜索结束-->
+		</div>
+
+		
+		
+		
+	<div class="pull-up">
+		<span>正在刷新...</span>
+	</div>
+	
+	
+	<div class="hslide">
+			<ul class="slides">
+				<li class="slide">
+					<img src="/layout/blue/imgs/wz1.jpg"/>
+				</li>
+				<li class="slide">
+					<img src="/layout/blue/imgs/wz1.jpg"/>
+				</li>
+				<li class="slide">
+					<img src="/layout/blue/imgs/wz1.jpg"/>
+				</li>
+				<li class="slide">
+					<img src="/layout/blue/imgs/wz1.jpg"/>
+				</li>
+			</ul>
+	</div><!--轮播图片结束-->
+	
+	<div class="job_tab new_job_1">
+		<div class="job_tah">
+			<ul>
+				<li class="selected" data-left="30">担保</li>
+				<li data-left="260">直招</li>
+				<li data-left="490" class="nojs"><a href="jobs-near-list.php">附近</a></li>
+			</ul>
+			<div class="w_line">
+				
+			</div>
+		</div>
+		<div class="job_tabb">
+			<div class="job_tabb_wrap">
+			<ul id="db">
+		{#qishi_news_list set="列表名:list,显示数目:8,资讯小类:9,标题长度:7"#}
+<!--   以下为循环读取 -->
+	{#foreach from=$list item=li#}
+	
+	 <li>
+					<a href="{#$li.url#}">
+						<div class="ico">
+					<img src="{#$li.bimg#}" width="116" height="124"/>
+					</div>
+					<div class="txt">
+						<h2>{#$li.title#}</h2>
+						<h4>{#$li.focos_categoryname#}</h4>
+					</div>
+					</a>
+		</li>
+
+	{#/foreach#}
+ <!-- 循环结束 -->
+ 
+
+			</ul>
+			<ul id="zz">
+		{#qishi_news_list set="列表名:list,显示数目:8,资讯小类:13,标题长度:7"#}
+<!--   以下为循环读取 -->
+	{#foreach from=$list item=li#}
+	
+	 <li>
+					<a href="{#$li.url#}">
+						<div class="ico">
+					<img src="{#$li.bimg#}" width="116" height="124"/>
+					</div>
+					<div class="txt">
+						<h2>{#$li.title#}</h2>
+						<h4>{#$li.focos_categoryname#}</h4>
+					</div>
+					</a>
+		</li>
+
+	{#/foreach#}
+ <!-- 循环结束 -->
+			</ul>
+			
+			</div>
+		</div>
+		
+		 
+	</div>
+	<!--job工作结束-->
+	
+	
+	<div class="new_job">
+		<div class="head">
+			<h2>换一批精选工作<em></em></h2>
+		</div>
+		<div class="body_h3">
+			<h3>最新兼职</h3>
+		</div>
+		<!--刷新开始-->
+	
+				<table>
+					<tbody  class="body">	
+					{#foreach from=$new_jobs item=list key=kkk#}
+					<tr>
+							<td>
+								<a href="{#$list.url#}">
+				
+											{#if $kkk%3==0#}
+											<div class="ico ico_n1">{#$list.category_cn#}</div>
+											{#elseif $kkk%3==1#}
+											<div class="ico ico_n2">{#$list.category_cn#}</div>											
+											{#else#}
+											<div class="ico ico_n3">{#$list.category_cn#}</div>
+											{#/if#}
+											
+											
+					<div class="txt">
+						<h4>{#$list.jobs_name#}</h4>
+						<h5><em class="n1"></em>{#$list.work_start#}-{#$list.work_end#}</h5>
+						<h5><em class="n2"></em>{#$list.district_cn#}</h5>
+					</div>
+					<div class="sup">
+						
+						{#if $list.wage_amount>0#}
+							<span>{#$list.wage_amount#} {#$list.wage_cn#}</span>
+						{#else#}
+							<span>{#$list.wage_cn#}</span>
+						{#/if#}
+						
+					</div>
+					<div class="pic">
+						<dl>
+							{#foreach from=$list.jobspecial_cn item=listli key=kkk #}
+											{#if $kkk%3==0#}
+											<dd class="pic1">{#$listli#}</dd>
+											{#elseif $kkk%3==1#}
+											<dd class="pic2">{#$listli#}</dd>											
+											{#else#}
+											<dd class="pic3">{#$listli#}</dd>
+											{#/if#}
+											{#/foreach#}
+						</dl>
+					</div>
+								</a>
+							</td>
+						</tr>	
+						
+						{#/foreach#}
+					</tbody>
+				</table>		
+	</div><!--new_job结束-->
+	
+	<div class="pull-down">
+		<span>正在刷新...</span>
+	</div>
+	
+{#include file="m/m-footer.htm"#}
+	
+	
+	
+</div><!--loyout结束-->
+
+<script src="http://static.ydbimg.com/API/YdbOnline.js" type="text/javascript"></script>
+<script type="text/javascript">
+var YDB = new YDBOBJ();
+     YDB.SetStatusBarStyle(1);
+</script>
+<script language="javascript" src="http://www.bangbbs.com/API/YundabaoSDK.js"></script>
+<script type="text/javascript" src="/layout/blue/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/layout/blue/js/jquery.mobile-1.0.1.min.js"></script>
+<script type="text/javascript" src="/layout/blue/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/layout/blue/js/jquery.glide.js"></script>
+<script type="text/javascript" src="/layout/blue/js/script.js"></script>
+<script>
+	$(function(){
+		$(window).bind('scroll',function(bb){
+			
+			 bb.stopPropagation();
+			 
+			var a = $(document).height() - $(window).height();
+			//console.log( Math.abs($(window).scrollTop()) + '-------' +  + '---' + );
+			if(Math.abs($(window).scrollTop()) >= a){
+				
+			
+				$('.pull-down').show();
+				
+				setTimeout(function(){
+					$('.pull-down').hide();
+				},2000)
+			}
+			
+			
+			/*if(Math.abs($(window).scrollTop()) <= 1){
+			
+				$('.pull-up').show();
+				
+				setTimeout(function(){
+					$('.pull-up').hide();
+				},2000)
+			}*/
+		})
+		
+		
+	})
+	//隐藏地址栏
+	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+      function hideURLbar(){
+                window.scrollTo(0,1);
+      } 
+</script>
+</body>
+
+</html>
+

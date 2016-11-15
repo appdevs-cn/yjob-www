@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+<title>点位管理</title>
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/common.css">
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/user.css">
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/jquery.circliful.css">
+
+</head>
+<body>
+    <div class="layout">
+	<div class="user_head">
+		<div class="left">
+			<a href="#" class="ico ico_prev"></a>
+		</div>
+		<h2>签退管理</h2>
+		<h4 id="pl">批量操作</h4>
+	</div>
+	<div class="sign_info">
+		<form>
+		<div class="head">
+			<a href="#" class="prev"></a>
+			<select name="">
+				<option value="">{#$ptInfo.job_name#}</option>
+			</select>
+			<a href="#" class="next"></a>
+		</div>
+		<div class="body">
+			<ul>
+				<li>
+					<div class="label">
+						点位督导
+					</div>
+					<div class="input">
+                                            <div class="tels">
+                                                <dl> 
+                                                    <dd>
+                                                        {#$ptInfo.dd_name#}<a href="tel:{#$ptInfo.dd_mobile#}">{#$ptInfo.dd_mobile#}</a>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+					</div>
+				</li>
+				<li>
+                                    <div class="label">
+                                            查看方式
+                                    </div>
+                                    <div class="input">
+                                        <select name="" id="show_type" data-url="http://www.baidu.com/">
+                                            <option value="link">全部</option>
+                                            <option value="link">图片</option>
+                                        </select>						
+                                    </div>
+				</li>
+                                <li>
+                                    <div class="label">
+                                            审核状态
+                                    </div>
+                                    <div class="input">
+                                        <select name="" id="qdfs">
+                                            <option value="all">全部</option>
+                                            <option value="yes">通过</option>
+                                            <option value="no">拒绝</option>
+                                        </select>						
+                                    </div>
+				</li>
+				<li>
+					<div class="label">
+						选择日期
+					</div>
+					<div class="input" >						
+                                            <select id="work_date" data-url="/m/personal/user.php?act=signOut_manage&id={#$ptInfo.id#}"">
+                                                <option value="0" >全部</option>
+                                                {#foreach from=$ptInfo.work_date item=work_date#}
+                                                    <option value="{#$work_date#}" {#if $cdate == $work_date#}selected{#/if#}>{#$work_date|date_format:"%m月%d日"#}</option>
+                                                {#/foreach#}
+                                            </select>		
+					</div>
+				</li>
+			</ul>
+		</div>
+		</form>
+	</div>
+	<div class="sign_mgr sign_mgr_t">
+		<form>
+		<div class="head">
+			<h2><i></i>签退状态</h2>
+		</div>
+		<div class="head2">
+			<div class="l">
+				<input type="checkbox" name="" id="qx" value="" />
+				<label for="qx"></label>
+				全选
+			</div>
+			<div class="r">
+				已选中<span id="yx">1</span>项
+			</div>
+		</div>
+		<div class="body">
+			<ul>
+                            {#foreach from=$passList item=past#}
+                                <li class="selected">
+                                            <em></em>
+                                            <div class="hd">
+                                                    <div class="img">
+                                                            <img src="{#$past.info.avatars#}"/>
+                                                            <i></i>						</div>
+                                                    <div class="txt">
+                                                            <h4>{#$past.info.name#}　<a href="tel:{#$pass.mobile#}">{#$pass.info.mobile#}</a></h4>
+                                                            {#if $past.info.leaveEarly#}
+                                                            							<h5>被标记为早退</h5>
+
+                                                            {#else#}
+                                                             {#if !$past.list#}
+                                                            							<h5>无记录</h5>
+
+                                                            {#else#}
+                                                                                                                        <h5><span>{#$past.info.passCount#}</span>次有效，<span>{#$past.info.refuseCount#}</span>次未操作</h5>
+                                                            {#/if#}
+                                                            {#/if#}
+                                                           
+                                                    </div>
+                                                        {#if !$past.info.leaveEarly#}
+                                                            <div class="ico selected" data-eid="{#$past.info.enroll_id#}">
+                                                                <h4>早退</h4>
+                                                            </div>
+                                                        {#else#}
+                                                            <div class="ico " data-eid="{#$past.info.enroll_id#}">
+                                                                <h4>取消标记</h4>
+                                                            </div>
+                                                        {#/if#}
+                                            </div>
+                                            {#if !$past.info.leaveEarly#}
+
+                                                <div class="bd">
+                                                    <dl>
+                                                        {#foreach from=$past.list item=list key=lk#}
+                                                            <dd>
+                                                                <span>
+                                                                    <input disabled="" {#if $list.confirm_status == 200 || $list.confirm_status == 300#}checked{#/if#} type="checkbox" name="sid" id="n{#$lk#}" value="{#$list.id#}" />
+                                                                    <label for="n{#$lk#}"></label>
+                                                                </span>
+                                                                <div class="c1">
+                                                                        <i></i>{#$list.sign_address#}								</div>
+                                                                <div class="c2">
+                                                                        {#$list.sign_time#}								</div>
+                                                                <div class="c3 {#if $list.confirm_status == 200#}c3_2{#elseif $list.confirm_status == 300#}c3_3{#else#}c3_1{#/if#}" data-sid="{#$list.id#}">                                                                                           </div>
+                                                            </dd>
+                                                        {#/foreach#}
+                                                    </dl>
+                                                </div>
+                                            {#/if#}
+                                    </li>
+                            {#/foreach#}
+		  </ul>
+		</div>
+		<div class="foot">
+			<ul>
+				<li class="yes pl" data-status="100">
+					<i><img src="{#$QISHI.site_template#}css/manage/imgs/img_wz34.png"/></i>
+					<h4>批量通过</h4>
+				</li>
+				<li class="pl" data-status="200">
+					<i><img src="{#$QISHI.site_template#}css/manage/imgs/img_wz35.png"/></i>
+					<h4>批量拒绝</h4>
+				</li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/script.js"></script>
+</body>
+</html>
+

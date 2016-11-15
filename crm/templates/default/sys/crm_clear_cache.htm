@@ -1,0 +1,34 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+  <div class="toptip">
+	<h2>提示：</h2>
+	<p>当进行了数据恢复、升级或者工作出现异常的时候，您可以使用本功能重新生成缓存。 </p>
+  </div>
+<div class="toptit">更新选项</div>
+  <form id="form1" name="form1" method="post" action="?act=clear_cache"> 
+  <table width="100%" border="0" cellspacing="0" cellpadding="4">
+      <td height="60" style=" line-height:220%; color:#666666;">
+	  <table width="600" height="49" border="0" cellpadding="2" cellspacing="2" id="selecttplcache">
+        <tr>
+          <td height="45" align="center"><input name="submit" type="submit" class="admin_submit"    value="确定" onclick="document.getElementById('selecttplcache').style.display='none';document.getElementById('hide').style.display='block';"/></td>
+        </tr>
+      </table>      
+        <table width="600" height="100" border="0" cellpadding="5" cellspacing="0" id="hide" style="display:none">
+          <tr>
+            <td align="center" valign="bottom"><img src="images/ajax_loader.gif"  border="0" /></td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" style="color: #009900">正在更新缓存，请稍候......</td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+  </form>  
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

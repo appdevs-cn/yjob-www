@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+<title>工作卡</title>
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/common.css">
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/user.css">
+</head>
+<body>
+<div class="layout">
+	<div class="user_head">
+		<div class="left">
+			<a href="#" class="ico ico_prev"></a>
+		</div>
+		<h2>工作卡</h2>
+	</div>
+	<div class="card_info">
+		<ul>
+			<li>
+				<div class="label">
+					我的督导
+				</div>
+				<div class="input">
+					<a href="tel:{#$ptInfo.dd_mobile#}" class="ico_tel">{#$ptInfo.dd_name#}　{#$ptInfo.dd_mobile#}</a>
+                                        <input type="hidden" id="job_info_id" value="{#$ptInfo.job_info_id#}"/>
+                                        <input type="hidden" id="job_id" value="{#$ptInfo.job_id#}"/>
+                                        <input type="hidden" id="enroll_id" value="{#$ptInfo.enroll_id#}"/>
+				</div>
+			</li>
+			<li>
+				<div class="label">
+					工作时间
+				</div>
+				<div class="input">
+					{#$ptInfo.start_date|date_format:"%m.%d"#}-{#$ptInfo.end_date|date_format:"%m.%d"#}，{#$ptInfo.work_start_time#}-{#$ptInfo.work_end_time#}
+				</div>
+			</li>
+			<li>
+				<div class="label">
+					集合时间
+				</div>
+				<div class="input">
+					{#$ptInfo.fall_in_time#}
+				</div>
+			</li>
+			<li class="last">
+				<div class="label">
+					集合地址
+				</div>
+				<div class="input">
+                                        {#$ptInfo.fall_in_address#}
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="card_tabr">
+		<div class="head">
+			<ul>
+				<li class="selected" ><a href="#">签到</a></li>
+				<li ><a href="#">签退</a></li>
+				<li ><a href="#">续约</a></li>
+			</ul>
+			<div class="f-line">
+				
+			</div>
+		</div>
+		
+		<div class="body" >
+			<em></em>
+			<div class="img"  {#if !$signIned#}onClick="openDiv('card_dialog'); openDiv('mask');return false;"{#/if#}/>
+				 <h2>{#if !$signIned#}点位签到{#else#}已签到{#/if#}</h2>
+				<h4 class="ui-current-time-show"></h4>
+			</div>
+			<div class="txt">
+				<p><i></i><span class="ui-current-address"></span></p>
+			</div>			
+			<div class="card_list">
+			<div class="hd">
+				签到状态：
+			</div>
+			<div class="bd">
+						<!--table-->
+			    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                {#foreach from=$signInList item=signIn#}
+                                    <tr>
+                                      <td width="38%">{#$signIn.sign_time#}</td>
+                                      <td width="45%"><a href="img.html" class="addr">{#$signIn.sign_address#}</a></td>
+                                      <td width="17%" align="right" class="{#if $signIn.confirm_status == 100 #}wait {#elseif $signIn.confirm_status == 200#}yes{#elseif $signIn.confirm_status == 300#}no{#/if#}">{#if $signIn.confirm_status == 100 #}待确认 {#elseif $signIn.confirm_status == 200#}已确认{#elseif $signIn.confirm_status == 300#}已拒绝{#/if#}</td>
+                                    </tr>
+                                {#/foreach#}
+                            </table>	
+				  </div>
+			    </div>	
+		</div> <!-- body 结束-->
+		
+		
+		<div class="body" style="display: none;">
+			<em></em>
+			<div class="img" {#if !$signOuted#}onClick="openDiv('card_dialog_1'); openDiv('mask');    return false;" {#/if#}/ >
+				<h2>{#if !$signOuted#}点位签退{#else#}已签退{#/if#}</h2>
+				<h4 class="ui-current-time-show"></h4>
+			</div>
+			<div class="txt">
+				<p><i></i><span class="ui-current-address"></span></p>
+			</div>			
+			<div class="card_list">
+                            <div class="hd">
+                                    签退状态：
+                            </div>
+                            <div class="bd">
+                                                    <!--table-->
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    {#foreach from=$signOutList item=signOut#}
+                                   <tr>
+                                      <td width="38%">{#$signOut.sign_time#}</td>
+                                      <td width="45%"><a href="img.html" class="addr">{#$signOut.sign_address#}</a></td>
+                                      <td width="17%" align="right" class="{#if $signOut.confirm_status == 100 #}wait {#elseif $signOut.confirm_status == 200#}yes{#elseif $signOut.confirm_status == 300#}no{#/if#}">{#if $signOut.confirm_status == 100 #}待确认 {#elseif $signOut.confirm_status == 200#}已确认{#elseif $signOut.confirm_status == 300#}已拒绝{#/if#}</td>
+                                    </tr>
+                                    {#/foreach#}
+                                </table>	
+                            </div>
+                        </div>	
+		</div> <!-- body 结束-->
+		
+		<div class="body" style="display: none;">
+			<em></em>
+			<div class="img" {#if !$isxy#} onClick="reenroll({#$ptInfo.job_id#},{#$ptInfo.id#}, {#$companyId#})"{#/if#}>
+				<h2>{#if !$isxy#}工作续约{#else#}已续约{#/if#}</h2>
+				<h4 class="ui-current-time-show"></h4>
+			</div>
+			<div class="txt">
+                                <p><i></i><span class="ui-current-address1">您将续约“{#$xxDate|date_format:"%m月%d"日#}”的工作</span></p>
+			</div>			
+			<div class="card_list">
+			<div class="hd">
+				续约状态：
+			</div>
+			<div class="bd">
+						<!--table-->
+			      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                  {#foreach from=$workList item=work #}
+                                    <tr>
+                                        <td width="19%">{#$work.create_time|date_format:"%m月%d"日#}</td>
+                                        <td width="19%">{#$work.create_time|date_format:"%H:%I"日#}</td>
+                                        <td width="45%"><a href="img.html" class="addr"><a href="img.html" class="addr">续约“{#$work.work_date|date_format:"%m月%d"日#}”的工作</a></a></td>
+                                        <td width="17%" align="right" class="{#if $work.status == 200#}yes{#elseif $work.status == 100#}wait{#elseif $work.status == 400#}no{#/if#}">{#if $work.status == 200#}已确认{#elseif $work.status == 100#}待确认{#elseif $work.status == 400#}已拒绝{#else#}已完成{#/if#}</td>
+                                    </tr>
+                                  {#/foreach#}
+                            </table>
+                        </div>
+                    </div>	
+		</div> <!-- body 结束-->
+
+	</div>
+	
+	<!--遮罩-->
+	<div class="mask" id="mask">
+		
+	</div>
+	
+	<!--弹窗-->
+	<div class="card_dialog" id="card_dialog">
+		<div class="head">
+			<h2>点位签到</h2>
+			<span class="delete" onClick="closeDiv('card_dialog'); closeDiv('mask');    return false;"/></span>
+		</div>
+		<div class="body">
+			<ul>
+				<li class="frist">
+					<div class="label">
+						签到时间
+					</div>
+					<div class="input ui-current-time-static" id="signInTime">
+					</div>
+				</li>
+				<li class="frist">
+					<div class="label">
+						签到地点
+					</div>
+					<div class="input ui-current-address" id="signInAddr">
+					</div>
+				</li>
+				<li class="last">
+                                    <div class="label">
+                                            备注
+                                    </div>
+                                    <div class="imgs">
+                                        <textarea name="signDesc" id="signDesc" rows="" cols="" placeholder="请填写签到备注（选填）"></textarea>
+                                       <dl class="ui-upload-img">
+                                            <dd class="file">
+                                                <input type="file" name="" onchange="uploadImg(this)" value="" />
+                                            </dd>
+                                        </dl>
+                                    </div>
+				</li>
+			</ul>
+		</div>
+		<div class="foot">
+			<a href="javascript:void(0);" id="signIn" data-type="100">签到</a>
+		</div>
+	</div>
+	
+	<div class="card_dialog" id="card_dialog_1">
+		<div class="head">
+			<h2>点位签退</h2>
+			<span class="delete" onClick="closeDiv('card_dialog_1'); closeDiv('mask');    return false;"/></span>
+		</div>
+		<div class="body">
+			<ul>
+				<li class="frist">
+					<div class="label">
+						签退时间
+					</div>
+					<div class="input ui-current-time-static" id="signOutTime">
+					</div>
+				</li>
+				<li class="second">
+					<div class="label">
+						签退地点
+					</div>
+					<div class="input ui-current-address" id="signOutAddr">
+					</div>
+				</li>
+				<li class="last">
+					<div class="label">
+						备注
+					</div>
+					<div class="imgs">
+						<textarea id="signOutDesc" name="" rows="" cols="" placeholder="请填写签到备注（选填）"></textarea>
+                                        <dl class="ui-upload-img">
+                                            <dd class="file">
+                                                <input type="file" name="" onchange="uploadImg(this)" value="" />
+                                            </dd>
+                                        </dl>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="foot">
+			<a href="javascript:void(0);" id="signOut" data-type="200">签退</a>
+		</div>
+	</div>
+	
+	<!--dialog2-->
+	<div class="card_dialog" id="card_dialog_2">
+		<div class="head">
+			<h2>工作续约</h2>
+			<span class="delete" onClick="closeDiv('card_dialog_2'); closeDiv('mask');    return false;"/></span>
+		</div>
+		<div class="body">
+			<ul>
+				<li class="frist">
+                                    <div class="label">
+                                            签退时间
+                                    </div>
+                                    <div class="input ui-current-time-static" id="signOutTime">
+                                    </div>
+				</li>
+				<li class="second">
+					<div class="label">
+						签退地点
+					</div>
+					<div class="input ui-current-address" id="signOutAddr">
+					</div>
+				</li>
+				<li class="last">
+					<div class="label">
+						备注
+					</div>
+					<div class="imgs">
+						<textarea name="" rows="" cols="" placeholder="请填写签到备注（选填）"></textarea>
+						<dl>
+							<dd class="img">
+								<img src="../layout/manage/imgs/img_wz1.jpg"/>
+								<i></i>
+							</dd>
+							<dd class="img">
+								<img src="../layout/manage/imgs/img_wz2.jpg"/>
+								<i></i>
+							</dd>
+							<dd class="img">
+								<img src="../layout/manage/imgs/img_wz3.jpg"/>
+								<i></i>
+							</dd>
+							<dd class="file">
+								<input type="file" name="" id="" value="" />
+							</dd>
+						</dl>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="foot">
+			<a href="#">签退</a>
+		</div>
+	</div>
+	<!--//-->
+	
+	<iframe id="ifm" src="#" height="100%" frameborder="0" style="display: none;"></iframe>
+</div>
+	
+<!--loyout结束-->
+
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/script.js"></script>
+</body>
+</html>
+

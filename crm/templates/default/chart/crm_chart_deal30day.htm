@@ -1,0 +1,22 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+ 
+	<div class="toptit">30天成交客户趋势 </div>
+ 
+   <script language="JavaScript" src="js/FusionCharts.js"></script>
+<div id="chartdiv"  > 
+        FusionCharts. 
+		</div>
+<script type="text/javascript">
+		   var chart = new FusionCharts("data/statement/area2D.swf", "ChartId", "800", "260");
+		   chart.setDataURL("data/statement/deal30day.xml");		   
+		   chart.render("chartdiv");
+</script>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

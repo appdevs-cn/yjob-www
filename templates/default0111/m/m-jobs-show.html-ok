@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+	<title>{#$show.jobs_name#} - {#$QISHI.site_name#}</title>
+	<meta name="description" content="{#$page.description#},{#$show.companyname#}招聘职位{#$show.jobs_name#}" id="description">
+	<meta name="keywords" content="{#$page.keywords#},{#$QISHI.site_name#},{#$show.companyname#},{#$show.nature_cn#},{#$show.category_cn#},{#$show.trade_cn#},{#$show.district_cn#},{#$show.tag_cn#},{#$show.experience_cn#},{#$show.education_cn#}">
+<link rel="stylesheet" href="/layout/blue/css/glide.css">
+<link rel="stylesheet" href="/layout/blue/css/common.css">
+<link href="./css/common.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="./css/common.css">
+<link rel="stylesheet" href="/layout/blue/css/style.css">
+<link rel="stylesheet" href="/layout/blue/css/wallet.css">
+<script type="text/javascript" src="./js/jquery-1.11.3.js" ></script>
+	<script type='text/javascript' src="./js/jquery.common.js" ></script>
+	<script type="text/javascript" src="./js/layer/layer.js" ></script>
+<script language="javascript" src="http://static.ydbimg.com/API/YdbOnline.js"></script>
+<script type="text/javascript">
+var YDB = new YDBOBJ();
+    YDB.SetMenuBar(0);
+		
+</script>
+<script type="text/javascript">
+		$(document).ready(function()
+		{
+			$('.thisurl').click( function () {window.location.href =  $(this).attr('data-url');});
+			// 弹出框
+			function showFloatBox() {
+				$("body").prepend("<div class=\"menu_bg_layer\"></div>");
+				$(".menu_bg_layer").height($(document).height());
+				$(".menu_bg_layer").css({ width: $(document).width(), position: "absolute",left:"0", top:"0","z-index":"1","background-color":"#000000"});
+				$(".menu_bg_layer").css("opacity",0.3);
+			}
+			// 申请职位
+			$("#jobs_apply").click(function(){
+				var uid="{#$smarty.session.uid#}";
+				var username="{#$smarty.session.username#}";
+				var utype="{#$smarty.session.utype#}";
+				var id={#$smarty.get.id#};
+				if(uid=='' || username=='' || utype=='1')
+				{
+					window.location.href='login.php';
+					return false;
+				}
+				showFloatBox();
+				$(".choose_menu").css({ top: ($(window).height() - $('.choose_menu').outerHeight())/2 + $(document).scrollTop() });
+				$(".choose_menu").show();
+				var jobs_id = {#$show.id#};
+				var jobs_name = "{#$show.jobs_name#}";
+				var company_id = {#$show.company_id#};
+				var company_name = "{#$show.companyname#}";
+				var company_uid = {#$show.uid#};
+				$("#but_left").click(function(){
+					var resume_id=$("input[name='resume_list']:checked").val();
+					var resume_title=$("input[name='resume_list']:checked").attr("title");
+					if(resume_id){
+						$(".choose_menu").hide();
+						$(".menu_bg_layer").remove();
+						$.post("personal/apply.php?act=apply_add",{jobs_id:jobs_id,jobs_name:jobs_name,company_id:company_id,company_name:company_name,company_uid:company_uid,resume_id:resume_id,resume_title:resume_title},function(data){
+							if(data=="ok"){
+								//layer.msg('申请职位成功！', {icon: 1});
+								$("#bm").show();
+		                        setTimeout(function () {
+		                            window.location.reload();
+		                        }, 2000);
+							}else if(data=="err"){
+								layer.msg('申请职位失败！', {icon: 2});
+							}else{
+								$("#ybm").show();
+								$("#ybm h4").html(data);
+								setTimeout(function () {
+		                            window.location.reload();
+		                        }, 2000);
+							}
+						});
+					}else{
+						layer.msg("请选择简历");
+					}
+				});
+				$("#but_right").click(function(){
+					$(".choose_menu").hide();
+					$(".menu_bg_layer").remove();
+				})
+			});
+			// 收藏职位
+			$("#collect_job").click(function(){
+				var id = {#$smarty.get.id#};
+				$.post("personal/user.php?act=add_favorites",{id:id},function(data){
+					if(data=="ok"){
+						//layer.msg('收藏职位成功！', {icon: 1});
+						$("#sc").show();
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
+					}else if(data=="err"){
+						layer.msg('收藏职位失败！', {icon: 2});
+					}else{
+						if(data=='login.php')
+						{
+							window.location.href=''+data;
+						}else{
+							$("#ysc").show();
+							$("#ysc h4").html(data);
+							$('.layui-layer').css("left",($(window).width() - $('.layui-layer').outerWidth())/2);
+							setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
+						}
+					}
+				});
+			});
+			$.get("plus/ajax.php", { "id": {#$show.id#},"act":"jobs_contact"},
+				function (data,textStatus)
+				 {			
+					$("#jobs_contact").html(data);
+				 }
+			);
+		});
+	</script>
+<style>
+    .next_button{
+        cursor:pointer;
+		default:true;
+		tags:true;
+    }
+</style>
+</head>
+<div class="layout pb100">
+	<div class="blur">
+		<div class="city_nav wallet">
+		<div class="hd">
+			<h5>职位详情</h5>
+			<em><a href="#"></a></em>
+			<span class="fx" onClick="openDiv('job_mask',99999); openDiv('alert',9999999);"><img src="/layout/blue/imgs/wz46.png"/></span>
+		</div>				
+			
+	</div>
+	
+	<div class="job_head">
+		<div class="ico ico_n2">
+		{#$show.category_cn#}
+		</div>
+		<div class="txt">
+			
+			<h2>{#$show.jobs_name#}</h2>
+			<h4>{#$show.start_riqi#}-{#$show.end_riqi#}</h4>
+		</div>
+		<div class="sub">
+			{#if $show.wage_amount>0#}
+				<h2>{#$show.wage_amount#} {#$show.wage_cn#}</h2>
+			{#else#}
+				<h2>{#$show.wage_cn#}</h2>
+			{#/if#}
+			<h4>已报<span>{#$show.counts#}</span>名</h4>
+		</div>
+	</div>
+	
+	<div class="job_body">
+		<div class="hd">
+			<h4>任职要求</h4>
+		</div>
+		<div class="bd">
+			<dl>
+				<dt>工作地点：</dt>
+				<dd>{#$show.district_cn#}</dd>				
+			</dl>
+			<dl>
+				<dt>工作日期：</dt>
+				<dd>{#$show.start_riqi#}-{#$show.end_riqi#}</dd>
+			</dl>
+			<dl>
+				<dt>工作时间：</dt>
+				<dd>{#$show.start_shijian#}-{#$show.end_shijian#}</dd>
+			</dl>
+			<dl>
+				<dt>性别限制：</dt>
+				<dd>{#$show.sex_cn#}</dd>
+			</dl>
+			<dl>
+				<dt>年龄限制：</dt>
+				<dd>{#$show.age#}</dd>
+			</dl>
+			<dl>
+				<dt>薪 <span></span><span></span>资：</dt>
+				{#if $show.wage_amount>0#}
+					<dd>{#$show.wage_amount#} {#$show.wage_cn#}</dd>
+				{#else#}
+					<dd>{#$show.wage_cn#}</dd>
+				{#/if#}
+			</dl>
+	
+			<dl>
+				<dt>招聘人数：</dt>
+				<dd>{#$show.amount#}人</dd>
+			</dl>
+		</div>
+	</div>
+	
+	<div class="job_body ">
+		<div class="hd">
+			<h4>职位描述</h4>
+		</div>
+		<div class="txt">
+				<p>{#$show.contents#}</p>	
+		</div>
+	</div>
+	<!--<div id="jobs_contact"></div>-->
+	
+	<div class="job_body job_last ">
+		<div class="hd">
+			<h4>职位标签</h4>
+		</div>
+		<div class="tags">
+			<ul>
+				{#foreach from=$show.tag_cn item=tagli#}
+<li>{#$tagli#}</li>
+				{#/foreach#}
+	
+			</ul>
+		</div>
+	</div>
+	<div class="h_hight">
+		
+	</div>
+	<div class="job_foot">
+		<ul>
+			<li class="{#if $show.is_favorites=='1'#}selected{#/if#} next_button" id="collect_job">
+				<a href="javascript:;"  >
+					<div class="ico1">
+					
+				</div>
+				<h4 >收藏职位</h4>
+				</a>
+
+			</li>
+			<li class="line">
+				<span></span>
+			</li>
+			<li>
+						{#if $is_show_tel#}
+						<a href="tel:{#if $show.contact.telephone#}{#$show.contact.telephone#}{#else#}{#$show.contact.landline_tel#}{#/if#}"><div class="ico2"></div>
+				<h4>电话联系</h4></a>
+						{#else#}
+						<a href="login.php"><div class="ico2"></div>
+				<h4>电话联系</h4></a>
+						{#/if#}	
+
+			</li>
+		</ul>
+		<div class="apply" >
+			<a href="javascript:;" class="next_button" id="jobs_apply" >立即报名</a>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- 弹出框 -->
+	<div class="menu choose_menu" style="position:absolute;z-index:1;">
+		<div class="menu_title">请确认报名</div>
+		<ul style="display:none;">
+			{#foreach from=$resume_list item=list#}
+			<li ><label for="r_{#$list.id#}" ><input type="radio" name="resume_list" id="r_{#$list.id#}" value="{#$list.id#}" title="{#$list.nickname#}" checked="checked"/>{#$list.nickname#}</label></li>
+			{#/foreach#}
+		</ul>
+		<div class="choose_but">
+			<div class="but_left" id="but_left">
+				<a>确定</a>
+			</div>
+			<div class="but_right" id="but_right">
+				<a>取消</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div> 
+
+<!--弹窗-->
+<div class="job_mask" id="job_mask">
+	
+</div>
+
+<div class="alert" id="alert" >
+	<div class="close-alert">
+	</div>
+	<ul>
+		<li>
+			<a href="#"><div class="ico">
+				<img src="/layout/blue/imgs/wz39.png"/>
+			</div>
+			<h4>QQ</h4></a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz40.png"/>
+			</div>
+			<h4>微信</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz41.png"/>
+			</div>
+			<h4>微博</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz42.png"/>
+			</div>
+			<h4>朋友圈</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz40.png"/>
+			</div>
+			<h4>微信</h4>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<div class="ico">
+				<img src="/layout/blue/imgs/wz41.png"/>
+			</div>
+			<h4>微博</h4>
+			</a>
+		</li>
+	</ul>
+
+
+
+	
+
+	<div class="alert_last">
+		<ul>
+			<li class="frist">您的简历未完善<br/>
+简历达到80%以上即可报名~</li>
+<li><a href="#">立即完善</a></li>
+<li class="last"><h4>取消</h4></li>
+		</ul>
+	</div>
+</div><!--loyout结束-->
+<div class="dialog" id="sc">
+		<div class="ico">
+		<img src="/layout/blue/imgs/wz43.png"/>
+		</div>
+	    <h4>收藏成功</h4>
+	</div>
+	<div class="dialog" id="ysc">
+		<div class="ico">
+		<img src="/layout/blue/imgs/wz43.png"/>
+		</div>
+	    <h4></h4>
+	</div>
+   
+   <div class="dialog" id="bm">
+		<div class="ico">
+		<img src="/layout/blue/imgs/wz44.png"/>
+		</div>
+	    <h4>报名成功</h4>
+	</div>
+	<div class="dialog" id="ybm">
+		<div class="ico">
+		<img src="/layout/blue/imgs/wz44.png"/>
+		</div>
+	    <h4></h4>
+	</div>
+<script language="javascript" src="http://static.ydbimg.com/API/YdbOnline.js"></script>
+<script type="text/javascript">
+var YDB = new YDBOBJ();
+    YDB.SetMenuBar(0);
+</script>
+
+<div id="page_description" style="display:none;">{#$show.contents#}</div>
+
+<script type="text/javascript" src="/layout/blue/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/layout/blue/js/jquery.glide.js"></script>
+<script type="text/javascript" src="/layout/blue/js/script.js"></script>
+<script language="javascript">
+$().ready(function(e) {
+	var uaua = navigator.userAgent.toLowerCase();
+	if(uaua.indexOf('ck 2.0')>=0){
+		$('.city_nav>.hd>.fx').removeAttr('onclick').unbind('click').bind('click',function(e){
+			var title = document.title;
+			var content = $('#page_description').text();
+			var url = window.location.href;
+			YDB.Share(title,content,'',url);
+		});
+	}
+});
+</script>
+</body>
+</html>
+

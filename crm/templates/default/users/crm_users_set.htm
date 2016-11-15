@@ -1,0 +1,471 @@
+{#include file="sys/crm_header.htm"#}
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#selectAll").click(function()
+	{	
+		$("form :checkbox").attr("checked",true);
+		setbg();
+	});
+	$("#uncheckAll").click(function()
+	{	
+		$("form :checkbox").attr("checked",false);
+		setbg();
+	});
+	$("#opposite").click(function()
+	{	
+		$("form :checkbox").each(function()
+		{
+		$(this).attr("checked")?$(this).attr("checked",false):$(this).attr("checked",true);
+		});
+		setbg();
+	});	
+});
+</script>
+{#if $crm_admin_purview<>"all"#}
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#form1 :checkbox").attr("disabled","false");
+});
+</script>
+{#/if#}
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit">{#$pageheader#}</div>
+	{#include file="users/crm_users_nav.htm"#}
+  <div class="clear"></div>
+</div>
+<div class="toptip">
+<h2>提示：</h2>
+<p>
+通过管理员设置，您可以进行编辑管理员资料、权限、密码以及删除管理员等操作；
+</p>
+</div> 
+<div class="toptit">管理员权限
+<span style="color: #FF3300">({#$account.admin_name#})</span>
+	  {#if $crm_admin_purview=="all"#}
+	  &nbsp;&nbsp;&nbsp;
+	  <span id="selectAll" style="color:#0066CC; cursor:pointer">[全选]</span>
+	  &nbsp;&nbsp;&nbsp;
+	  <span id="uncheckAll" style="color:#0066CC; cursor:pointer">[全不选]</span>
+	  &nbsp;&nbsp;&nbsp;
+	  <span id="opposite" style="color:#0066CC; cursor:pointer">[反选]</span>
+	  {#/if#}
+</div>
+  {#if $account.purview=="all"#}
+  <div  style="color:#009900; padding:24px;">系统超级管理员权限不允许修改！</div>
+    <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+    <tr>
+      <td bgcolor="#FFFFFF"  style="padding-left:24px;" > 
+      <input name="submit22" type="button" class="admin_submit"    value="返回上一步" onclick="Javascript:window.history.go(-1)"/></td>
+    </tr>
+  </table>
+  {#else#}
+    <form id="form1" name="form1" method="post" action="?act=users_set_save">
+	{#$inputtoken#}
+	  <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>客户管理：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+		  <ul style="margin:0px; padding:3px; list-style:none">		  
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="add_client" {#if "add_client"|in_array:$admin_set#}checked="checked"{#/if#} />新增客户 
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="client_edit" {#if "client_edit"|in_array:$admin_set#}checked="checked"{#/if#} />管理客户
+
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="client_fail" {#if "client_fail"|in_array:$admin_set#}checked="checked"{#/if#} />转交客户
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="client_add_log" {#if "client_add_log"|in_array:$admin_set#}checked="checked"{#/if#} />跟进客户
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="set_fail" {#if "set_fail"|in_array:$admin_set#}checked="checked"{#/if#} />设置无效/有效
+</label>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="del_fail" {#if "del_fail"|in_array:$admin_set#}checked="checked"{#/if#} />删除无效客户
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="to_mycontacts" {#if "to_mycontacts"|in_array:$admin_set#}checked="checked"{#/if#} />导入到通讯录
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="myclient_export" {#if "myclient_export"|in_array:$admin_set#}checked="checked"{#/if#} />导出我的客户
+</label>
+</li>
+<br>
+<!-- -->
+<li class="clear" style="list-style:none; display:none"></li>
+</ul>	
+		  </td>
+        </tr>
+      </table>
+	  <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>资源池：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+		  <ul style="margin:0px; padding:3px; list-style:none">		  
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="receive_client" {#if "receive_client"|in_array:$admin_set#}checked="checked"{#/if#} />领取资源
+</label>
+</li>
+<!-- -->
+<!-- -->
+<li class="clear" style="list-style:none; display:none"></li>
+</ul>	
+		  </td>
+        </tr>
+      </table>
+ 
+ 
+ 
+ <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>营销中心：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+		  <ul style="margin:0px; padding:3px; list-style:none">		  
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="market_category" {#if "market_category"|in_array:$admin_set#}checked="checked"{#/if#} />分类设置
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="add_doc" {#if "add_doc"|in_array:$admin_set#}checked="checked"{#/if#} />添加文档
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="edit_doc" {#if "edit_doc"|in_array:$admin_set#}checked="checked"{#/if#} />修改文档
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="del_doc" {#if "del_doc"|in_array:$admin_set#}checked="checked"{#/if#} />删除文档
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="send_sms" {#if "send_sms"|in_array:$admin_set#}checked="checked"{#/if#} />发送短信
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="send_email" {#if "send_email"|in_array:$admin_set#}checked="checked"{#/if#} />发送邮件
+</label>
+</li>
+<!-- -->
+<li class="clear" style="list-style:none; display:none"></li>
+</ul>	
+		  </td>
+        </tr>
+      </table>
+ 
+	 
+ <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>我的办公室：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+		  <ul style="margin:0px; padding:3px; list-style:none">		  
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="add_workplan" {#if "add_workplan"|in_array:$admin_set#}checked="checked"{#/if#} />添加工作计划
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="edit_workplan" {#if "edit_workplan"|in_array:$admin_set#}checked="checked"{#/if#} />修改工作计划
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="del_workplan" {#if "del_workplan"|in_array:$admin_set#}checked="checked"{#/if#} />删除工作计划
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="my_contacts_add" {#if "my_contacts_add"|in_array:$admin_set#}checked="checked"{#/if#} />添加我的联系人
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="my_contacts_edit" {#if "my_contacts_edit"|in_array:$admin_set#}checked="checked"{#/if#} />修改我的联系人
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="my_contacts_del" {#if "my_contacts_del"|in_array:$admin_set#}checked="checked"{#/if#} />删除我的联系人
+</label>
+</li>
+
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="my_contacts_addgroup" {#if "my_contacts_addgroup"|in_array:$admin_set#}checked="checked"{#/if#} />添加联系人分组
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="my_contacts_editgroup" {#if "my_contacts_editgroup"|in_array:$admin_set#}checked="checked"{#/if#} />修改联系人分组
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="my_contacts_delgroup" {#if "my_contacts_delgroup"|in_array:$admin_set#}checked="checked"{#/if#} />删除联系人分组
+</label>
+</li>
+<br>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="add_dairy" {#if "add_dairy"|in_array:$admin_set#}checked="checked"{#/if#} />添加业务日记
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="edit_dairy" {#if "edit_dairy"|in_array:$admin_set#}checked="checked"{#/if#} />修改业务日记
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="del_dairy" {#if "del_dairy"|in_array:$admin_set#}checked="checked"{#/if#} />删除业务日记
+</label>
+</li>
+<!-- -->
+<li class="clear" style="list-style:none; display:none"></li>
+</ul>	
+		  </td>
+        </tr>
+      </table>
+	    
+	  <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>通讯中心：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+		  <ul style="margin:0px; padding:3px; list-style:none">		  
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="contacts_add" {#if "contacts_add"|in_array:$admin_set#}checked="checked"{#/if#} />添加联系人
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="contacts_edit" {#if "contacts_edit"|in_array:$admin_set#}checked="checked"{#/if#} />修改联系人
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="contacts_del" {#if "contacts_del"|in_array:$admin_set#}checked="checked"{#/if#} />删除联系人
+</label>
+</li>
+
+<li class="clear" style="list-style:none; display:none"></li>
+</ul>	
+		  </td>
+        </tr>
+      </table>
+<table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>决策分析：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+		  <ul style="margin:0px; padding:3px; list-style:none">		  
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="chart_show" {#if "chart_show"|in_array:$admin_set#}checked="checked"{#/if#} />查看决策分析
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="chart_add_all" {#if "chart_add_all"|in_array:$admin_set#}checked="checked"{#/if#} />全部新增客户
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="chart_deal_all" {#if "chart_deal_all"|in_array:$admin_set#}checked="checked"{#/if#} />全部成交客户
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="chart_lastyear_add_all" {#if "chart_lastyear_add_all"|in_array:$admin_set#}checked="checked"{#/if#} />全部往年新增客户
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="chart_lastyear_deal_all" {#if "chart_lastyear_deal_all"|in_array:$admin_set#}checked="checked"{#/if#} />全部往年成交客户
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="allclientstatistical" {#if "allclientstatistical"|in_array:$admin_set#}checked="checked"{#/if#} />全部客户有效性
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="allclient_status" {#if "allclient_status"|in_array:$admin_set#}checked="checked"{#/if#} />全部客户状态图
+</label>
+</li>
+
+
+<li class="clear" style="list-style:none; display:none"></li>
+</ul> 
+      </td>
+        </tr>
+      </table>
+<table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>报表：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+      <ul style="margin:0px; padding:3px; list-style:none">     
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="report_list" {#if "report_list"|in_array:$admin_set#}checked="checked"{#/if#} />报表列表
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="report_create" {#if "report_create"|in_array:$admin_set#}checked="checked"{#/if#} />生成报表
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="report_export" {#if "report_export"|in_array:$admin_set#}checked="checked"{#/if#} />导出报表
+</label>
+</li>
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="del_report" {#if "del_report"|in_array:$admin_set#}checked="checked"{#/if#} />删除报表
+</label>
+</li>
+
+
+<!-- -->
+<li class="clear" style="list-style:none; display:none"></li>
+</ul>	
+		  </td>
+        </tr>
+      </table>
+<table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>基础资料管理</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+      <ul style="margin:0px; padding:3px; list-style:none">
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="category_set" {#if "category_set"|in_array:$admin_set#}checked="checked"{#/if#} />设置分类
+</label>
+</li>
+<!-- -->     
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="account_info" {#if "account_info"|in_array:$admin_set#}checked="checked"{#/if#} />账户信息管理
+</label>
+</li>
+
+<!-- -->
+<li class="clear" style="list-style:none; display:none"></li>
+</ul> 
+      </td>
+        </tr>
+      </table>
+	   <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+        <tr>
+          <td height="25" bgcolor="#FFFFFF" style=" border-bottom:1px #CCCCCC dashed; padding-left:20px;"><strong>系统：</strong></td>
+        </tr>
+        <tr>
+          <td  bgcolor="#FFFFFF" style="  padding-left:14px;">
+		  <ul style="margin:0px; padding:3px; list-style:none">		  
+
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="password_edit" {#if "password_edit"|in_array:$admin_set#}checked="checked"{#/if#} />修改密码
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="clear_cache" {#if "clear_cache"|in_array:$admin_set#}checked="checked"{#/if#} />更新缓存
+</label>
+</li>
+<!-- -->
+<li  class="user_box_li">
+<label>
+<input name="purview[]" type="checkbox"  value="crons" {#if "crons"|in_array:$admin_set#}checked="checked"{#/if#} />计划任务
+</label>
+</li>
+<!-- -->
+<li class="clear" style="list-style:none; display:none"></li>
+</ul>	
+		  </td>
+        </tr>
+      </table>
+	  	   
+
+	                    <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  >
+
+                          <tr>
+                            <td height="50" bgcolor="#FFFFFF" style=" border-top:1px #CCCCCC dashed; padding-left:20px;">
+							{#if $crm_admin_purview=="all"#}
+							<input name="id" type="hidden" value="{#$account.admin_id#}" />
+                              <input name="submit3" type="submit" class="admin_submit"    value="修改"/>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							  {#/if#}
+                              <input name="submit222" type="button" class="admin_submit"    value="返回" onclick="Javascript:window.history.go(-1)"/>
+                                   </td>
+                          </tr>
+                        </table>
+    </form>
+  {#/if#} 
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

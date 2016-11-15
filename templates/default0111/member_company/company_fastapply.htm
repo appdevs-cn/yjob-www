@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+<meta name="renderer" content="webkit"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+<title>{#$title#}</title>
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/user_common.css" />
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/user_company.css" />
+<link href="{#$QISHI.site_template#}css/ui-dialog.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js"></script>
+<script src="{#$QISHI.site_template#}js/dialog-min.js" type="text/javascript" language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/dialog-min-common.js" type="text/javascript" language="javascript"></script>
+<script>
+	$(document).ready(function() {
+		$('.name-link').toggle(function(){
+			$(this).parents('.c-data-content').next().show();
+			$(this).parents('.c-data-row').css({'border-color':'#fff'});
+		}, function(){
+			$(this).parents('.c-data-content').next().hide();
+			$(this).parents('.c-data-row').css({'border-color':'#ccc'});
+		});
+		// 顶部筛选
+		$('.data-filter').on('click', function(e){
+			$(this).find('.filter-down').toggle();
+			// 动态设置下拉列表宽度
+			var fWidth = $(this).find('.filter-span').outerWidth(true) - 2;
+			$(this).find(".filter-down").width(fWidth);
+			// 点击其他位置收起下拉
+			$(document).one("click",function(){
+				$('.filter-down').hide();
+			});
+			e.stopPropagation();
+			//点击下拉时收起其他下拉
+			$(".data-filter").not($(this)).find('.filter-down').hide();
+		})
+		// 删除弹出
+		delete_dialog('.ctrl-del','#form1');
+		// 发送到邮箱弹出
+		companySendToEmail_dialog('.db-btn.btn3','./company_ajax.php');
+		//查看弹出
+		$('.check-detail').on('click', function(){
+			var did =  $(this).attr('did');
+			var url = "company_ajax.php?act=interview_detail&did="+did;
+			var myDialog = dialog();
+			myDialog.content("加载中...");
+			myDialog.title('面试详情');
+		 	myDialog.width('300');
+			myDialog.showModal();
+			$.get(url, function(data){
+				myDialog.content(data);
+				/* 关闭 */
+				$(".DialogClose").live('click',function() {
+					myDialog.close().remove();
+				});
+			});
+		});
+	});
+</script>
+</head>
+<body {#if $QISHI.body_bgimg#}style="background:url({#$QISHI.site_domain#}{#$QISHI.site_dir#}data/{#$QISHI.updir_images#}/{#$QISHI.body_bgimg#}) repeat-x center 38px;"{#/if#}>
+{#include file="user/header.htm"#}
+<div class="page_location link_bk">当前位置：<a href="{#$QISHI.site_dir#}">首页</a> > <a href="{#$userindexurl#}">会员中心</a> > 快速报名</div>
+	<div class="usermain">
+		<div class="leftmenu com link_bk">
+			{#include file="member_company/left.htm"#}	
+		</div>
+		<div class="rightmain">
+			<div class="bbox1">
+				<div class="topnav get_resume">
+					<div class="titleH1"><div class="h1-title">快速报名</div></div>
+				</div>
+				<form id="form1" name="form1" method="post" action="?act=fastapply">
+				
+				<div class="clear" style="margin-top:10px;">
+					<div style="height:30px;width:300px;float:right;border:none;margin-right:10px;">
+						<input type="text" style="height:26px;width:120px;margin-right:6px;" name="zhi" />
+						<select name="tiaojian" style="width:60px;height:28px;" id="">
+							<option value="1" selected="selected">姓名</option>
+							<option value="2">手机号</option>
+						</select>
+						<input type="submit" style="height:26px;width:80px;margin-left:10px;color:#fff;font-size:18px;line-height:24px;border:none;text-align:center;background-color:green;" value="搜 索" />
+					</div>
+				</div>
+				</form>
+				<div class="company-data-list clear" style="margin-top:20px;">
+					<div class="c-data-top interview clearfix">
+						<div class="item f-left top-item1">姓名</div>
+						<div class="item f-left top-item2">手机号</div>
+						<div class="item f-left top-item3">
+							简历名称
+						</div>
+						<div class="item f-left top-item7">操作</div>
+					</div>
+					{#if $resume#}
+						{#foreach from=$resume item=list#}
+						<div class="c-data-row">
+							<div class="c-data-content interview clearfix">
+								
+								<div class="c-item f-left content1" style="width:100px;text-indent:-10px;"><a href="javascript:;" class="name-link underline">&nbsp;{#$list.fullname#}</a></div>
+								<div class="c-item f-left content2" style="width:200px;">&nbsp;{#$list.telephone#}</div>
+								<div class="c-item f-left content3" style="width:200px;"><a href="{#$list.jobs_url#}" class="jobs-name-link underline" target="_blank">&nbsp;{#$list.title#}</a></div>
+								
+								<div class="c-item f-left content7" style="width:180px;">
+									<form action="?act=ksbm_bm" method="post" style="width:300px;">
+									{#if $jobs#}
+									<input type="submit" value="快速报名" style="width:80px;color:red;line-height:20px;text-align:center;">
+									
+									<input type="hidden" name="id" value="{#$list.id#}"/>
+									<select name="zhiwei" id="" style="width:100px;">
+										{#foreach from=$jobs item=zwlist#}
+										{#if $list.bmid != $zwlist.id#}
+										<option value="{#$zwlist.id#}">{#$zwlist.jobs_name#}</option>
+										{#/if#}
+										{#/foreach#}
+									</select>
+									{#else#}
+										<a href="javascript:;" style="width:80px;color:red;line-height:20px;text-align:center;">您没发布职位或职位过期</a>
+									{#/if#}
+									</form>
+								</div>
+							</div>
+						</div>
+						{#/foreach#}
+					{#else#}
+					<div style="margin-top:20px;font-size:30px;height:50px;line-height:50px;">您输入的信息有误！</div>
+					{#/if#}
+				</div>
+				<!-- 这里加分页 -->
+				{#if $page#}
+				<div class="clearfix"></div>
+				<table border="0" align="center" cellpadding="0" cellspacing="0">
+		          	<tr>
+		          		<td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+		          	</tr>
+		      	</table>
+				{#/if#}
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	{#include file="user/footer.htm"#}
+</body>
+</html>

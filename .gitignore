@@ -1,0 +1,7 @@
+/data/config.php
+/temp/
+*.txt
+data/sessions
+upload
+.idea
+nbproject/private

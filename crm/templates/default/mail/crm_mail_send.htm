@@ -1,0 +1,141 @@
+{#include file="sys/crm_header.htm"#}
+<script  charset="utf-8" src="kindeditor/kindeditor.js"></script>
+<script type="text/javascript"> 
+$(document).ready(function()
+{
+	$("#check").click(function () {	
+	$("#submitbox").hide();
+	$("#hide").show();	
+	});
+	$("#ButAudit").QSdialog({
+	DialogTitle:"选择联系人",
+	DialogContent:"#OpAuditLayer",
+	DialogContentType:"id",
+	DialogAddObj:"#OpAudit",	
+	DialogAddType:"html",	
+	});
+});
+</script>
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+	{#include file="mail/crm_sendemail_nav.htm"#}
+  <div class="clear"></div>
+</div>
+ 
+		  <div class="toptit">发送邮件</div>
+    <span id="submitbox">
+		<form action="?act=email_send" method="post"   name="form1" id="form1">
+		{#$inputtoken#}
+		<table width="100%" border="0" cellspacing="10" cellpadding="1" style=" margin-bottom:3px;">
+          <tr>
+            <td width="100" align="right">收件人地址:</td>
+            <td>
+			<input name="email" type="text"  class="input_text_400" id="email" value="{#$smarty.get.email#}" maxlength="60"/>多个邮箱请用英文半角分号";"分隔</td>
+          </tr>
+          <tr>
+            <td width="100" align="right"></td>
+            <td>
+			<a href="javascript:void(0);" id="ButAudit">选择联系人</a></td>
+          </tr>
+		   <tr>
+            <td width="100" align="right">邮件标题:</td>
+            <td>
+			<input name="subject" type="text"  class="input_text_400" id="email" value="" /></td>
+          </tr>
+		  <tr>
+            <td width="100" align="right" valign="top">邮件内容:</td>
+            <td>
+			  <textarea id="body" name="body" style="width:700px;height:300px;visibility:hidden;"></textarea>
+		<script>
+			KE.show({
+				id : 'body',
+				shadowMode : false,
+				autoSetDataMode: false,
+				allowPreviewEmoticons : false,
+				//skinType : 'tinymce',
+				urlType : '',
+				filterMode : true,
+				//allowFileManager : true,
+				afterCreate : function(id) {
+					KE.event.add(KE.$('form1'), 'submit', function() {
+						KE.util.setData(id);
+					});
+				}
+			});
+		</script>
+		    </td>
+          </tr>
+          <tr>
+            <td align="right">&nbsp;</td>
+            <td>
+			<input name="url" type="hidden" value="{#$url#}" />
+			<input name="check" type="submit" class="admin_submit" id="check"    value="立即发送" /></td>
+          </tr>
+        </table>
+	    </form>
+  </span>
+<span id="hide" style="display: none; color: #009900; padding-left:30px; padding-bottom:80px;">
+ 正在发送邮件.......<br />
+<br />
+</span>
+</div>
+<div style="display:none" id="OpAuditLayer">
+ <table width="100%" border="0" align="center" cellpadding="0" cellspacing="6">
+    <tr>
+      <td width="20" height="30">&nbsp;</td>
+      <td height="30"><strong  style="color:#0066CC; font-size:14px;">联系人列表：</strong></td>
+    </tr>
+	 <tr>
+      <td height="25">&nbsp;</td>
+      <td>
+      	<table style="border-collapse:collapse;">
+      		<tr>
+      			<td width="10" style="border:1px solid #98bf21;"><input type="checkbox" class="chkit"></td>
+  				<td width="110" style="border:1px solid #98bf21;">姓名</td>
+  				<td width="180" style="border:1px solid #98bf21;">email</td>
+  			</tr>
+      	</table>
+	  	<div style="height:100px;overflow:auto;">
+	  		<table id="formresumelist">
+	  			{#foreach from=$mycontacts item=list#}
+	  			<tr>
+	  				<td width="10"><input type="checkbox" class="selectit" name="send_email_box" value="{#$list.email#}"></td>
+	  				<td width="110">{#$list.fullname#}</td>
+	  				<td width="180">{#$list.email#}</td>
+	  			</tr>
+	  			{#/foreach#}
+	  		</table>
+	  		
+	  	</div>
+	  </td>
+    </tr>
+    <tr>
+      <td height="25">&nbsp;</td>
+      <td><input type="submit" name="set_audit" value="确定" class="admin_submit tj"/></td>
+    </tr>		  
+  </table>
+</div>
+<span id="OpAudit"></span>
+	<script type="text/javascript">
+	  			$(document).ready(function(){
+	  				$('.chkit').click(function(){
+	  					$(".selectit").attr('checked',$(this).attr('checked'))
+	  				});
+	  				$(".tj").click(function(){
+	  					var email_str = "";
+	  					var r=document.getElementsByName("send_email_box");
+					    for(var i=5;i<r.length;i++){
+					         if(r[i].checked){
+					         	email_str += r[i].value+";";
+					       }
+					    } 
+	  					$("#email").attr("value",email_str);
+	  					$(".FloatBg").hide();
+						$(".FloatBox").hide();
+	  				});
+	  			});
+	  		</script>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

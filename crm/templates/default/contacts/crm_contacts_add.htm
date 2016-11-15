@@ -1,0 +1,63 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+	{#include file="contacts/crm_contacts_nav.htm"#}
+  <div class="clear"></div>
+</div>
+ <div class="toptit">新增联系人</div>
+    <form id="form1" name="form1" method="post"   action="?act=addsave" >
+	{#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+    <tr>
+      <td width="120" height="30" align="right"  >姓名：</td>
+      <td  ><input name="fullname" type="text" class="input_text_200"   maxlength="100" value=""/>
+       </td>
+    </tr>
+	    
+
+	    <tr>
+      <td height="30" align="right"  >电话：</td>
+      <td   ><input name="tel" type="text" class="input_text_200"   value=""/>
+       </td>
+    </tr>
+	
+	  <tr>
+      <td height="30" align="right"  >email：</td>
+      <td   ><input name="email" type="text" class="input_text_200"   value=""/>
+       </td>
+    </tr>
+	
+	 <tr>
+      <td height="30" align="right"  >QQ：</td>
+      <td   ><input name="qq" type="text" class="input_text_200"   value=""/>
+       </td>
+    </tr>
+	
+	<tr>
+      <td height="30" align="right"  >网址：</td>
+      <td   ><input name="web" type="text" class="input_text_200"   value=""/>
+       </td>
+    </tr>
+	
+	<tr>
+      <td height="30" align="right"  >地址：</td>
+      <td   ><input name="address" type="text" class="input_text_200"   value=""/>
+       </td>
+    </tr>
+	
+	
+	
+    <tr>
+      <td height="30" align="right"  >&nbsp;</td>
+      <td height="50"  > 
+            <input name="submit3" type="submit" class="admin_submit"    value="添加"/>
+        <input name="submit22" type="button" class="admin_submit"    value="返回" onclick="Javascript:window.history.go(-1)"/>
+       </td>
+    </tr>
+  </table>
+    </form>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

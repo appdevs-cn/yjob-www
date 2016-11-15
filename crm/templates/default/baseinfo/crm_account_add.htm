@@ -1,0 +1,58 @@
+{#include file="sys/crm_header.htm"#}
+<link href="css/date_input.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.date_input.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+//日期
+	$(function() { 
+	$(".date_input").date_input(); 
+	}); 
+}); 
+</script>
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<div class="toptit">账户基本信息  
+  </div>
+  <form id="form1" name="form1" method="post" action="?act=account_add_save">
+  {#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+    <tr>
+      <td width="120" height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">账户名称： </td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" >
+	  <input name="accountname" type="text" class="input_text_200" value=""  >	  </td>
+    </tr>
+    <tr>
+      <td width="120" align="right"  style=" border-bottom:1px #CCCCCC dashed" >开户银行：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" ><input name="bank" type="text" class="input_text_200" value=""  ></td>
+    </tr>
+    <tr>
+      <td align="right"  style=" border-bottom:1px #CCCCCC dashed" >账号：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" ><input name="account" type="text" class="input_text_200" value=""></td>
+    </tr>
+    <tr>
+      <td align="right"  style=" border-bottom:1px #CCCCCC dashed" >初始金额：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" ><input name="amount_money" type="text" class="input_text_200" value="0"></td>
+    </tr>
+    <tr>
+      <td align="right"  style=" border-bottom:1px #CCCCCC dashed" >备注：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" > <textarea name="remark" class="input_text_400" style="height:60px;"></textarea></td>
+    </tr>
+  </table>
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+	<tr>
+	  <td width="120" height="30" align="right"    >&nbsp;</td>
+	  <td   >
+	  
+            <input name="submit32" type="submit" class="admin_submit"    value="保存"/>
+      <input name="submit222" type="button" class="admin_submit"    value="返 回" onclick="Javascript:window.history.go(-1)"/>	  </td>
+    </tr>
+  </table>
+  </form>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

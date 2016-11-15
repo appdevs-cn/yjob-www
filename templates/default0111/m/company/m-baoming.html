@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="gb2312">
+		<title>个人会员中心-快速报名</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="author" content="骑士CMS" />
+		<meta name="copyright" content="74cms.com" />
+		<link rel="stylesheet" href="../css/user-common.css" />
+		<link rel="stylesheet" href="../css/personal.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.3.js" ></script>
+		<script type="text/javascript" src="../js/jquery.common.js" ></script>
+		<script type="text/javascript" src="../js/wapcheckall.js" ></script>
+		<script type='text/javascript' src="../js/jquery.pinterest.js" ></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				wapcheckall("?act=");
+				pinterest("{#$QISHI.wap_domain#}/plus/ajax.php?act=ajax_apply_list&offset=");
+			});
+		</script>
+	</head>
+	<body class="global-bg">
+		<div class="global-container">
+			<header class="global-header flex-box">
+				<div class="header-left flex1"><div class="prev" id="pageback"></div></div>
+				<div class="header-center flex2"><span class="title-only">快速报名</span></div>
+				{#include file="m/company/navi.html"#}
+			</header>
+			{#if $resume#}
+				<div id="container">
+					<section class="title flex-box" style="">
+					<form id="form1" name="form1" method="post" action="?act=index">
+						<div class="clear" style="margin-top:10px;width:100%;">
+							<div style="height:30px;width:100%;border:none;margin-right:10px;">
+								<input type="text" style="height:24px;width:120px;margin-right:6px;float:left;" name="zhi" />
+								<select name="tiaojian" style="width:60px;height:28px;float:left;" id="">
+									<option value="1" selected="selected">姓名</option>
+									
+									<option value="2">手机号</option>
+								</select>
+								<input type="submit" style="height:28px;width:80px;float:right;" value="搜索" />
+							</div>
+						</div>
+					</form>
+					</section>
+					{#foreach from=$resume  item=list#}
+						<div class="classifylist box " url="">
+							<section class="title flex-box" style="font-size:14px;">
+								<div class="name" style="width:60px;margin-right:4px;font-size:14px;">{#$list.fullname#}</div>
+								<div class="name" style="width:100px;margin-right:4px;font-size:14px;">{#$list.telephone#}</div>
+								<div class="name" style="width:80px;margin-right:4px;font-size:14px;">{#$list.title#}</div>
+								<div class="status flex2">
+									<form action="?act=ksbm_bm" method="post" style="width:160px;">
+										{#if $jobs#}
+										<select name="zhiwei"  style="width:80px;float:left;">
+											{#foreach from=$jobs item=zwlist#}
+											{#if $list.bmid==$zwlist.id#}
+											
+											<option value="{#$zwlist.id#}">{#$zwlist.jobs_name#}</option>
+											{#/if#}
+											{#/foreach#}
+										</select>
+										<input type="submit"  value="快速报名" style="margin-left:0;width:80px;color:red;line-height:16px;text-align:center;font-size:14px;float:left;">
+										
+										{#else#}
+											<a href="javascript:;" style="width:80px;color:red;line-height:20px;text-align:center;">您没发布职位或职位过期</a>
+										{#/if#}
+										
+										
+										
+										<input type="hidden" name="id" value="{#$list.id#}"/>
+										
+										
+									</form>
+								</div>
+							</section>
+							
+						</div>
+					{#/foreach#}
+				</div>
+			{#else#}
+				<article class="nodata">
+				
+					<div class="txt flex-box">您输入的信息有误！</div>
+				
+				</article>
+				
+			{#/if#}
+		</div>
+	</body>
+</html>

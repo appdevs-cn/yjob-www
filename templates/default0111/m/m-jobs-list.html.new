@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+<title>筛选条件</title>
+<link rel="stylesheet" href="/layout/blue/css/glide.css">
+<link rel="stylesheet" href="/layout/blue/css/common.css">
+<link rel="stylesheet" href="/layout/blue/css/style.css">
+
+
+</head>
+<div class="layout pb100">
+	
+	
+
+	<div class="header header_n1">		
+			<div class="head">
+				<h2>筛选条件</h2>
+			<div class="return ">
+				<a href="#"></a>
+			</div>
+			</div>
+	</div>
+	
+		
+	
+		<div class="mask">
+			
+		</div>
+	<div class="city_filter">
+		<ul>
+			<li ><h4>北京市<em></em></h4>
+				<div class="city_filter_nav">
+					<ul>
+						<li><h2>全北京</h2></li>
+						<li class="selected"><h2>朝阳</h2>
+							<div class="city_filter_sub">
+								<dl>								
+									<dd><a href="#">全朝阳</a></dd>
+									<dd>国贸</dd>
+									<dd>CBD</dd>
+									<dd>大望路</dd>
+									<dd>四惠</dd>
+									<dd>双井</dd>
+									<dd>劲松</dd>								
+								</dl>
+							</div>
+						</li>
+						<li><h2>海淀</h2></li>
+						<li><h2>东城</h2></li>
+						<li><h2>西城</h2></li>
+						<li><h2>丰台</h2></li>						
+						<li><h2>通州</h2></li>
+					</ul>
+				</div>				
+			</li>
+			<li class="selected"><h4>职位类型<em></em></h4>
+				<div class="city_filter_nav job_filter_nav">
+					<ul>
+						<li><h2>不限</h2></li>
+						<li ><h2>传单派发</h2></li>
+						<li><h2>促销导购</h2></li>
+						<li><h2>话务客服</h2></li>
+						<li><h2>礼仪模特</h2></li>
+						<li><h2>活动充场</h2></li>						
+						<li><h2>外卖送餐</h2></li>
+					</ul>
+				</div>		
+			</li>
+			<li><h4>工期性质<em></em></h4>
+				<div class="city_filter_nav job_filter_nav">
+					<ul>
+						<li><h2>不限</h2></li>
+						<li ><h2>日结</h2></li>
+						<li><h2>周结</h2></li>
+						<li><h2>月结</h2></li>
+					</ul>
+				</div>	
+			</li>
+			<li class="last"><h4>默认排序<em></em></h4>
+				<div class="city_filter_nav job_filter_nav">
+					<ul>
+						<li><h2>默认排序</h2></li>
+						<li ><h2>离我最近</h2></li>
+						<li><h2>最新发布</h2></li>
+						<li><h2>工资最高</h2></li>
+					</ul>
+				</div>	
+			</li>
+		</ul>
+	</div>	
+	
+	<div class="new_job new_jobb">
+	
+		<!--刷新开始-->
+			<table>
+			<tbody  class="body">	
+				<tr>
+					<td>
+						<a href="#">
+							<div class="ico ico_n1">
+				推广
+			</div>
+			<div class="txt">
+				<h4>百度外卖推广员</h4>
+				<h5><em class="n1"></em>06.20~06.25</h5>
+				<h5><em class="n2"></em>海淀区知春里</h5>
+			</div>
+			<div class="sup">
+				<span>160元/天</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>							
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+						</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+					<a href="#">
+						<div class="ico ico_n2">
+				送餐
+			</div>
+			<div class="txt">
+				<h4>百度外卖推广员</h4>
+				<h5><em class="n1"></em>06.20~06.25</h5>
+				<h5><em class="n2"></em>海淀区知春里</h5>
+			</div>
+			<div class="sup">
+				<span>160元/天</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>
+					<dd class="pic2">绩</dd>
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+					</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+					<a href="#">
+						<div class="ico ico_n3">
+			客服
+			</div>
+			<div class="txt">
+				<h4>饿了吗外卖送餐员</h4>
+				<h5><em class="n1"></em>06.20~10.20</h5>
+				<h5><em class="n2"></em>朝阳区团结湖</h5>
+			</div>
+			<div class="sup">
+				<span>4000元/月</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>
+					<dd class="pic2">绩</dd>
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+					</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+						<a href="#">
+							<div class="ico ico_n1">
+				推广
+			</div>
+			<div class="txt">
+				<h4>百度外卖推广员</h4>
+				<h5><em class="n1"></em>06.20~06.25</h5>
+				<h5><em class="n2"></em>海淀区知春里</h5>
+			</div>
+			<div class="sup">
+				<span>160元/天</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>							
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+						</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+					<a href="#">
+						<div class="ico ico_n2">
+				送餐
+			</div>
+			<div class="txt">
+				<h4>百度外卖推广员</h4>
+				<h5><em class="n1"></em>06.20~06.25</h5>
+				<h5><em class="n2"></em>海淀区知春里</h5>
+			</div>
+			<div class="sup">
+				<span>160元/天</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>
+					<dd class="pic2">绩</dd>
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+					</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+					<a href="#">
+						<div class="ico ico_n3">
+			客服
+			</div>
+			<div class="txt">
+				<h4>饿了吗外卖送餐员</h4>
+				<h5><em class="n1"></em>06.20~10.20</h5>
+				<h5><em class="n2"></em>朝阳区团结湖</h5>
+			</div>
+			<div class="sup">
+				<span>4000元/月</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>
+					<dd class="pic2">绩</dd>
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+					</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+						<a href="#">
+							<div class="ico ico_n1">
+				推广
+			</div>
+			<div class="txt">
+				<h4>百度外卖推广员</h4>
+				<h5><em class="n1"></em>06.20~06.25</h5>
+				<h5><em class="n2"></em>海淀区知春里</h5>
+			</div>
+			<div class="sup">
+				<span>160元/天</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>							
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+						</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+					<a href="#">
+						<div class="ico ico_n2">
+				送餐
+			</div>
+			<div class="txt">
+				<h4>百度外卖推广员</h4>
+				<h5><em class="n1"></em>06.20~06.25</h5>
+				<h5><em class="n2"></em>海淀区知春里</h5>
+			</div>
+			<div class="sup">
+				<span>160元/天</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>
+					<dd class="pic2">绩</dd>
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+					</a>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+					<a href="#">
+						<div class="ico ico_n3">
+			客服
+			</div>
+			<div class="txt">
+				<h4>饿了吗外卖送餐员</h4>
+				<h5><em class="n1"></em>06.20~10.20</h5>
+				<h5><em class="n2"></em>朝阳区团结湖</h5>
+			</div>
+			<div class="sup">
+				<span>4000元/月</span>
+			</div>
+			<div class="pic">
+				<dl>
+					<dd class="pic1">底</dd>
+					<dd class="pic2">绩</dd>
+					<dd class="pic3">月</dd>
+				</dl>
+			</div>
+					</a>
+					</td>
+				</tr>	
+			</tbody>
+		</table>	
+		
+	</div><!--new_job结束-->
+	
+	
+	<div class="pull-down pull-downn">
+		<span>正在刷新...</span>
+	</div>
+	<div class="h_hight">
+	</div>
+		<div class="navs">
+		<ul>
+			<li class="selected">
+				<div class="ico n1">
+					
+				</div>
+				<h4>首页</h4>
+			</li>
+			<li>
+				<div class="ico n2">
+					
+				</div>
+				<h4>活动</h4>
+			</li>
+			<li>
+				<div class="ico n3">
+					
+				</div>
+				<h4>消息</h4>
+			</li>
+			<li>
+				<div class="ico n4">
+					
+				</div>
+				<h4>我的</h4>
+			</li>
+		</ul>
+	</div>
+	
+</div><!--loyout结束-->
+
+<body>
+
+<script type="text/javascript" src="/layout/blue/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/layout/blue/js/jquery.glide.js"></script>
+<!--<script type="text/javascript" src="/layout/blue/js/script.js"></script>-->
+<script>
+	$(function(){
+		$(window).bind('scroll',function(bb){
+			
+			 bb.stopPropagation();
+			 
+			var a = $(document).height() - $(window).height();
+			//console.log( Math.abs($(window).scrollTop()) + '-------' +  + '---' + );
+			if(Math.abs($(window).scrollTop()) >= a){
+				
+			
+				$('.pull-down').show();
+				
+				setTimeout(function(){
+					$('.pull-down').hide();
+				},2000)
+			}
+			
+			
+			if(Math.abs($(window).scrollTop()) <= 0){
+			
+				$('.pull-up').show();
+				
+				setTimeout(function(){
+					$('.pull-up').hide();
+				},2000)
+			}
+		})
+		
+		//nav
+		$('.city_filter li').hover(function(){
+			$(this).find('.city_filter_nav').show();
+			$(this).addClass('selected');
+		},
+		function(){
+			$(this).find('.city_filter_nav').hide();
+			$(this).removeClass('selected');
+		})
+		//subnav
+		$('.city_filter li li').hover(function(){
+			$(this).find('.city_filter_sub').show();
+			$(this).addClass('selected');
+		},
+		function(){
+			$(this).find('.city_filter_sub').hide();
+			$(this).removeClass('selected');
+		})
+		
+		
+		
+	})
+	//隐藏地址栏
+	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+      function hideURLbar(){
+                window.scrollTo(0,1);
+      } 
+</script>
+</body>
+</html>
+

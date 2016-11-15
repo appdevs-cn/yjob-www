@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<title> Powered by 74CMS</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+$(".admin_top_nav>a").click(function(){
+	$(".admin_top_nav>a").removeClass("select");
+	$(this).addClass("select");
+	$(this).blur();
+	window.parent.frames["leftFrame"].location.href =  "crm_left.php?act="+$(this).attr("id");
+	})
+})
+</script>
+</head>
+<body>
+<div class="admin_top_bg">
+    <table width="1080" height="70" border="0" cellpadding="0" cellspacing="0">
+        <tr><td width="200" rowspan="2" align="right" valign="middle" ><div align="center"><img src="images/logo_in.png" width="160" height="25" /></div>
+		</td>
+          <td height="39" align="right" valign="middle" class="link_w">
+		  {#if $QISHI.subsite=="1" && $QISHI.subsite_id!="0"#}
+		  <span style="color:#FFFF00">[{#$QISHI.subsite_districtname#}站管理平台]</span>&nbsp;&nbsp;&nbsp;&nbsp;  
+		  {#/if#}
+		  欢迎{#$admin_rank#}：<strong style="color: #99FF00">{#$admin_name#}</strong>&nbsp; 登录&nbsp;&nbsp;&nbsp;&nbsp;  <a href="crm_login.php?act=logout" target="_top">[退出]</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <a href="../" target="_blank">网站首页</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.74cms.com/bbs/" target="_blank">官方论坛</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.74cms.com/" target="_blank">官方网站</a> </td>
+        </tr>
+        <tr>
+          <td height="31" valign="bottom" class="admin_top_nav">
+		  <a href="crm_index.php?act=main" class="select" target="mainFrame" id="index">首页</a>
+		  <a href="crm_myclient.php" target="mainFrame" id="myclient">客户管理</a>
+		  <a href="crm_client.php" target="mainFrame" id="client">资源池</a>
+		  <a href="crm_market.php" target="mainFrame" id="market">营销中心</a>
+		  <a href="crm_workplan.php" target="mainFrame" id="workplan">我的办公室</a>
+		  <a href="crm_contacts.php" target="mainFrame" id="contacts">通讯中心</a>
+		  <a href="crm_report.php" target="mainFrame" id="report">报表</a>
+		  <a href="crm_chart.php" target="mainFrame" id="chart">决策分析</a>
+		  <a href="crm_category.php" target="mainFrame" id="baseinfo">基础资料</a>
+		  <a href="crm_users.php" target="mainFrame" id="sys">系统</a>
+		  <div class="clear"></div>
+		   </td>
+        </tr>
+      </table>
+	  </div>
+</body>
+</html>

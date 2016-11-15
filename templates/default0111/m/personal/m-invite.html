@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="gb2312">
+		<title>个人会员中心-我的邀请码</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="author" content="骑士CMS" />
+		<meta name="copyright" content="74cms.com" />
+		<link rel="stylesheet" href="../css/user-common.css" />
+		<link rel="stylesheet" href="../css/personal.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.3.js" ></script>
+		<script type="text/javascript" src="../js/jquery.common.js" ></script>
+		<script type="text/javascript" src="../js/wapcheckall.js" ></script>
+		<script type='text/javascript' src="../js/jquery.pinterest.js" ></script>
+	</head>
+	<body class="global-bg">
+		<div class="global-container">
+			<header class="global-header flex-box">
+				<div class="header-left flex1"><div class="prev" id="pageback"></div></div>
+				<div class="header-center flex2"><span class="title-only">我的邀请码</span></div>
+				{#include file="m/personal/navi.html"#}
+			</header>
+			
+			<article class="nodata">
+                            <div class=" flex-box"><img src="{#$qimgUrl#}" style="max-height:80%;max-width:80%;"/></div>
+				<div class="txt flex-box">邀请码：{#$qCode#}</div>
+			</article>
+		</div>
+	</body>
+</html>

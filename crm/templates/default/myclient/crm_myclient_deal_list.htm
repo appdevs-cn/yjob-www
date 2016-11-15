@@ -1,0 +1,401 @@
+{#include file="sys/crm_header.htm"#}
+<script type="text/javascript" src="js/jquery.userinfotip-min.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#Butstatus").QSdialog({
+	DialogTitle:"请选择",
+	DialogContent:"#OpstatusLayer",
+	DialogContentType:"id",
+	DialogAddObj:"#Opstatus",	
+	DialogAddType:"html"	
+	});
+	$("#Buttrustworthiness").QSdialog({
+	DialogTitle:"请选择",
+	DialogContent:"#OptrustworthinessLayer",
+	DialogContentType:"id",
+	DialogAddObj:"#Optrustworthiness",	
+	DialogAddType:"html"	
+	});
+	$("#Butgrade").QSdialog({
+	DialogTitle:"请选择",
+	DialogContent:"#OpgradeLayer",
+	DialogContentType:"id",
+	DialogAddObj:"#Opgrade",	
+	DialogAddType:"html"	
+	});
+	$("#Butdeliver").QSdialog({
+	DialogTitle:"请选择",
+	DialogContent:"#OpdeliverLayer",
+	DialogContentType:"id",
+	DialogAddObj:"#Opdeliver",	
+	DialogAddType:"html"	
+	});
+	$("#Buttomycontacts").QSdialog({
+	DialogTitle:"导入到我的通讯录",
+	DialogContent:"#OptomycontactsLayer",
+	DialogContentType:"id",
+	DialogAddObj:"#Optomycontacts",	
+	DialogAddType:"html"	
+	});
+
+	//批量无效	
+	$("#Butfail").click(function(){
+		if (confirm('你确定要将所选客户设置为无效客户吗？'))
+		{
+			$("form[name=form1]").attr("action","?act=set_fail");
+			$("form[name=form1]").submit()
+		}
+	});
+	//导出
+	$("#Butexport").click(function(){
+		if (confirm('您确定要导出为excel吗？'))
+		{
+			$("form[name=form1]").attr("action","?act=myclient_export");
+			$("form[name=form1]").submit()
+		}
+	});
+	//perpage
+	$("#Butpage").click(function(){
+		$("form[name=date_from]").submit()
+	});
+});
+</script>
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<div class="seltpye_y">
+
+	<form name="date_from" method="post" action="?act=deal_list">
+	<div class="tit link_lan">
+	<strong>有效客户列表</strong><span>(共找到{#$total_val#}条)</span>
+	<a href="?">[恢复默认]</a>
+	<div class="choose_perpage">每页显示<input type="text" name="perpage" value="{#$perpage#}" class="input_text_40">
+	<a href="javascript:void(0);" style="text-decoration: none;" id="Butpage"><font size="2" color="#003399">[确定]</font></a></div>
+	</div>
+	</form>	
+	<div class="list listod" >
+	  <div class="t">客户等级</div>	  
+	  <div class="txt link_lan">
+	 	<a href="{#"grade_id:"|qishi_parse_url#}" {#if $smarty.get.grade_id ==""#}class="select"{#/if#}>不限</a>
+		{#foreach  from=$category_grade item=l#}
+
+			  <a href="{#"grade_id:"|cat:$l.c_id|qishi_parse_url#}" {#if $smarty.get.grade_id==$l.c_id#}class="select"{#/if#}>{#$l.c_name#}</a>
+			  {#/foreach#}
+	  </div>
+    </div>
+	
+	<div class="list listod" >
+	  <div class="t">客户来源</div>	  
+	  <div class="txt link_lan">
+	 	<a href="{#"source_id:"|qishi_parse_url#}" {#if $smarty.get.source_id ==""#}class="select"{#/if#}>不限</a>
+		{#foreach  from=$category_source item=l#}
+
+			  <a href="{#"source_id:"|cat:$l.c_id|qishi_parse_url#}" {#if $smarty.get.source_id==$l.c_id#}class="select"{#/if#}>{#$l.c_name#}</a>
+			  {#/foreach#}
+	  </div>
+    </div>
+	<div class="list listod" >
+	  <div class="t">信用等级</div>	  
+	  <div class="txt link_lan">
+	 	<a href="{#"trustworthiness_id:"|qishi_parse_url#}" {#if $smarty.get.trustworthiness_id ==""#}class="select"{#/if#}>不限</a>
+		{#foreach  from=$category_trustworthiness item=l#}
+
+			  <a href="{#"trustworthiness_id:"|cat:$l.c_id|qishi_parse_url#}" {#if $smarty.get.trustworthiness_id==$l.c_id#}class="select"{#/if#}>{#$l.c_name#}</a>
+			  {#/foreach#}
+	  </div>
+    </div>
+
+    {#if $is_admin==1#}
+    <div class="list" >
+	  <div class="t">客户经理</div>	  
+	  <div class="txt link_lan">
+	 	<a href="{#"admin_id:"|qishi_parse_url#}" {#if $smarty.get.admin_id==""#}class="select"{#/if#}>不限</a>
+	  	{#foreach from=$admins item=list#}
+	 	<a href="{#"admin_id:$list.admin_id"|qishi_parse_url#}" {#if $smarty.get.admin_id==$list.admin_id#}class="select"{#/if#}>{#$list.admin_name#}</a>
+		{#/foreach#}
+	  </div>
+    </div>
+    {#/if#}
+	
+	
+	
+	<div class="clear"></div>
+</div>
+
+  <form id="form1" name="form1" method="post" action="?act=perform">
+  {#$inputtoken#}
+  <table width="100%" border="0" cellpadding="0" cellspacing="0"  id="list" class="link_lan">
+    <tr>
+      <td  class="admin_list_tit admin_list_first">
+      <label id="chkAll"><input type="checkbox" name=" " title="全选/反选" id="chk"/>客户编号</label>	  </td>
+	 
+	  
+      <td width="10%" align="center"    class="admin_list_tit">客户名称</td>
+	  <td width="8%" align="center"    class="admin_list_tit">登记日期</td> 
+	  <td  width="10%" align="center" class="admin_list_tit">上次跟进</td>  
+      <td width="8%" align="center" class="admin_list_tit">成交时间</td>
+	     
+      <td width="8%" align="center" class="admin_list_tit">客户来源</td>
+	   <td width="8%" align="center" class="admin_list_tit">客户状态</td>
+	   <td width="8%" align="center" class="admin_list_tit">客户等级</td>
+	   <td width="8%" align="center" class="admin_list_tit">客户类型</td>
+	   <td width="8%" align="center" class="admin_list_tit">信用等级</td>
+	   <td width="8%" align="center" class="admin_list_tit">客户经理</td>
+	   <td width="8%" align="center" class="admin_list_tit">操作</td>
+    </tr>
+	{#foreach from=$clist item=list#}
+      <tr >
+      <td class="admin_list admin_list_first" >
+        <input name="y_id[]" type="checkbox" id="y_id" value="{#$list.id#}" />
+		{#$list.id#}
+	
+		</td>
+		<td align="center"  class="admin_list">
+		
+		{#if $$list.company_url#}
+		<a href="?act=management&id={#$list.uid#}" target="_blank">{#$list.companyname#}</a>
+		{#else#}
+		{#$list.companyname#}
+		{#/if#}</td>
+		<td align="center"  class="admin_list">
+		
+		{#$list.addtime|date_format:"%Y-%m-%d"#}			</td>
+        <td align="center" class="admin_list {#if $list.followtime<>'0'#}vtip{#/if#}" title='{#$list.client_log#}'>
+		{#if $list.followtime<>'0'#}
+		{#$list.followtime|date_format:"%Y-%m-%d"#}<font color="red">&nbsp;&nbsp;[详情]</font>
+		{#else#}
+		未联系
+		{#/if#}		</td>
+		
+        <td align="center" class="admin_list">
+		{#if $list.dealtime<>'0'#}
+		{#$list.dealtime|date_format:"%Y-%m-%d"#}
+		{#else#}
+		未设置
+		{#/if#}
+		
+		</td>
+     
+		      
+        <td align="center" class="admin_list">
+		{#if $list.source#}
+		{#$list.source#}
+		{#else#}
+		未知
+		{#/if#}
+		</td>
+		<td align="center" class="admin_list">
+		
+		{#if $list.status#}
+		{#$list.status#}
+		{#else#}
+		未知
+		{#/if#}
+		</td>
+		<td align="center" class="admin_list">
+		
+		{#if $list.grade#}
+		{#$list.grade#}
+		{#else#}
+		未知
+		{#/if#}
+		</td>
+		<td align="center" class="admin_list">
+		
+		{#if $list.type#}
+		{#$list.type#}
+		{#else#}
+		未知
+		{#/if#}
+		</td>
+		<td align="center" class="admin_list">
+		
+		{#if $list.trustworthiness#}
+		{#$list.trustworthiness#}
+		{#else#}
+		未知
+		{#/if#}
+		</td>
+		<td align="center" class="admin_list">
+		
+		{#if $list.crm_id#}
+		{#$list.admin_name#}
+		{#else#}
+		未知
+		{#/if#}
+		</td>
+		<td width="8%" align="center" class="admin_list">
+		<a href="?act=myclient_edit&id={#$list.id#}"  >管理</a>	</td>
+      </tr>
+      {#/foreach#}
+    </table>
+<span id="Opstatus"></span>
+<span id="Optrustworthiness"></span>
+<span id="Opgrade"></span>
+<span id="Opdeliver"></span>
+<span id="Optomycontacts"></span>
+  </form>
+	{#if !$clist#}
+	<div class="admin_list_no_info">没有任何信息！</div>
+	{#/if#}
+  
+	<table width="100%" border="0" cellspacing="10" cellpadding="0" class="admin_list_btm">
+      <tr>
+        <td>
+		 <input type="button" name="" value="客户状态" class="admin_submit"  id="Butstatus" />
+		<input type="button" name="" value="客户等级" class="admin_submit"  id="Butgrade" />
+		<input type="button" name="" value="信用等级" class="admin_submit"   id="Buttrustworthiness"/>
+		<input type="button" name="" value="设为无效" class="admin_submit"   id="Butfail"/>
+		<input type="button" name="" value="转交客户" class="admin_submit"   id="Butdeliver"/>
+		<input type="button" name="" value="导入到通讯录" class="admin_submit"   id="Buttomycontacts"/>
+		<input type="button" name="" value="导出" class="admin_submit" id="Butexport"/>
+		</td>
+        <td width="305" align="right">
+		<form id="formseh" name="formseh" method="get" action="?">	
+			<div class="seh">
+			    <div class="keybox"><input name="key" type="text"   value="{#$smarty.get.key#}" /></div>
+			    <div class="selbox">
+					<input name="key_type_cn"  id="key_type_cn" type="text" value="{#$smarty.get.key_type_cn|default:"客户名称"#}" readonly="true"/>
+						<div>
+								<input name="key_type" id="key_type" type="hidden" value="{#$smarty.get.key_type|default:"1"#}" />
+												<div id="sehmenu" class="seh_menu">
+														<ul>
+														<li id="1" title="客户名称">客户名称</li>
+														<li id="2" title="联系地址">联系地址</li>
+														<li id="3" title="联系人">联系人</li>
+														<li id="4" title="联系电话">联系电话</li>
+														<li id="5" title="联系邮箱">联系邮箱</li>														
+														<li id="6" title="客户网址">客户网址</li>
+														</ul>
+												</div>
+						</div>				
+				</div>
+				<div class="sbtbox">
+				<input name="act" type="hidden" value="myclient_list" />
+				<input type="submit" name="" class="sbt" id="sbt" value="搜索"/>
+				</div>
+				<div class="clear"></div>
+		  </div>
+		  </form>
+		  <script type="text/javascript">$(document).ready(function(){showmenu("#key_type_cn","#sehmenu","#key_type");});	</script>
+	    </td>
+      </tr>
+  </table>
+<div class="page link_bk">{#$page#}</div>
+</div>
+<div style="display:none" id="OptomycontactsLayer">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="6" >
+    <tr>
+      <td width="20" height="30">&nbsp;</td>
+      <td height="30"><strong  style="color:#0066CC; font-size:14px;">选择联系人分组</strong></td>
+    </tr>
+    <tr>
+      <td height="25">&nbsp;</td>
+      <td>
+      	<select name="group_id">
+      		<option value="0">不限</option>
+      		{#foreach from=$my_contacts_group item=list#}
+      		<option value="{#$list.id#}">{#$list.group_name#}</option>
+      		{#/foreach#}
+      	</select>
+      </td>
+    </tr>	
+    <tr>
+      <td height="25">&nbsp;</td>
+      <td><input type="submit" name="to_mycontacts" value="确定" class="admin_submit"    /></td>
+    </tr>		  
+  </table>
+</div>
+<div style="display:none" id="OpdeliverLayer">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="6" >
+    <tr>
+      <td width="20" height="30">&nbsp;</td>
+      <td height="30"><strong  style="color:#0066CC; font-size:14px;">将所选客户转交给为：</strong></td>
+    </tr>
+	{#foreach  from=$admin_list item=l#}
+	      <tr>
+      <td height="25">&nbsp;</td>
+      <td>
+	  <label >
+                      <input name="crm_id" type="radio" value="{#$l.admin_id#}"   />
+                     <strong> {#$l.rank#}</strong> (帐号：{#$l.admin_name#}) </label>	  </td>
+    </tr>
+	  {#/foreach#}
+    <tr>
+      <td height="25">&nbsp;</td>
+      <td><input type="submit" name="set_deliver" value="确定" class="admin_submit"    /></td>
+    </tr>		  
+  </table>
+</div>
+<div style="display:none" id="OptrustworthinessLayer">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="6" >
+    <tr>
+      <td width="20" height="30">&nbsp;</td>
+      <td height="30"><strong  style="color:#0066CC; font-size:14px;">将所选客户设置为：</strong></td>
+    </tr>
+	{#foreach  from=$category_trustworthiness item=l#}
+	      <tr>
+      <td height="25">&nbsp;</td>
+      <td>
+	  <label >
+                      <input name="trustworthiness_id" type="radio" value="{#$l.c_id#}"   />
+                      {#$l.c_name#} </label>	  </td>
+    </tr>
+	  {#/foreach#}
+    <tr>
+      <td height="25">&nbsp;</td>
+      <td><input type="submit" name="set_trustworthiness" value="确定" class="admin_submit"    /></td>
+    </tr>		  
+  </table>
+</div>
+<!-- -->
+<div style="display:none" id="OpgradeLayer">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="6" >
+    <tr>
+      <td width="20" height="30">&nbsp;</td>
+      <td height="30"><strong  style="color:#0066CC; font-size:14px;">将所选客户设置为：</strong></td>
+    </tr>
+	{#foreach  from=$category_grade item=l#}
+	      <tr>
+      <td height="25">&nbsp;</td>
+      <td>
+	  <label >
+                      <input name="grade_id" type="radio" value="{#$l.c_id#}"   />
+                      {#$l.c_name#} </label>	  </td>
+    </tr>
+	  {#/foreach#}
+    <tr>
+      <td height="25">&nbsp;</td>
+      <td><input type="submit" name="set_grade" value="确定" class="admin_submit"    /></td>
+    </tr>		  
+  </table>
+</div>
+<!-- -->
+<div style="display:none" id="OpstatusLayer">
+ <table width="100%" border="0" align="center" cellpadding="0" cellspacing="6" >
+    <tr>
+      <td width="20" height="30">&nbsp;</td>
+      <td height="30"><strong  style="color:#0066CC; font-size:14px;">将所选客户设置为：</strong></td>
+    </tr>
+	{#foreach  from=$category_status item=l#}
+	      <tr>
+      <td height="25">&nbsp;</td>
+      <td>
+	  <label >
+                      <input name="status_id" type="radio" value="{#$l.c_id#}"   />
+                      {#$l.c_name#} </label>	  </td>
+    </tr>
+	  {#/foreach#}
+    <tr>
+      <td height="25">&nbsp;</td>
+      <td><input type="submit" name="set_status" value="确定" class="admin_submit"    /></td>
+    </tr>		  
+  </table>
+</div>
+<!-- -->
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>

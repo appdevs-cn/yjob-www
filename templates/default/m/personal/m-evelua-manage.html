@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+<title>点位管理</title>
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/common.css">
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/user.css">
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/jquery.circliful.css">
+
+</head>
+<body>
+    <div class="layout">
+	<div class="user_head">
+		<div class="left">
+                    <a href="#" class="ico ico_prev"></a>
+		</div>
+		<h2>评价管理</h2>
+                <h4 id="zk">全部展开</h4>
+	</div>
+	<div class="sign_info">
+		<form>
+		<div class="head">
+			<a href="#" class="prev"></a>
+			<select name="">
+				<option value="">{#$ptInfo.job_name#}</option>
+			</select>
+			<a href="#" class="next"></a>
+		</div>
+		<div class="body">
+			<ul>
+				<li>
+					<div class="label">
+						点位督导
+					</div>
+					<div class="input">
+                                            <div class="tels">
+                                                <dl> 
+                                                    <dd>
+                                                        {#$ptInfo.dd_name#}<a href="tel:{#$ptInfo.dd_mobile#}">{#$ptInfo.dd_mobile#}</a>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+					</div>
+				</li>
+				<li>
+                                    <div class="label">
+                                            查看方式
+                                    </div>
+                                    <div class="input">
+                                        <select name="" id="pjfs">
+							<option value="all">全部人数</option>
+							<option value="yes">已评价</option>
+							<option value="no">未评价</option>
+			            </select>						
+                                    </div>
+				</li>
+				<li>
+					<div class="label">
+						选择日期
+					</div>
+					<div class="input" >						
+                                            <select id="work_date" data-url="/m/personal/user.php?act=evelua_manage&id={#$ptInfo.id#}"">
+                                                <option value="0" >全部</option>
+                                                {#foreach from=$ptInfo.work_date item=work_date#}
+                                                    <option value="{#$work_date#}" {#if $cdate == $work_date#}selected{#/if#}>{#$work_date|date_format:"%m月%d日"#}</option>
+                                                {#/foreach#}
+                                            </select>		
+					</div>
+				</li>
+			</ul>
+		</div>
+		</form>
+	</div>
+	<div class="comment_list">
+            <ul>
+                {#foreach from=$evaluateList item=evaluateInfo key=uid#}
+                    {#if $evaluateInfo.evaluate_status == 200#}
+                        <li class="replyed">
+                            <div class="hd">
+                                <div class="img">
+                                        <img src="../layout/manage/imgs/img_wz5.jpg "/>
+                                </div>
+                                <div class="txt">
+                                        <h2>{#$evaluateInfo.name#}　<a href="tel:{#$evaluateInfo.mobile#}">{#$evaluateInfo.mobile#}</a></h2>
+                                        <h4>已评价</h4>
+                                </div>
+                                <div class="ico ico1">
+                                </div>
+                            </div>
+                            <div class="bd" >
+                                <dl>
+                                    <dd data-key='punctual'data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>准时率</h4>							
+                                        <span>{#$evaluateInfo.punctual_txt#}</span>
+                                        <div class="stars">
+                                               {#$evaluateInfo.punctual#}
+                                        </div>
+                                    </dd>
+                                    <dd data-key='earnest' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>热心率</h4>							
+                                        <span>{#$evaluateInfo.earnest_txt#}</span>
+                                        <div class="stars">
+                                               {#$evaluateInfo.earnest#}
+                                        </div>
+                                    </dd>
+                                    <dd data-key='effect' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>效果率</h4>							
+                                        <span>{#$evaluateInfo.effect_txt#}</span>
+                                        <div class="stars">
+                                               {#$evaluateInfo.effect#}
+                                        </div>
+                                    </dd>
+                                    <dd data-key='performance' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>绩效率</h4>							
+                                         <span>{#$evaluateInfo.performance_txt#}</span>
+                                        <div class="stars">
+                                               {#$evaluateInfo.performance#}
+                                        </div>
+                                    </dd>
+                                    <dd data-key='ability' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>能力率</h4>							
+                                         <span>{#$evaluateInfo.ability_txt#}</span>
+                                        <div class="stars">
+                                               {#$evaluateInfo.ability#}
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <div class="txtarea">
+                                    <textarea data-uid="{#$uid#}" data-eid="{#$evaluateInfo.enroll_id#}" name="" rows="" cols="" placeholder="写下你对TA的评价和意见吧~">{#$evaluateInfo.evaluate_content#}</textarea>
+                                    <h4>您还可以输入<i>100</i>个字</h4>
+                                </div>
+                            </div>
+                        </li>
+                    {#else#}
+                        <li class="selected">
+                            <div class="hd">
+                                    <div class="img">
+                                            <img src="{#$evaluateInfo.avatars#}"/>
+                                    </div>
+                                    <div class="txt">
+                                             <h2>{#$evaluateInfo.name#}　<a href="tel:{#$evaluateInfo.mobile#}">{#$evaluateInfo.mobile#}</a></h2>
+                                            <h4>未评价</h4>
+                                    </div>
+                                    <div class="ico ico2">
+                                    </div>
+                            </div>	
+                            <div class="bd">
+                                <dl>
+                                    <dd data-key='punctual' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>准时率</h4>
+                                        <span>一般</span>
+                                        <div class="stars">
+                                            <i data-key='11'></i>
+                                            <i data-key='11'></i>
+                                            <i data-key='11'></i>
+                                            <i data-key='11'></i>
+                                            <i data-key='11'></i>
+                                        </div>
+                                    </dd>
+                                    <dd data-key='earnest' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>热心率</h4>
+                                        <span>差</span>
+                                        <div class="stars">
+                                             <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                    </dd>
+                                    <dd data-key='effect' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>效果率</h4>
+                                        <span>好</span>
+                                        <div class="stars">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                    </dd>
+                                    <dd data-key='performance' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>绩效率</h4>
+                                        <span>很好</span>
+                                        <div class="stars">
+                                           <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>						
+                                        </div>
+                                    </dd>
+                                    <dd data-key='ability' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>
+                                        <h4>能力率</h4>							
+                                        <span>很差</span>
+                                        <div class="stars">
+                                                <i></i>
+                                                <i></i>
+                                                <i></i>
+                                                <i></i>
+                                                <i></i>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <div class="txtarea">
+                                    <textarea  data-uid="{#$uid#}" data-eid="{#$evaluateInfo.enroll_id#}" name="" rows="" cols="" placeholder="写下你对TA的评价和意见吧~"></textarea>
+                                    <h4>您还可以输入<i>100</i>个字</h4>
+                                </div>
+                            </div>
+			</li>
+                    {#/if#}
+                {#/foreach#}
+            </ul>
+	</div>
+</div>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/script.js"></script>
+</body>
+</html>
+

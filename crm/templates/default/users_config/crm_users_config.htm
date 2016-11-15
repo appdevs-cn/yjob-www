@@ -1,0 +1,42 @@
+{#include file="sys/crm_header.htm"#}
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit">{#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<div class="toptip">
+<h2>提示：</h2>
+<p>
+用户相关设置；
+</p>
+</div>  
+  <div class="toptit">用户设置</div>
+    <form id="form1" name="form1" method="post" action="?act=users_config_save">
+	{#$inputtoken#}
+	<table width="100%" border="0" cellpadding="4" cellspacing="0"  class="admin_table" >
+	    <tr>
+      <td height="30" align="right"   width="120" style="border:0px;" >最大领取客户数量：</td>
+      <td  style="border:0px;" ><input type="text" class="input_text_200" name="max_receive_client_num" value="{#$max_receive_client_num.config_value#}"></td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >跟进期限：</td>
+      <td   ><input type="text" name="follow_days" class="input_text_200" value="{#$follow_days.config_value#}"><font color="red">（0为不回收,业务员领取客户之后期限内没有跟进将回收到客户资源池）</font></td>
+    </tr>
+	<tr>
+      <td height="30" align="right"  >成交期限：</td>
+      <td   ><input type="text" name="deal_days" class="input_text_200" value="{#$deal_days.config_value#}"><font color="red">（0为不回收,业务员领取客户之后期限内没有成交将回收到客户资源池）</font></td>
+    </tr>
+	  <tr>
+      <td height="30" align="right"  >&nbsp;</td>
+      <td height="50"  >
+            <input name="submit3" type="submit" class="admin_submit"    value="保存"/>
+		
+            <input name="submit22" type="button" class="admin_submit"    value="返回" onclick="Javascript:window.history.go(-1)"/>
+       </td>
+    </tr>	
+  </table>
+  </form>
+</div>
+{#include file="sys/crm_footer.htm"#}
+</body>
+</html>
