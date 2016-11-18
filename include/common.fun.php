@@ -1033,10 +1033,10 @@ function https_request_api($apiPath, $data = null) {
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($curl);
 
-//        $log .= "\r\n".'url='.$url."\r\n";
-//        $log .= 'pramas='.$data."\r\n";
-//        $log .= 'result='.$output;
-//        file_put_contents("/tmp/request-api-".date('Y-m-d', time()).".log", var_export($log, true), FILE_APPEND);
+        $log .= "\r\n".'url='.$url."\r\n";
+        $log .= 'pramas='.$data."\r\n";
+        $log .= 'result='.$output;
+        file_put_contents("/tmp/request-api-".date('Y-m-d', time()).".log", var_export($log, true), FILE_APPEND);
         if($output) {
             $output = json_decode($output, true);
         }
