@@ -12,16 +12,22 @@
 define('IN_QISHI', true);
 require_once(dirname(__FILE__).'/company_common.php');
 $smarty->assign('leftmenu',"jobs");
+//..............
+function get_area_by_id($id){
+	global $db;
+	$area = $db->getall("select categoryname from ".table('category_qgdistrict')." where id=".$id);
+	return $area[0]["categoryname"];
+}
 if ($act=='jobs')
 {
-    $page = $_GET['page'] ? intval($_GET['page']) : 0;
-    $size = $_GET['size'] ? intval($_GET['size']) : 30;
-    $_GET['status'] && $status = intval($_GET['status']);
-    $postData['page'] = $page;
-    $postData['size'] = $size;
-    $postData['status'] = $status;
-    $postData['company_id'] = $company_profile['id'];
-    $list = https_request_api('job/list', $postData);
+	$page = $_GET['page'] ? intval($_GET['page']) : 0;
+	$size = $_GET['size'] ? intval($_GET['size']) : 30;
+	$_GET['status'] && $status = intval($_GET['status']);
+	$postData['page'] = $page;
+	$postData['size'] = $size;
+	$postData['status'] = $status;
+	$postData['company_id'] = $company_profile['id'];
+	$list = https_request_api('job/list', $postData);
 //	$addjobs_save_succeed=intval($_GET['addjobs_save_succeed']);
 //	$jobtype=intval($_GET['jobtype']);
 //	$wheresql=" WHERE uid='{$_SESSION['uid']}' ";
@@ -32,7 +38,7 @@ if ($act=='jobs')
 //			/* 全部职位 状态 筛选*/
 //			$state=intval($_GET["state"]);
 //			if($state==1)
-//			{	
+//			{
 //				$tabletype="jobs";
 //			}
 //			elseif($state==2)
@@ -52,7 +58,7 @@ if ($act=='jobs')
 //			}
 //			$orderby=" order by display asc,audit asc";
 //			break;
-//			
+//
 //		case 2:
 //			$tabletype="jobs_tmp";
 //			$wheresql.=" AND audit=2 ";
@@ -87,8 +93,8 @@ if ($act=='jobs')
 //	{
 //		$wheresql.=" AND $generalize<>'' ";
 //	}
-//	
-        //require_once(QISHI_ROOT_PATH.'include/page.class.php');
+//
+	//require_once(QISHI_ROOT_PATH.'include/page.class.php');
 //	$perpage=10;
 //	if ($tabletype=="all")
 //	{
@@ -99,7 +105,7 @@ if ($act=='jobs')
 //	$total_sql="SELECT COUNT(*) AS num FROM ".table($tabletype).$wheresql;
 //	}
 //	$total_val=$db->get_total($total_sql);
-//        
+//
 //	$page = new page(array('total'=>$list['totalCount'], 'perpage'=>$perpage,'getarray'=>$_GET));
 //	$offset=($page->nowindex-1)*$perpage;
 	$smarty->assign('title','职位管理 - 企业会员中心 - '.$_CFG['site_name']);
@@ -107,15 +113,15 @@ if ($act=='jobs')
 	$smarty->assign('audit',$audit);
 	$smarty->assign('total', $list['data']['totalCount']);
 	$smarty->assign('jobs_total',$list['data']['totalCount']);
-        $smarty->assign('jobs', $list['data']['list']);
+	$smarty->assign('jobs', $list['data']['list']);
 //	if($total_val>$perpage)
 //	{
 //		$smarty->assign('page',$page->show(3));
 //	}
 //	// 发布成功标记
 	$addjobs_save_succeed=intval($_GET['addjobs_save_succeed']);
-        
-        $jobs_one_tmp = https_request_api('job/info/'.$addjobs_save_succeed);
+
+	$jobs_one_tmp = https_request_api('job/info/'.$addjobs_save_succeed);
 //	$jobs_one=get_jobs_one($addjobs_save_succeed);
 	$smarty->assign('jobs_one',$jobs_one_tmp['data']);
 //	$smarty->assign('points_rule',get_cache('points_rule'));
@@ -320,19 +326,20 @@ elseif ($act=='addjobs_save')
     $addData['receive_info']['push_email'] = intval($_POST['notify']) == 1 ? 100 : 200;
     $addData['receive_info']['receive_mobile'] = $_POST['telephone_two'];
     $addData['receive_info']['push_sms'] = intval($_POST['notify_mobile']) == 1 ? 100 : 200;
+//    $addData['stations_info']=[];
     if($_POST['stations']) {
         foreach($_POST['stations'] as $sk => $sv) {
             parse_str(urldecode($sv), $stationArr);
             $stationTmp['supervisor_nums'] = $stationArr['dd_nums'];
             $stationTmp['supervisor_backup'] = $stationArr['dd_by_nums'];
             $stationTmp['supervisor_money'] = $stationArr['ddxz'];
-            $stationTmp['supervisor_wage'] = $stationArr['ddxz'];
-            $stationTmp['supervisor_type'] = $stationArr['ddxz'];
+			$stationTmp['supervisor_wage'] = $stationArr['work_xzdw_id'];	//督导薪资计算方式ID(天/件/次....).
+			$stationTmp['supervisor_type'] = $stationArr['work_xzdw_id'];	// 	督导结算方式ID.(未实现)
             $stationTmp['parttime_nums'] = $stationArr['stations_jz_nums'];
             $stationTmp['parttime_backup'] = $stationArr['stations_jz_by_nums'];
-            $stationTmp['parttime_money'] = $stationArr['jz_xz'];
-            $stationTmp['parttime_wage'] = $stationArr['ddxz'];
-            $stationTmp['parttime_type'] = $stationArr['ddxz'];
+            $stationTmp['parttime_money'] = $stationArr['jz_xz']; //兼职薪资.
+            $stationTmp['parttime_wage'] = $stationArr['work_xzdw_id'];		//兼职薪资计算方式ID(天/件/次....)(未实现)
+            $stationTmp['parttime_type'] = $stationArr['work_xzdw_id'];		//兼职薪资督导结算方式ID.(未实现)
             $pTmp = explode('|', $stationArr['provinceId']);
             $stationTmp['province_id'] = $pTmp[0];
             $cTmp = explode('|', $stationArr['cityId']);
@@ -340,8 +347,8 @@ elseif ($act=='addjobs_save')
             $dTmp = explode('|', $stationArr['countyId']);
             $stationTmp['district_id'] = $dTmp[0];
             $bTmp = explode('|', $stationArr['businessId']);
-            $stationTmp['business_district_id'] = $bTmp[0] = 1;
-            $stationTmp['address'] = $stationArr['fname'];
+            $stationTmp['business_district_id'] = $bTmp[0];
+            $stationTmp['address'] = iconv('utf-8', 'gbk', $stationArr['fname']);
             $stationTmp['lng'] = $stationArr['position_lng'];
             $stationTmp['lat'] = $stationArr['position_lat'];
             $stationTmp['start_date'] = strtotime($stationArr['work_start']);
@@ -349,11 +356,15 @@ elseif ($act=='addjobs_save')
             $stationTmp['work_start_time'] = $stationArr['work_start_time'];
             $stationTmp['work_end_time'] = $stationArr['work_end_time'];
             $stationTmp['fall_in_time'] = $stationArr['work_jh_time'];
-            $stationTmp['fall_in_address'] = $stationArr['work_jh_dd'];
+            $stationTmp['fall_in_address'] = iconv('utf-8', 'gbk', $stationArr['work_jh_dd']);
             $addData['stations_info'][] = $stationTmp;
         }
     }
+
     $addRst = https_request_api('job/create', $addData);
+
+//	var_dump($addData);
+//	var_dump($addRst);exit;
     $pid = $addRst['data']['id'];
     header("location:?act=jobs&addjobs_save_succeed=".$pid);
 }
@@ -469,6 +480,7 @@ elseif ($act=='editjobs')
         showmsg("获取职位信息失败！",1);
     }
 	$jobs=$jobs_info_tmp['data'];
+//var_dump($jobs);exit;
 	if (empty($jobs)) showmsg("参数错误！",1);
 	$jobs['contents'] = htmlspecialchars_decode($jobs['job_desc'],ENT_QUOTES);
         unset($jobs['job_desc']);
@@ -565,192 +577,333 @@ elseif ($act=='editjobs')
 
             }
         }
+
         if($jobs['list']) {
             foreach($jobs['list'] as $lk => &$lv) {
                 $lv['start_date'] = date('Y年m月d日', $lv['start_date']);
-                $lv['end_date'] = date('Y年月d日', $lv['end_date']);
+                $lv['end_date'] = date('Y年m月d日', $lv['end_date']);
             }
         }
+//        var_dump($jobs);exit;
+	//后来添加代码
+//	序列化点位信息
+	$position_list = array();
+	for($i=0;$i<count($jobs["list"]);$i++){
+		$str = '';
+		$str .= "job_info_id=".$jobs["list"][$i]['id'];
+		$str .= "&provinceId=".$jobs["list"][$i]['province_id'] . "||";
+		$jobs["list"][$i]['provinceName'] = get_area_by_id($jobs["list"][$i]['province_id']);
+		$str .= "&provinceName=" . $jobs["list"][$i]['provinceName'];
+
+		$str .= '&cityId='.$jobs["list"][$i]["city_id"] . "||";
+		$jobs["list"][$i]['cityName'] = get_area_by_id($jobs["list"][$i]['city_id']);
+		$str .= '&cityName='. $jobs["list"][$i]['cityName'];
+
+		$str .= '&countyId='.$jobs["list"][$i]["district_id"] . "||";	//3级地区  有疑问
+		$jobs["list"][$i]['countyName'] = get_area_by_id($jobs["list"][$i]['district_id']);
+		$str .= '&countyName='. $jobs["list"][$i]['countyName'];
+
+		$str .= '&businessId='.$jobs["list"][$i]["business_district_id"] . "||";
+		$jobs["list"][$i]['businessName'] = get_area_by_id($jobs["list"][$i]['business_district_id']);
+		$str .= '&businessName='. $jobs["list"][$i]['businessName'];
+
+		$str .= '&fname='.$jobs["list"][$i]["address"];
+		$str .= '&dd_nums='.$jobs["list"][$i]['supervisor_nums'];
+		$str .= '&dd_by_nums='.$jobs["list"][$i]['supervisor_backup'];
+		$str .= '&ddxz='.$jobs["list"][$i]['supervisor_money'];
+		$str .= '&stations_jz_nums='.$jobs["list"][$i]['parttime_nums'];
+		$str .= '&stations_jz_by_nums='.$jobs["list"][$i]['parttime_backup'];
+		$str .= '&jz_xz='.$jobs["list"][$i]['parttime_money'];
+
+		$temp_time = str_replace(['年','月'],['-','-'],$jobs["list"][$i]['start_date']);
+		$temp_time = rtrim($temp_time,"日");
+		$str .= '&work_start='.$temp_time;
+
+		$temp_time = str_replace(['年','月'],['-','-'],$jobs["list"][$i]['end_date']);
+		$temp_time = rtrim($temp_time,"日");
+		$str .= '&work_end='.$temp_time;
+
+		$str .= '&work_start_time='.$jobs["list"][$i]['work_start_time'];
+		$str .= '&work_end_time='.$jobs["list"][$i]['work_end_time'];
+		$str .= '&work_jh_time='.$jobs["list"][$i]['fall_in_time'];
+		$str .= '&work_jh_dd='.$jobs["list"][$i]['fall_in_address'];
+		$str .= '&position_lng='.$jobs["list"][$i]['lng'];
+		$str .= '&position_lat='.$jobs["list"][$i]['lat'];
+		$str .= '&work_xzdw_id='.$jobs["list"][$i]['supervisor_wage'];
+//		$str .= '&work_xzdw='.$jobs["list"][i];
+//		把字符串进行url编码
+//		var_dump($str);
+		$jobs["list"][$i]["encoded_position"] = urlencode(iconv("GBK","UTF-8",$str));
+	}
+//	var_dump($jobs);exit;
 	$smarty->assign('subsite_cn', $jobs['site']['s_sitename']);
 	$smarty->assign('district_cn',$jobs['site']['s_districtname']);
 	$smarty->assign('district',get_subsite_district($jobs['s_district']));
 	$smarty->assign('jobs',$jobs);
 	$smarty->display('member_company/company_editjobs.htm');
 }
-elseif ($act=='editjobs_save')
-{
-	$id=intval($_POST['id']);
-	$add_mode=trim($_POST['add_mode']);
-	if ($add_mode=='1')
-	{
-					$points_rule=get_cache('points_rule');
-					$user_points=get_user_points($_SESSION['uid']);
-					if($points_rule['jobs_edit']['type']=="2" && $points_rule['jobs_edit']['value']>0)
-					{
-						$total=$points_rule['jobs_edit']['value'];
-						if ($total>$user_points)
-						{
-						$link[0]['text'] = "返回上一页";
-						$link[0]['href'] = 'javascript:history.go(-1)';
-						$link[1]['text'] = "立即充值";
-						$link[1]['href'] = 'company_service.php?act=order_add';
-						showmsg("你的".$_CFG['points_byname']."不足，请充值后再发布！",0,$link);
-						}
-					}
-					
-	}
-	elseif ($add_mode=='2')
-	{
-					$link[0]['text'] = "立即开通服务";
-					$link[0]['href'] = 'company_service.php?act=setmeal_list';
-					$link[1]['text'] = "会员中心首页";
-					$link[1]['href'] = 'company_index.php?act=';
-				$setmeal=get_user_setmeal($_SESSION['uid']);
-				if ($setmeal['endtime']<time() && $setmeal['endtime']<>"0")
-				{					
-					showmsg("您的套餐已经到期，请重新开通",1,$link);
-				}
-	}
-    
-	$setsqlarr['jobs_name']=!empty($_POST['jobs_name'])?trim($_POST['jobs_name']):showmsg('您没有填写职位名称！',1);
+elseif ($act=='editjobs_save'){
+
+	$updateDate['job_id'] = $_POST['id'];
+	$updateDate['job_name'] = !empty($_POST['jobs_name'])?trim($_POST['jobs_name']):showmsg('您没有填写职位名称！',1);
 	check_word($_CFG['filter'],$_POST['jobs_name'])?showmsg($_CFG['filter_tips'],0):'';
-	$setsqlarr['nature']=intval($_POST['nature']);
-	$setsqlarr['nature_cn']=trim($_POST['nature_cn']);
-	$setsqlarr['topclass']=trim($_POST['topclass']);
-	$setsqlarr['category']=!empty($_POST['category'])?intval($_POST['category']):showmsg('请选择职位类别！',1);
-	$setsqlarr['subclass']=trim($_POST['subclass']);
-	$setsqlarr['category_cn']=trim($_POST['category_cn']);
-	$setsqlarr['wage_amount']=trim($_POST['wage_amount']);
-	/* $setsqlarr['topclasss']=trim($_POST['topclasss']);
-	$setsqlarr['categorys']=!empty($_POST['categorys'])?intval($_POST['categorys']):showmsg('请选择工作地区！',1);
-	$setsqlarr['subclasss']=trim($_POST['subclasss']);
-	$setsqlarr['category_cns']=trim($_POST['category_cns']); */
-	$setsqlarr['amount']=intval($_POST['amount']);
-	$setsqlarr['subsite_id']=!empty($_POST['subsite_id'])?intval($_POST['subsite_id']):showmsg('请选择发布城市！',1);
-	$setsqlarr['district']=intval($_POST['district']);
-	$setsqlarr['sdistrict']=intval($_POST['sdistrict']);
-	$setsqlarr['district_cn']=empty($_POST['district_cn'])?trim($_POST['subsite_name']):(trim($_POST['subsite_name']).'/'.trim($_POST['district_cn']));
-	$setsqlarr['wage']=intval($_POST['wage'])?intval($_POST['wage']):showmsg('请选择薪资待遇！',1);		
-	$setsqlarr['wage_cn']=trim($_POST['wage_cn']);
-	$setsqlarr['work_start']=strtotime($_POST['work_start']);
-	$setsqlarr['work_end']=strtotime($_POST['work_end']);
-	$setsqlarr['negotiable']=intval($_POST['negotiable']);
-	$setsqlarr['tag']=trim($_POST['tag']);
-	$setsqlarr['tag_cn']=trim($_POST['tag_cn']);
-	$setsqlarr['jobspecial']=trim($_POST['tags']);
-	$setsqlarr['jobspecial_cn']=trim($_POST['tag_cns']);
-	$setsqlarr['sex']=intval($_POST['sex']);
-	$setsqlarr['sex_cn']=trim($_POST['sex_cn']);
-	$setsqlarr['education']=intval($_POST['education'])?intval($_POST['education']):'';		
-	$setsqlarr['education_cn']=trim($_POST['education_cn']);
-	$setsqlarr['experience']=intval($_POST['experience'])?intval($_POST['experience']):'';		
-	$setsqlarr['experience_cn']=trim($_POST['experience_cn']);
-	$setsqlarr['graduate']=intval($_POST['graduate']);
-	$setsqlarr['age']=trim($_POST['minage'])."-".trim($_POST['maxage']);
-	$setsqlarr['contents']=!empty($_POST['contents'])?trim($_POST['contents']):showmsg('您没有填写职位描述！',1); 
-	check_word($_CFG['filter'],$_POST['contents'])?showmsg($_CFG['filter_tips'],0):'';
-	if ($add_mode=='1'){
-		$setsqlarr['setmeal_deadline']=0;
-		$setsqlarr['add_mode']=1;
-	}elseif($add_mode=='2'){
-		$setmeal=get_user_setmeal($_SESSION['uid']);
-		$setsqlarr['setmeal_deadline']=$setmeal['endtime'];
-		$setsqlarr['setmeal_id']=$setmeal['setmeal_id'];
-		$setsqlarr['setmeal_name']=$setmeal['setmeal_name'];
-		$setsqlarr['add_mode']=2;
-	}
-	// 修改职位 过期时间为
-	$setsqlarr['deadline']=strtotime("".intval($_CFG['company_add_days'])." day");
-	$setsqlarr['key']=$setsqlarr['jobs_name'].$company_profile['companyname'].$setsqlarr['category_cn'].$setsqlarr['district_cn'].$setsqlarr['contents'];
-	require_once(QISHI_ROOT_PATH.'include/splitword.class.php');
-	$sp = new SPWord();
-	$setsqlarr['key']="{$setsqlarr['jobs_name']} {$company_profile['companyname']} ".$sp->extracttag($setsqlarr['key']);
-	$setsqlarr['key']=$sp->pad($setsqlarr['key']);
-	if ($company_profile['audit']=="1")
-	{
-	$_CFG['audit_verifycom_editjob']<>"-1"?$setsqlarr['audit']=intval($_CFG['audit_verifycom_editjob']):'';
-	}
-	else
-	{
-	$_CFG['audit_unexaminedcom_editjob']<>"-1"?$setsqlarr['audit']=intval($_CFG['audit_unexaminedcom_editjob']):'';
-	}
-	$setsqlarr_contact['contact']=!empty($_POST['contact'])?trim($_POST['contact']):showmsg('您没有填写联系人！',1);
+	$updateDate['job_desc'] = !empty($_POST['contents'])?trim($_POST['contents']):showmsg('您没有填写职位描述！',1);
+	$updateDate['company_id'] = $company_profile['id'];
+	$updateDate['company_name'] = $company_profile['companyname'];
+	$updateDate['job_type'] = intval($_POST['nature']);
+	$updateDate['category_id'] = !empty($_POST['subclass'])?intval($_POST['subclass']):showmsg('请选择职位类别！',1);
+	$updateDate['category_name'] = trim($_POST['category_cn']);
+	$updateDate['position_high'] = trim($_POST['tag']);
+	$updateDate['position_character'] = trim($_POST['tags']);
+	$updateDate['sex'] = intval($_POST['sex']) == 1 ? 200 : (intval($_POST['sex']) == 2 ? 300 : 100) ;
+	$updateDate['education'] = intval($_POST['education'])?intval($_POST['education']):'';
+	$updateDate['experience'] = intval($_POST['experience'])?intval($_POST['experience']):'';
+	$updateDate['min_age'] = intval($_POST['minage']);
+	$updateDate['max_age'] = intval($_POST['maxage']);
+	$updateDate['publish_city_id'] = !empty($_POST['subsite_id'])?intval($_POST['subsite_id']):showmsg('请选择发布城市！',1);
+	$updateDate['contacts_info']['contact_name'] = !empty($_POST['contact'])?trim($_POST['contact']):showmsg('您没有填写联系人！',1);
 	check_word($_CFG['filter'],$_POST['contact'])?showmsg($_CFG['filter_tips'],0):'';
-	$setsqlarr_contact['telephone']=!empty($_POST['telephone'])?trim($_POST['telephone']):'';
-	check_word($_CFG['filter'],$_POST['telephone'])?showmsg($_CFG['filter_tips'],0):'';
-	$setsqlarr_contact['address']=!empty($_POST['address'])?trim($_POST['address']):showmsg('您没有填写联系地址！',1);
-	check_word($_CFG['filter'],$_POST['address'])?showmsg($_CFG['filter_tips'],0):'';
-	$setsqlarr_contact['email']=!empty($_POST['email'])?trim($_POST['email']):showmsg('您没有填写联系邮箱！',1);
-	check_word($_CFG['filter'],$_POST['email'])?showmsg($_CFG['filter_tips'],0):'';
-	$setsqlarr_contact['notify']=intval($_POST['notify']);//邮件提醒
-	$setsqlarr_contact['notify_mobile']=intval($_POST['notify_mobile']);//手机提醒
-	
-  	$setsqlarr_contact['contact_show']=intval($_POST['contact_show']);
-	$setsqlarr_contact['email_show']=intval($_POST['email_show']);
-	$setsqlarr_contact['telephone_show']=intval($_POST['telephone_show']);
-	$setsqlarr_contact['address_show']=intval($_POST['address_show']);
-	//座机
+	$updateDate['contacts_info']['dispaly_name'] = intval($_POST['contact_show']) == 1 ? 100 : 200;
 	$landline_tel[]=trim($_POST['landline_tel_first'])?trim($_POST['landline_tel_first']):"0";
 	$landline_tel[]=trim($_POST['landline_tel_next'])?trim($_POST['landline_tel_next']):"0";
 	$landline_tel[]=trim($_POST['landline_tel_last'])?trim($_POST['landline_tel_last']):"0";
-	$setsqlarr_contact['landline_tel']=implode('-', $landline_tel);
-	//座机和手机至少二选一
-	if(empty($setsqlarr_contact['telephone']) && $setsqlarr_contact['landline_tel']=='0-0-0')
-	{
-		showmsg('请填写手机或固话，二选一即可！',1);
-	}
- 
-	if (!$db->updatetable(table('jobs'), $setsqlarr," id='{$id}' AND uid='{$_SESSION['uid']}' ")) showmsg("保存失败！",0);
-	if (!$db->updatetable(table('jobs_tmp'), $setsqlarr," id='{$id}' AND uid='{$_SESSION['uid']}' ")) showmsg("保存失败！",0);
-	if (!$db->updatetable(table('jobs_contact'), $setsqlarr_contact," pid='{$id}' ")){
-		showmsg("保存失败！",0);
-	}
-	if ($add_mode=='1')
-	{
-		if ($points_rule['jobs_edit']['value']>0)
-		{
-		report_deal($_SESSION['uid'],$points_rule['jobs_edit']['type'],$points_rule['jobs_edit']['value']);
-		$user_points=get_user_points($_SESSION['uid']);
-		$operator=$points_rule['jobs_edit']['type']=="1"?"+":"-";
-		write_memberslog($_SESSION['uid'],1,9001,$_SESSION['username'],"修改职位：<strong>{$setsqlarr['jobs_name']}</strong>，({$operator}{$points_rule['jobs_edit']['value']})，(剩余:{$user_points})",1,1002,"修改招聘信息","{$operator}{$points_rule['jobs_edit']['value']}","{$user_points}");
+	$updateDate['contacts_info']['contact_tel'] = implode('-', $landline_tel);
+	$updateDate['contacts_info']['contact_mobile'] = !empty($_POST['telephone'])?trim($_POST['telephone']):'';
+	check_word($_CFG['filter'],$_POST['telephone'])?showmsg($_CFG['filter_tips'],0):'';
+	$updateDate['contacts_info']['dispaly_mobile'] = intval($_POST['telephone_show']) == 1 ? 100 : 200;
+	$updateDate['contacts_info']['contact_email'] = !empty($_POST['email'])?trim($_POST['email']):showmsg('您没有填写联系邮箱！',1);
+	check_word($_CFG['filter'],$_POST['email'])?showmsg($_CFG['filter_tips'],0):'';
+	$updateDate['contacts_info']['dispaly_email'] = intval($_POST['email_show']) == 1 ? 100 : 200;
+	$updateDate['contacts_info']['contact_address'] = !empty($_POST['address'])?trim($_POST['address']):showmsg('您没有填写联系地址！',1);
+	check_word($_CFG['filter'],$_POST['address'])?showmsg($_CFG['filter_tips'],0):'';
+	$updateDate['receive_info']['receive_email'] = $_POST['email'];
+	$updateDate['receive_info']['push_email'] = intval($_POST['notify']) == 1 ? 100 : 200;
+	$updateDate['receive_info']['receive_mobile'] = empty($_POST['telephone_two'])?$_POST['telephone']:$_POST['telephone_two'];	//teleon_tw0为disable未提交过来
+	$updateDate['receive_info']['push_sms'] = intval($_POST['notify_mobile']) == 1 ? 100 : 200;
+    $updateDate['stations_info']=[];
+	if($_POST['stations']) {
+		foreach($_POST['stations'] as $sk => $sv) {
+			$stationArr = [];
+			$stationTmp = [];
+			parse_str(urldecode($sv), $stationArr);
+			if(!empty($stationArr['job_info_id'])){
+				$stationTmp['job_info_id'] = (int)$stationArr['job_info_id'];
+			}
+			$stationTmp['supervisor_nums'] = (int)$stationArr['dd_nums'];
+			$stationTmp['supervisor_backup'] = (int)$stationArr['dd_by_nums'];
+			$stationTmp['supervisor_money'] = (int)$stationArr['ddxz'];
+			$stationTmp['supervisor_wage'] = (int)$stationArr['work_xzdw_id'];	//督导薪资计算方式ID(天/件/次....).
+			$stationTmp['supervisor_type'] = (int)$stationArr['ddxz'];	// 	督导结算方式ID.(未实现)
+			$stationTmp['parttime_nums'] = (int)$stationArr['stations_jz_nums'];
+			$stationTmp['parttime_backup'] = (int)$stationArr['stations_jz_by_nums'];
+			$stationTmp['parttime_money'] = (int)$stationArr['jz_xz']; //兼职薪资.
+			$stationTmp['parttime_wage'] = (int)$stationArr['ddxz'];		//兼职薪资计算方式ID(天/件/次....)(未实现)
+			$stationTmp['parttime_type'] = (int)$stationArr['ddxz'];		//兼职薪资督导结算方式ID.(未实现)
+			$pTmp = explode('|', $stationArr['provinceId']);
+			$stationTmp['province_id'] = (int)$pTmp[0];
+			$cTmp = explode('|', $stationArr['cityId']);
+			$stationTmp['city_id'] = (int)$cTmp[0];
+			$dTmp = explode('|', $stationArr['countyId']);
+			$stationTmp['district_id'] = (int)$dTmp[0];
+			$bTmp = explode('|', $stationArr['businessId']);
+			$stationTmp['business_district_id'] = (int)$bTmp[0];
+			$stationTmp['address'] = iconv('utf-8', 'gbk', $stationArr['fname']);
+			$stationTmp['lng'] = (double)$stationArr['position_lng'];
+			$stationTmp['lat'] = (double)$stationArr['position_lat'];
+			$stationTmp['start_date'] = strtotime($stationArr['work_start']);
+			$stationTmp['end_date'] = strtotime($stationArr['work_end']);
+			$stationTmp['work_start_time'] = $stationArr['work_start_time'];
+			$stationTmp['work_end_time'] = $stationArr['work_end_time'];
+			$stationTmp['fall_in_time'] = $stationArr['work_jh_time'];
+			$stationTmp['fall_in_address'] = iconv('utf-8', 'gbk', $stationArr['work_jh_dd']);
+			$updateDate['stations_info'][] = $stationTmp;
 		}
-	}	 
-	$link[0]['text'] = "职位列表";
-	$link[0]['href'] = '?act=jobs';
-	$link[1]['text'] = "查看修改结果";
-	$link[1]['href'] = "?act=editjobs&id={$id}";
-	$link[2]['text'] = "会员中心首页";
-	$link[2]['href'] = "company_index.php";
-	//
-	$searchtab['nature']=$setsqlarr['nature'];
-	$searchtab['sex']=$setsqlarr['sex'];
-	$searchtab['topclass']=$setsqlarr['topclass'];
-	$searchtab['category']=$setsqlarr['category'];
-	$searchtab['subclass']=$setsqlarr['subclass'];
-	$searchtab['topclasss']=$setsqlarr['topclasss'];
-	$searchtab['categorys']=$setsqlarr['categorys'];
-	$searchtab['subclasss']=$setsqlarr['subclasss'];
-	$searchtab['district']=$setsqlarr['district'];
-	$searchtab['sdistrict']=$setsqlarr['sdistrict'];
-	$searchtab['education']=$setsqlarr['education'];
-	$searchtab['experience']=$setsqlarr['experience'];
-	$searchtab['wage']=$setsqlarr['wage'];
-	$searchtab['graduate']=$setsqlarr['graduate'];	
-	//
-	$db->updatetable(table('jobs_search_wage'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
-	$db->updatetable(table('jobs_search_rtime'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
-	$db->updatetable(table('jobs_search_stickrtime'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
-	$db->updatetable(table('jobs_search_hot'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
-	$db->updatetable(table('jobs_search_scale'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}'");
-	$searchtab['key']=$setsqlarr['key'];
-	$searchtab['likekey']=$setsqlarr['jobs_name'].','.$company_profile['companyname'];
-	$db->updatetable(table('jobs_search_key'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
-	unset($searchtab);
-	add_jobs_tag(intval($_POST['id']),$_SESSION['uid'],$_POST['tag'])?"":showmsg('保存失败！',0);
-	distribution_jobs($id,$_SESSION['uid']);
-	write_memberslog($_SESSION['uid'],$_SESSION['utype'],2002,$_SESSION['username'],"修改了职位：{$setsqlarr['jobs_name']}，职位ID：{$id}");
-	showmsg("修改成功！",2,$link);
+	}
+	$updateDate['del_job_ids'] = empty($_POST['del_job_ids'])?[]:explode(',',rtrim($_POST['del_job_ids'],','));
+	array_walk($updateDate['del_job_ids'],function (&$v,$k){$v=(int)$v;});
+
+
+	$updateRst = https_request_api('job/update',$updateDate);
+    var_dump($updateDate,$updateRst);exit;
+
+
+	header("location:?act=editjobs&id=".$updateDate['job_id']);
 }
+//elseif ($act=='editjobs_save')
+//{
+//	var_dump($_POST);exit;
+//	$id=intval($_POST['id']);
+//	$add_mode=trim($_POST['add_mode']);
+//	if ($add_mode=='1')
+//	{
+//					$points_rule=get_cache('points_rule');
+//					$user_points=get_user_points($_SESSION['uid']);
+//					if($points_rule['jobs_edit']['type']=="2" && $points_rule['jobs_edit']['value']>0)
+//					{
+//						$total=$points_rule['jobs_edit']['value'];
+//						if ($total>$user_points)
+//						{
+//						$link[0]['text'] = "返回上一页";
+//						$link[0]['href'] = 'javascript:history.go(-1)';
+//						$link[1]['text'] = "立即充值";
+//						$link[1]['href'] = 'company_service.php?act=order_add';
+//						showmsg("你的".$_CFG['points_byname']."不足，请充值后再发布！",0,$link);
+//						}
+//					}
+//
+//	}
+//	elseif ($add_mode=='2')
+//	{
+//					$link[0]['text'] = "立即开通服务";
+//					$link[0]['href'] = 'company_service.php?act=setmeal_list';
+//					$link[1]['text'] = "会员中心首页";
+//					$link[1]['href'] = 'company_index.php?act=';
+//				$setmeal=get_user_setmeal($_SESSION['uid']);
+//				if ($setmeal['endtime']<time() && $setmeal['endtime']<>"0")
+//				{
+//					showmsg("您的套餐已经到期，请重新开通",1,$link);
+//				}
+//	}
+//
+//	$setsqlarr['jobs_name']=!empty($_POST['jobs_name'])?trim($_POST['jobs_name']):showmsg('您没有填写职位名称！',1);
+//	check_word($_CFG['filter'],$_POST['jobs_name'])?showmsg($_CFG['filter_tips'],0):'';
+//	$setsqlarr['nature']=intval($_POST['nature']);
+//	$setsqlarr['nature_cn']=trim($_POST['nature_cn']);
+//	$setsqlarr['topclass']=trim($_POST['topclass']);
+//	$setsqlarr['category']=!empty($_POST['category'])?intval($_POST['category']):showmsg('请选择职位类别！',1);
+//	$setsqlarr['subclass']=trim($_POST['subclass']);
+//	$setsqlarr['category_cn']=trim($_POST['category_cn']);
+//	$setsqlarr['wage_amount']=trim($_POST['wage_amount']);
+//	/* $setsqlarr['topclasss']=trim($_POST['topclasss']);
+//	$setsqlarr['categorys']=!empty($_POST['categorys'])?intval($_POST['categorys']):showmsg('请选择工作地区！',1);
+//	$setsqlarr['subclasss']=trim($_POST['subclasss']);
+//	$setsqlarr['category_cns']=trim($_POST['category_cns']); */
+//	$setsqlarr['amount']=intval($_POST['amount']);
+//	$setsqlarr['subsite_id']=!empty($_POST['subsite_id'])?intval($_POST['subsite_id']):showmsg('请选择发布城市！',1);
+//	$setsqlarr['district']=intval($_POST['district']);
+//	$setsqlarr['sdistrict']=intval($_POST['sdistrict']);
+//	$setsqlarr['district_cn']=empty($_POST['district_cn'])?trim($_POST['subsite_name']):(trim($_POST['subsite_name']).'/'.trim($_POST['district_cn']));
+////	$setsqlarr['wage']=intval($_POST['wage'])?intval($_POST['wage']):showmsg('请选择薪资待遇！',1);
+////	$setsqlarr['wage_cn']=trim($_POST['wage_cn']);
+//	$setsqlarr['work_start']=strtotime($_POST['work_start']);
+//	$setsqlarr['work_end']=strtotime($_POST['work_end']);
+//	$setsqlarr['negotiable']=intval($_POST['negotiable']);
+//	$setsqlarr['tag']=trim($_POST['tag']);
+//	$setsqlarr['tag_cn']=trim($_POST['tag_cn']);
+//	$setsqlarr['jobspecial']=trim($_POST['tags']);
+//	$setsqlarr['jobspecial_cn']=trim($_POST['tag_cns']);
+//	$setsqlarr['sex']=intval($_POST['sex']);
+//	$setsqlarr['sex_cn']=trim($_POST['sex_cn']);
+//	$setsqlarr['education']=intval($_POST['education'])?intval($_POST['education']):'';
+//	$setsqlarr['education_cn']=trim($_POST['education_cn']);
+//	$setsqlarr['experience']=intval($_POST['experience'])?intval($_POST['experience']):'';
+//	$setsqlarr['experience_cn']=trim($_POST['experience_cn']);
+//	$setsqlarr['graduate']=intval($_POST['graduate']);
+//	$setsqlarr['age']=trim($_POST['minage'])."-".trim($_POST['maxage']);
+//	$setsqlarr['contents']=!empty($_POST['contents'])?trim($_POST['contents']):showmsg('您没有填写职位描述！',1);
+//	check_word($_CFG['filter'],$_POST['contents'])?showmsg($_CFG['filter_tips'],0):'';
+//	if ($add_mode=='1'){
+//		$setsqlarr['setmeal_deadline']=0;
+//		$setsqlarr['add_mode']=1;
+//	}elseif($add_mode=='2'){
+//		$setmeal=get_user_setmeal($_SESSION['uid']);
+//		$setsqlarr['setmeal_deadline']=$setmeal['endtime'];
+//		$setsqlarr['setmeal_id']=$setmeal['setmeal_id'];
+//		$setsqlarr['setmeal_name']=$setmeal['setmeal_name'];
+//		$setsqlarr['add_mode']=2;
+//	}
+//	// 修改职位 过期时间为
+//	$setsqlarr['deadline']=strtotime("".intval($_CFG['company_add_days'])." day");
+//	$setsqlarr['key']=$setsqlarr['jobs_name'].$company_profile['companyname'].$setsqlarr['category_cn'].$setsqlarr['district_cn'].$setsqlarr['contents'];
+//	require_once(QISHI_ROOT_PATH.'include/splitword.class.php');
+//	$sp = new SPWord();
+//	$setsqlarr['key']="{$setsqlarr['jobs_name']} {$company_profile['companyname']} ".$sp->extracttag($setsqlarr['key']);
+//	$setsqlarr['key']=$sp->pad($setsqlarr['key']);
+//	if ($company_profile['audit']=="1")
+//	{
+//	$_CFG['audit_verifycom_editjob']<>"-1"?$setsqlarr['audit']=intval($_CFG['audit_verifycom_editjob']):'';
+//	}
+//	else
+//	{
+//	$_CFG['audit_unexaminedcom_editjob']<>"-1"?$setsqlarr['audit']=intval($_CFG['audit_unexaminedcom_editjob']):'';
+//	}
+//	$setsqlarr_contact['contact']=!empty($_POST['contact'])?trim($_POST['contact']):showmsg('您没有填写联系人！',1);
+//	check_word($_CFG['filter'],$_POST['contact'])?showmsg($_CFG['filter_tips'],0):'';
+//	$setsqlarr_contact['telephone']=!empty($_POST['telephone'])?trim($_POST['telephone']):'';
+//	check_word($_CFG['filter'],$_POST['telephone'])?showmsg($_CFG['filter_tips'],0):'';
+//	$setsqlarr_contact['address']=!empty($_POST['address'])?trim($_POST['address']):showmsg('您没有填写联系地址！',1);
+//	check_word($_CFG['filter'],$_POST['address'])?showmsg($_CFG['filter_tips'],0):'';
+//	$setsqlarr_contact['email']=!empty($_POST['email'])?trim($_POST['email']):showmsg('您没有填写联系邮箱！',1);
+//	check_word($_CFG['filter'],$_POST['email'])?showmsg($_CFG['filter_tips'],0):'';
+//	$setsqlarr_contact['notify']=intval($_POST['notify']);//邮件提醒
+//	$setsqlarr_contact['notify_mobile']=intval($_POST['notify_mobile']);//手机提醒
+//
+//  	$setsqlarr_contact['contact_show']=intval($_POST['contact_show']);
+//	$setsqlarr_contact['email_show']=intval($_POST['email_show']);
+//	$setsqlarr_contact['telephone_show']=intval($_POST['telephone_show']);
+//	$setsqlarr_contact['address_show']=intval($_POST['address_show']);
+//	//座机
+//	$landline_tel[]=trim($_POST['landline_tel_first'])?trim($_POST['landline_tel_first']):"0";
+//	$landline_tel[]=trim($_POST['landline_tel_next'])?trim($_POST['landline_tel_next']):"0";
+//	$landline_tel[]=trim($_POST['landline_tel_last'])?trim($_POST['landline_tel_last']):"0";
+//	$setsqlarr_contact['landline_tel']=implode('-', $landline_tel);
+//	//座机和手机至少二选一
+//	if(empty($setsqlarr_contact['telephone']) && $setsqlarr_contact['landline_tel']=='0-0-0')
+//	{
+//		showmsg('请填写手机或固话，二选一即可！',1);
+//	}
+//
+//	if (!$db->updatetable(table('jobs'), $setsqlarr," id='{$id}' AND uid='{$_SESSION['uid']}' ")) showmsg("保存失败！",0);
+//	if (!$db->updatetable(table('jobs_tmp'), $setsqlarr," id='{$id}' AND uid='{$_SESSION['uid']}' ")) showmsg("保存失败！",0);
+//	if (!$db->updatetable(table('jobs_contact'), $setsqlarr_contact," pid='{$id}' ")){
+//		showmsg("保存失败！",0);
+//	}
+//	if ($add_mode=='1')
+//	{
+//		if ($points_rule['jobs_edit']['value']>0)
+//		{
+//		report_deal($_SESSION['uid'],$points_rule['jobs_edit']['type'],$points_rule['jobs_edit']['value']);
+//		$user_points=get_user_points($_SESSION['uid']);
+//		$operator=$points_rule['jobs_edit']['type']=="1"?"+":"-";
+//		write_memberslog($_SESSION['uid'],1,9001,$_SESSION['username'],"修改职位：<strong>{$setsqlarr['jobs_name']}</strong>，({$operator}{$points_rule['jobs_edit']['value']})，(剩余:{$user_points})",1,1002,"修改招聘信息","{$operator}{$points_rule['jobs_edit']['value']}","{$user_points}");
+//		}
+//	}
+//	$link[0]['text'] = "职位列表";
+//	$link[0]['href'] = '?act=jobs';
+//	$link[1]['text'] = "查看修改结果";
+//	$link[1]['href'] = "?act=editjobs&id={$id}";
+//	$link[2]['text'] = "会员中心首页";
+//	$link[2]['href'] = "company_index.php";
+//	//
+//	$searchtab['nature']=$setsqlarr['nature'];
+//	$searchtab['sex']=$setsqlarr['sex'];
+//	$searchtab['topclass']=$setsqlarr['topclass'];
+//	$searchtab['category']=$setsqlarr['category'];
+//	$searchtab['subclass']=$setsqlarr['subclass'];
+//	$searchtab['topclasss']=$setsqlarr['topclasss'];
+//	$searchtab['categorys']=$setsqlarr['categorys'];
+//	$searchtab['subclasss']=$setsqlarr['subclasss'];
+//	$searchtab['district']=$setsqlarr['district'];
+//	$searchtab['sdistrict']=$setsqlarr['sdistrict'];
+//	$searchtab['education']=$setsqlarr['education'];
+//	$searchtab['experience']=$setsqlarr['experience'];
+//	$searchtab['wage']=$setsqlarr['wage'];
+//	$searchtab['graduate']=$setsqlarr['graduate'];
+//	//
+//	$db->updatetable(table('jobs_search_wage'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
+//	$db->updatetable(table('jobs_search_rtime'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
+//	$db->updatetable(table('jobs_search_stickrtime'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
+//	$db->updatetable(table('jobs_search_hot'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
+//	$db->updatetable(table('jobs_search_scale'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}'");
+//	$searchtab['key']=$setsqlarr['key'];
+//	$searchtab['likekey']=$setsqlarr['jobs_name'].','.$company_profile['companyname'];
+//	$db->updatetable(table('jobs_search_key'),$searchtab," id='{$id}' AND uid='{$_SESSION['uid']}' ");
+//	unset($searchtab);
+//	add_jobs_tag(intval($_POST['id']),$_SESSION['uid'],$_POST['tag'])?"":showmsg('保存失败！',0);
+//	distribution_jobs($id,$_SESSION['uid']);
+//	write_memberslog($_SESSION['uid'],$_SESSION['utype'],2002,$_SESSION['username'],"修改了职位：{$setsqlarr['jobs_name']}，职位ID：{$id}");
+//	showmsg("修改成功！",2,$link);
+//}
 elseif($act == "get_content_by_jobs_cat"){
 	$id = intval($_GET['id']);
 	if($id>0){

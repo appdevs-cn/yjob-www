@@ -26,6 +26,7 @@ function get_all_district_marked_subsite(){
 	}
 	return $data;
 }
+
 function showmsg($msg_detail, $msg_type = 0, $links = array(), $auto_redirect = true,$seconds=3)
 {
 	global $smarty;
@@ -703,11 +704,11 @@ function request_url()
 	{    
 		  if (isset($_SERVER['argv']))        
 			{           
-			$url = $_SERVER['PHP_SELF'] .'?'. $_SERVER['argv'][0];      
+			    $url = $_SERVER['PHP_SELF'] .'?'. $_SERVER['argv'][0];
 			}         
 		  else        
 			{          
-			$url = $_SERVER['PHP_SELF'] .'?'.$_SERVER['QUERY_STRING'];
+			    $url = $_SERVER['PHP_SELF'] .'?'.$_SERVER['QUERY_STRING'];
 			}  
     }    
     return urlencode($url); 
@@ -1017,25 +1018,21 @@ function https_request_api($apiPath, $data = null) {
         curl_setopt($curl, CURLOPT_URL, $url);
         
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-                curl_setopt($curl, curlopt_b, FALSE);
+//        curl_setopt($curl, curlopt_b, FALSE);
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
         if (!empty($data)){
             $data = json_encode(array_convert_encoding($data));
-              curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Accept:?application/json',
-                'Content-Type:?application/json',
-                'Content-Length: ' . strlen($data)
-            ));
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+            echo $data;
             curl_setopt($curl, CURLOPT_POSTFIELDS, ['jsonData' => $data]);
         } else {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-
         }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($curl);
+
         $log .= "\r\n".'url='.$url."\r\n";
         $log .= 'pramas='.$data."\r\n";
         $log .= 'result='.$output;
@@ -1492,4 +1489,9 @@ function sms_check_token()
 		}
 	unset($_SESSION['token'],$hiddentoken);
 }
+
+
+
+
+
 ?>
