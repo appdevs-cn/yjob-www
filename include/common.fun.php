@@ -1025,7 +1025,7 @@ function https_request_api($apiPath, $data = null) {
         if (!empty($data)){
             $data = json_encode(array_convert_encoding($data));
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-            echo $data;
+//            echo $data;
             curl_setopt($curl, CURLOPT_POSTFIELDS, ['jsonData' => $data]);
         } else {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
