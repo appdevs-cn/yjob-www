@@ -33,6 +33,7 @@ if ($act=='apply_jobs')
         foreach($jobListTmp['data']['list'] as $jlk => $job) {
             if($job['list']) {
                 foreach($job['list'] as $jk => $jv) {
+                    $station_list_tmp[$jv['job_id']][$jv['id']] = $jv;
                     $station_list[$jv['id']] = $jv;
                     $sData[] = $jv['start_date'];
                     $eData[] = $jv['end_date'];
@@ -53,8 +54,8 @@ if ($act=='apply_jobs')
             foreach($jobInfo['list'] as $jk => $jobInfoV) {
                 $sData[] = $jobInfoV['start_date'];
                 $eData[] = $jobInfoV['end_date'];
-                $resume['position_list'][$jobInfo['job_id']]['name'] = $jobInfoV['address'];
-                $resume['position_list'][$jobInfo['job_id']]['id'] = $jobInfoV['job_id'];
+                //$resume['position_list'][$jobInfoV['job_id']]['name'] = $jobInfoV['address'];
+                //$resume['position_list'][$jobInfoV['job_id']]['id'] = $jobInfoV['job_id'];
             }
         }
         $user_resume = current(get_resume_uid($resume['uid']));
@@ -67,6 +68,7 @@ if ($act=='apply_jobs')
         $resume['education_cn'] = $user_resume['education_cn'];
         $resume['display'] = $user_resume['display'];
         $resume['resume_url'] = $user_resume['resume_url'];
+        $resume['job_info_id'] = $resume['job_info_id'];
     }
     asort($sData);
     arsort($eData);
@@ -90,6 +92,7 @@ if ($act=='apply_jobs')
     $smarty->assign('count1', $resumeList['data']['nvcount']);
     $smarty->assign('count2', $resumeList['data']['vcount']);
     $smarty->assign('joblist', $jobList);
+    $smarty->assign('station_options',$station_list_tmp);
     $smarty->assign('station_list',$station_list);
     $smarty->assign('jobs',$resumeList['data']['list']);
     $smarty->display('member_company/company_apply_jobs.htm');

@@ -262,8 +262,8 @@ $(document).ready(function(){
 						<div class="c-item f-left content3">{#if $list.age#}{#$list.age#}Ëê/{#/if#}{#$list.education_cn#}/{#$list.experience_cn#}/{#$list.sex_cn#}</div>
 						<div class="c-item f-left content7" style="width:200px;">
                         <select name="station" id="station_{#$list.id#}" class="u_change bdr0" resume_id="{#$list.id#}">
-                            {#foreach from=$list.position_list item=position#}
-                                <option value="{#$position.id#}">{#$position.name#}</option>
+                            {#foreach from=$list.station_options item=position#}
+                                <option value="{#$position.id#}"{#if $list.job_info_id == $position.id #} selected {#/if#}>{#$position.address#}{#$list.job_info_id#}</option>
                             {#/foreach#}
                         </select>
                         </div>
