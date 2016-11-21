@@ -37,7 +37,7 @@ if ($act == 'index')
 	$cjl="select * from ".table('resume')." where uid=".$_SESSION['uid'];
 	$cdjl=$db->getone($cjl);
 	$id=$cdjl['id'];
-	$user=wap_get_user_info(intval($_SESSION['uid']));	
+	$user=wap_get_user_info(intval($_SESSION['uid']));
 	$smarty->assign('user',$user);
 	$resume_info=get_userprofile(intval($_SESSION['uid']));
 	if(empty($resume_info))
@@ -1352,6 +1352,15 @@ elseif($act=='invite') {
     $smarty->assign('qimgUrl', 'http://m.yjob.net/'.$qurl);
     $smarty->assign('qCode', $code);
     $smarty->display('m/personal/m-invite.html');
+}
+// 我的钱包 添加银行卡等
+elseif($act == 'my_bank_card'){
+	$uid = intval($_SESSION['uid']);
+	$sql = "select * from ys_my_bank_card where uid = ".$uid;
+	$result = $db->getone($sql);
+	$smarty->assign('uid', $uid);
+	$smarty->assign('my_bank_card', $result);
+	$smarty->display('m/personal/my-bank-card.html');
 }
 
 
