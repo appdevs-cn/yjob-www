@@ -727,7 +727,15 @@ elseif ($act=='editjobs_save'){
 //    var_dump($updateDate,$updateRst);exit;
 
 
-	header("location:?act=editjobs&id=".$updateDate['job_id']);
+	$link[0]['text'] = "职位列表";
+	$link[0]['href'] = '?act=jobs';
+	$link[1]['text'] = "查看修改结果";
+	$link[1]['href'] = "?act=editjobs&id=".$updateDate['job_id'];
+	$link[2]['text'] = "会员中心首页";
+	$link[2]['href'] = "company_index.php";
+	showmsg("修改成功！",2,$link);
+
+//	header("location:?act=editjobs&id=".$updateDate['job_id']);
 }
 //elseif ($act=='editjobs_save')
 //{
