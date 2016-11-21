@@ -1354,6 +1354,15 @@ elseif($act=='invite') {
     $smarty->display('m/personal/m-invite.html');
 }
 
+// 我的钱包 添加银行卡等
+elseif($act == 'my_bank_card'){
+	$uid = intval($_SESSION['uid']);
+	$sql = "select * from ys_my_bank_card where uid = ".$uid;
+	$result = $db->getone($sql);
+	$smarty->assign('uid', $uid);
+	$smarty->assign('my_bank_card', $result);
+	$smarty->display('m/personal/my-bank-card.html');
+}
 
 function create_guid() {
 	static $guid = '';
