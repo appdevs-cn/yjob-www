@@ -724,7 +724,7 @@ elseif ($act=='editjobs_save'){
 
 
 	$updateRst = https_request_api('job/update',$updateDate);
-    var_dump($updateDate,$updateRst);exit;
+//    var_dump($updateDate,$updateRst);exit;
 
 
 	header("location:?act=editjobs&id=".$updateDate['job_id']);
