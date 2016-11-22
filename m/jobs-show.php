@@ -148,6 +148,7 @@ $isEnrollRst = https_request_api('enroll/isEnroll', $favData);
 $row['is_enroll'] = !$isEnrollRst['codes'] ? $isEnrollRst['data'] : 0;
 $smarty->assign('is_show_tel',$show);
 $smarty->assign('rid',$resumeInfo['id']);
+$smarty->assign('stationCount',count($row['list']));
 $smarty->assign('show',$row);
 $smarty->assign('interest_show',$interest_show);
 $smarty->assign('goback',$_SERVER["HTTP_REFERER"]);

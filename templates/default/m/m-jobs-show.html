@@ -206,7 +206,9 @@ var YDB = new YDBOBJ();
 		<div class="ft"> 
 			<i></i>
 			<select name="position_id" id="position_id">
-				<option value="0">选择地点</option>
+				{#if $stationCount > 1#}
+					<option value="0">选择地点</option>
+				{#/if#}
                             {#foreach from=$show.list item=plist#}
 				<option value="{#$plist.id#}">{#$plist.address#}</option>
                             {#/foreach#}
@@ -265,6 +267,7 @@ var YDB = new YDBOBJ();
 			</li>
 		</ul>
 		<div class="apply" >
+
                     {#if $show.is_enroll == 1#}
                         <span style="color:#fff;">已报名</span>
                     {#else#}
