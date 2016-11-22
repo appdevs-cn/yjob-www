@@ -1,0 +1,681 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- BEGIN META -->
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+
+    <!-- END META -->
+
+    <!-- BEGIN SHORTCUT ICON -->
+    <link rel="shortcut icon" href="http://static.yjob.net/layout/mc/img/favicon.ico">
+    <!-- END SHORTCUT ICON -->
+    <title>银行卡查询</title>
+
+    <!-- BEGIN STYLESHEET -->
+    <link href="http://static.yjob.net/layout/mc/css/awesome-bootstrap-checkbox.css" rel="stylesheet"><!-- awesome-bootstrap-checkbox.css -->
+    <link href="http://static.yjob.net/layout/mc/css/bootstrap.min.css" rel="stylesheet"> <!-- bootstrap css-->
+    <link href="http://static.yjob.net/layout/mc/css/bootstrap-reset.css" rel="stylesheet"> <!-- BOOTSTRAP CSS -->
+    <link href="http://static.yjob.net/layout/mc/assets/font-awesome/css/font-awesome.css" rel="stylesheet"> <!-- FONT AWESOME CSS -->
+    <link href="http://static.yjob.net/layout/mc/css/style.css" rel="stylesheet"> <!-- THEME BASIC STYLESHEET -->
+    <link href="http://static.yjob.net/layout/mc/css/style-responsive.css" rel="stylesheet"> <!-- THEME RESPONSIVE CSS -->
+    <link href="http://static.yjob.net/layout/mc/css/zp.css" rel="stylesheet">
+    <link href="http://static.yjob.net/layout/mc/css/css.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="http://static.yjob.net/layout/mc/js/html5shiv.js"></script>
+    <script src="http://static.yjob.net/layout/mc/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- END STYLESHEET -->
+</head>
+<body>
+<!-- BEGIN SECTION -->
+<section id="container" class="">
+
+    <!-- BEGIN HEADER -->
+    <!--<header class="header white-bg">-->
+        <!--<a href="index.html" class="logo">-->
+            <!--<img src="http://static.yjob.net/layout/mc/img/images/header_06.png" alt="">-->
+        <!--</a>-->
+        <!--&lt;!&ndash;LOGO结束&ndash;&gt;-->
+        <!--&lt;!&ndash; 信息下拉 &ndash;&gt;-->
+        <!--<nav class="nav notify-row" id="top_menu">-->
+            <!--<ul class="nav top-menu">-->
+                <!--&lt;!&ndash; 开始通知邮箱 &ndash;&gt;-->
+                <!--<li id="header_inbox_bar" class="dropdown">-->
+                    <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">-->
+                        <!--<i class="fa fa-envelope-o">-->
+                        <!--</i>-->
+                        <!--<span class="badge bg-important">-->
+                  <!--5-->
+                <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu extended inbox">-->
+                        <!--<li class="notify-arrow notify-arrow-blue">-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="photo">-->
+                      <!--<img alt="avatar" src="./img/avatar-mini.jpg">-->
+                    <!--</span>-->
+                                <!--<span class="subject">-->
+                      <!--<span class="from">-->
+                        <!--Chintan Pandya-->
+                      <!--</span>-->
+                      <!--<span class="time">-->
+                        <!--Just now-->
+                      <!--</span>-->
+                    <!--</span>-->
+                                <!--<span class="message">-->
+                      <!--Hello, this is an example msg.-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="photo">-->
+                      <!--<img alt="avatar" src="./img/avatar-mini2.jpg">-->
+                    <!--</span>-->
+                                <!--<span class="subject">-->
+                      <!--<span class="from">-->
+                        <!--Parth Jani-->
+                      <!--</span>-->
+                      <!--<span class="time">-->
+                        <!--10 mins-->
+                      <!--</span>-->
+                    <!--</span>-->
+                                <!--<span class="message">-->
+                      <!--Hi, Bro how are you ?-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="photo">-->
+                      <!--<img alt="avatar" src="./img/avatar-mini3.jpg">-->
+                    <!--</span>-->
+                                <!--<span class="subject">-->
+                      <!--<span class="from">-->
+                        <!--Jay Bardolia-->
+                      <!--</span>-->
+                      <!--<span class="time">-->
+                        <!--3 hrs-->
+                      <!--</span>-->
+                    <!--</span>-->
+                                <!--<span class="message">-->
+                      <!--This is awesome dashboard.-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="photo">-->
+                      <!--<img alt="avatar" src="./img/avatar-mini4.jpg">-->
+                    <!--</span>-->
+                                <!--<span class="subject">-->
+                      <!--<span class="from">-->
+                        <!--Pruthvi Bardolia-->
+                      <!--</span>-->
+                      <!--<span class="time">-->
+                        <!--Just now-->
+                      <!--</span>-->
+                    <!--</span>-->
+                                <!--<span class="message">-->
+                      <!--Hello, this is metrolab-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--See all messages-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--&lt;!&ndash; 通知邮箱结束&ndash;&gt;-->
+
+                <!--&lt;!&ndash; 开始消息提醒 &ndash;&gt;-->
+                <!--<li id="header_notification_bar" class="dropdown">-->
+                    <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">-->
+                        <!--<i class="fa fa-bell-o">-->
+                        <!--</i>-->
+                        <!--<span class="badge bg-warning">-->
+                  <!--7-->
+                <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu extended notification">-->
+                        <!--<li class="notify-arrow notify-arrow-blue">-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="label label-danger">-->
+                      <!--<i class="fa fa-bolt">-->
+                      <!--</i>-->
+                    <!--</span>-->
+                                <!--Server #3 overloaded.-->
+                                <!--<span class="small italic">-->
+                      <!--34 mins-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="label label-warning">-->
+                      <!--<i class="fa fa-bell">-->
+                      <!--</i>-->
+                    <!--</span>-->
+                                <!--Server #10 not respoding.-->
+                                <!--<span class="small italic">-->
+                      <!--1 Hours-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="label label-danger">-->
+                      <!--<i class="fa fa-bolt">-->
+                      <!--</i>-->
+                    <!--</span>-->
+                                <!--Database overloaded 24%.-->
+                                <!--<span class="small italic">-->
+                      <!--4 hrs-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="label label-success">-->
+                      <!--<i class="fa fa-plus">-->
+                      <!--</i>-->
+                    <!--</span>-->
+                                <!--New user registered.-->
+                                <!--<span class="small italic">-->
+                      <!--Just now-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                    <!--<span class="label label-primary">-->
+                      <!--<i class="fa fa-bullhorn">-->
+                      <!--</i>-->
+                    <!--</span>-->
+                                <!--Application error.-->
+                                <!--<span class="small italic">-->
+                      <!--10 mins-->
+                    <!--</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--See all notifications-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--&lt;!&ndash; 消息提醒结束 &ndash;&gt;-->
+            <!--</ul>-->
+        <!--</nav>-->
+        <!--&lt;!&ndash;信息下拉结束&ndash;&gt;-->
+        <!--&lt;!&ndash;开始用户&ndash;&gt;-->
+        <!--<div class="top-nav ">-->
+            <!--<ul class="nav pull-right top-menu">-->
+                <!--<li class="dropdown">-->
+                    <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">-->
+                        <!--<img alt="" src="img/avatar1_small.jpg">-->
+                        <!--<span class="username">-->
+                  <!--云兼职平台-->
+                <!--</span>-->
+                        <!--<b class="caret">-->
+                        <!--</b>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu extended logout">-->
+                        <!--<li class="log-arrow-up">-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--<i class=" fa fa-suitcase">-->
+                                <!--</i>-->
+                                <!--Profile-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--<i class="fa fa-cog">-->
+                                <!--</i>-->
+                                <!--Settings-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--<i class="fa fa-bell-o">-->
+                                <!--</i>-->
+                                <!--Notification-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="login.html">-->
+                                <!--<i class="fa fa-key">-->
+                                <!--</i>-->
+                                <!--Log Out-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; 用户结束 &ndash;&gt;-->
+    <!--</header>-->
+    <!-- END HEADER -->
+    <!-- BEGIN SIDEBAR -->
+    <!--<aside>-->
+        <!--<div id="sidebar" class="nav-collapse">-->
+            <!--<ul class="sidebar-menu" id="nav-accordion">-->
+                <!--<li >-->
+                    <!--<a href="index.html" class="active">-->
+                        <!--<i class="fa fa-home">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--系统后台管理-->
+			        <!--</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="sub-menu">-->
+                    <!--<a href="javascript:;">-->
+                        <!--<i class="fa fa-briefcase">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--企业管理-->
+			        <!--</span>-->
+                        <!--<span class="label label-success span-sidebar">-->
+			          <!--2-->
+			        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                        <!--<li>-->
+                            <!--<a href="job_listings.html">-->
+                                <!--职位列表-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="enterprise_certification.html">-->
+                                <!--企业认证-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="sub-menu">-->
+                    <!--<a href="javascript:;">-->
+                        <!--<i class="fa fa-user">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--会员管理-->
+			        <!--</span>-->
+                        <!--<span class="label label-info span-sidebar">-->
+			          <!--4-->
+			        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                        <!--<li>-->
+                            <!--<a href="name_authentication.html">-->
+                                <!--实名认证-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="part-time-lib.html">-->
+                                <!--兼职列表-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="supervisor-lib.html">-->
+                                <!--督导列表-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="bd-lib.html">-->
+                                <!--BD列表-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="sub-menu">-->
+                    <!--<a href="javascript:;">-->
+                        <!--<i class="fa fa-star">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--积分系统-->
+			        <!--</span>-->
+                        <!--<span class="label label-warning span-sidebar">-->
+			          <!--3-->
+			        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--积分配置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--会员积分-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--企业积分-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a href="#">-->
+                        <!--<i class="fa fa-money">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--财务中心-->
+			        <!--</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+
+                <!--<li class="sub-menu">-->
+                    <!--<a href="javascript:;">-->
+                        <!--<i class="fa fa-file-text">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--内容管理-->
+			        <!--</span>-->
+                        <!--<span class="label label-inverse span-sidebar">-->
+			          <!--4-->
+			        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                        <!--<li>-->
+                            <!--<a href="content_management.html">-->
+                                <!--内容管理-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="add_content.html">-->
+                                <!--内容添加-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a href="sort_management.html">&ndash;&gt;-->
+                                <!--&lt;!&ndash;分类管理&ndash;&gt;-->
+                            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a href="region_class.html">&ndash;&gt;-->
+                                <!--&lt;!&ndash;地区分类&ndash;&gt;-->
+                            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                        <!--<li>-->
+                            <!--<a href="opinion_suggest.html">-->
+                                <!--意见反馈-->
+                            <!--</a>-->
+                        <!--</li>-->
+
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="sub-menu">-->
+                    <!--<a href="javascript:;">-->
+                        <!--<i class="fa fa-wrench">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--工具-->
+			        <!--</span>-->
+                        <!--<span class="label label-primary span-sidebar">-->
+			          <!--4-->
+			        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--计划任务-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="Being_pushed.html">-->
+                                <!--消息推送-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="bank_card.html">-->
+                                <!--银行卡查询-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="generalize_query.html">-->
+                                <!--推广查询-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="sub-menu">-->
+                    <!--<a href="javascript:;">-->
+                        <!--<i class="fa fa-cog">-->
+                        <!--</i>-->
+                        <!--<span>-->
+			          <!--系统设置-->
+			        <!--</span>-->
+                        <!--<span class="label label-danger span-sidebar">-->
+			          <!--12-->
+			        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="sub">-->
+                        <!--<li>-->
+                            <!--<a href="basic_settings.html">-->
+                                <!--基本配置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="enterprises_setup.com.html">-->
+                                <!--企业设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="personal_settings.html">-->
+                                <!--个人设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="registry_settings.html">-->
+                                <!--注册设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--安全设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="email_settings.html">-->
+                                <!--邮件设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="sms_settings.html">-->
+                                <!--短信设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="three_registr.html">-->
+                                <!--第三方接口设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--微信公众号设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="substation_management.html">-->
+                                <!--分站管理-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="all_class.html">-->
+                                <!--分类管理-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--管理员设置-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</aside>-->
+
+    <!-- END SIDEBAR -->
+
+    <!-- BEGIN MAIN CONTENT -->
+    <section id="main-content">
+        <section class="wrapper">
+            <section class="panel panel-first">
+                <div class="">
+                    <div class="panel with-nav-tabs panel-info panel-square panel-no-border">
+                        <div class="panel-body body-waiwei">
+                            <ul>
+                                <li class="first-font">
+                                    银行卡查询
+                                </li>
+                                <div class="opinion-hr">
+                                    <hr />
+                                </div>
+                            </ul>
+
+                            <table class=" table-hover table-condensed table-striped table-bordered table dataTable"  id="test">
+
+                                <thead>
+                                <tr role="row">
+                                    <th>手机号</th>
+                                    <th>姓名</th>
+                                    <th>银行类型</th>
+                                    <th>银行卡号</th>
+                                    <th>提示</th>
+                                    <th>操作</th>
+                                </tr>
+
+
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <!-- 新起一行 -->
+                                <tr>
+                                    <td >
+                                        <input  type="text" class="form-control bank-input" value="" placeholder="请输入手机号">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <a onclick="jiazai(this)" class="text-primary">加载</a>
+                                    </td>
+                                </tr>
+                                    <td >
+                                        <input type="text" class="form-control bank-input" placeholder="请输入手机号">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a onclick="jiazai(this)" class="text-primary">加载</a>
+                                    </td>
+                                </tr>
+                                <!-- 新起一行 -->
+                                <tr>
+                                    <td >
+                                        <input type="text" class="form-control bank-input" placeholder="请输入手机号">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a onclick="jiazai(this)" class="text-primary">加载</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-left bottom-btn-group">
+                                <div class="btn-group">
+                                    <input type="button" class="btn" id="btn1" value="增加">
+
+                                    </input>
+                                    <div class="btn-group " >
+                                        <select class="btn  dropdown-toogle enterprise-jujue"  id="se" >
+                                            <option selected="selected" value="0">1</option>
+                                            <option value="1">5</option>
+                                            <option value="2">10</option>
+                                            <option value="3">15</option>
+                                            <option value="4">20</option>
+                                            <option value="5">25</option>
+                                            <option value="6">30</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn">
+                                    导入卡号信息
+                                </button>
+                                <button type="button" class="btn" >
+                                    导出卡号信息
+                                </button>
+                            </div>
+                        </div>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+<!-- BEGIN JS -->
+<script type="text/javascript" src="http://static.yjob.net/layout/mc/js/jquery-1.8.3.min.js" ></script>
+<!--<script src="http://static.yjob.net/layout/mc/js/jquery.js" ></script>&lt;!&ndash; BASIC JS LIABRARY &ndash;&gt;-->
+<script src="http://static.yjob.net/layout/mc/js/bootstrap.min.js" ></script><!-- BOOTSTRAP JS  -->
+<script src="http://static.yjob.net/layout/mc/js/jquery.dcjqaccordion.2.7.js"></script><!-- ACCORDING JS -->
+<script src="http://static.yjob.net/layout/mc/js/jquery.scrollTo.min.js" ></script><!-- SCROLLTO JS  -->
+<script src="http://static.yjob.net/layout/mc/js/jquery.nicescroll.js" > </script><!-- NICESCROLL JS  -->
+<script src="http://static.yjob.net/layout/mc/js/respond.min.js" ></script><!-- RESPOND JS  -->
+<script src="http://static.yjob.net/layout/mc/js/common-scripts.js" ></script><!-- BASIC COMMON JS  -->
+<script src="http://static.yjob.net/layout/mc/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script><!-- BOOTSTRAP FILEUPLOAD JS  -->
+<script type="text/javascript" charset="gbk" src="http://static.yjob.net/layout/mc/js/zp/zp.js"></script>
+<!-- END JS -->
+</body>
+<script>
+    function jiazai(index){
+        var phoneVal = $(index).closest('tr').find('input').val();
+        $.ajax({
+            url: 'admin_set_person_card.php?act=get_bank',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                phone: phoneVal
+            },
+            success: function(data){
+//                console.log(data);
+                if(!data){
+                    $(index).closest('tr').children('td').eq(4).html("<span style='color:red;'>账号错误</span>");
+                }else{
+                    $(index).closest('tr').children('td').eq(1).html(data.username);
+                    $(index).closest('tr').children('td').eq(2).html(data.bank_name);
+                    $(index).closest('tr').children('td').eq(3).html(data.card_num);
+                    $(index).closest('tr').children('td').eq(4).html("<span style='color:darkgreen;'>账号正确</span>");
+                }
+            }
+        })
+    }
+</script>
+</html>
+
+
