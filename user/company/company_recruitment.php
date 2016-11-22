@@ -69,6 +69,7 @@ if ($act=='apply_jobs')
         $resume['display'] = $user_resume['display'];
         $resume['resume_url'] = $user_resume['resume_url'];
         $resume['job_info_id'] = $resume['job_info_id'];
+        $resume['station_options'] = $station_list_tmp[$resume['job_id']];
     }
     asort($sData);
     arsort($eData);
