@@ -12,9 +12,9 @@ $data = array (
   'set_resumeallow' => '1',
   'set_resumenotallow' => '0',
   'set_applyjobs' => '1',
-  'set_jianlihs' => '1',
-  'set_jianlibhs' => '1',
-  'set_qxbaoming' => '1',
+  'set_jianlihs' => '0',
+  'set_jianlibhs' => '0',
+  'set_qxbaoming' => '0',
   'set_fanggz' => '1',
 );
 ?>

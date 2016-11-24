@@ -57,11 +57,13 @@ if(!$smarty->is_cached($mypage['tpl'],$cached_id))
 require_once(QISHI_ROOT_PATH.'include/mysql.class.php');
 $db = new mysql($dbhost,$dbuser,$dbpass,$dbname);
 unset($dbhost,$dbuser,$dbpass,$dbname);
-$smarty->display($mypage['tpl'],$cached_id);
+//$smarty->display($mypage['tpl'],$cached_id);
+	header("Location: http://www.yjob.net/m");
 }
 else
 {
-$smarty->display($mypage['tpl'],$cached_id);
+//$smarty->display($mypage['tpl'],$cached_id);
+	header("Location: http://www.yjob.net/m");
 }
 unset($smarty);
 ?>

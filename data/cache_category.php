@@ -102,49 +102,6 @@ $data = array (
       'stat_resume ' => NULL,
     ),
   ),
-  'jsfs' => 
-  array (
-    436 => 
-    array (
-      'id' => '436',
-      'parentid' => '0',
-      'categoryname' => '年',
-      'stat_jobs' => '',
-      'stat_resume ' => NULL,
-    ),
-    435 => 
-    array (
-      'id' => '435',
-      'parentid' => '0',
-      'categoryname' => '月',
-      'stat_jobs' => '',
-      'stat_resume ' => NULL,
-    ),
-    434 => 
-    array (
-      'id' => '434',
-      'parentid' => '0',
-      'categoryname' => '周',
-      'stat_jobs' => '',
-      'stat_resume ' => NULL,
-    ),
-    433 => 
-    array (
-      'id' => '433',
-      'parentid' => '0',
-      'categoryname' => '日',
-      'stat_jobs' => '',
-      'stat_resume ' => NULL,
-    ),
-    437 => 
-    array (
-      'id' => '437',
-      'parentid' => '0',
-      'categoryname' => '小时',
-      'stat_jobs' => '',
-      'stat_resume ' => NULL,
-    ),
-  ),
   'QS_trade' => 
   array (
     1 => 
@@ -2783,6 +2740,57 @@ $data = array (
       'id' => '432',
       'parentid' => '0',
       'categoryname' => '31',
+      'stat_jobs' => '',
+      'stat_resume ' => NULL,
+    ),
+  ),
+  'paymethod' => 
+  array (
+    433 => 
+    array (
+      'id' => '433',
+      'parentid' => '0',
+      'categoryname' => '次日结',
+      'stat_jobs' => '',
+      'stat_resume ' => NULL,
+    ),
+    434 => 
+    array (
+      'id' => '434',
+      'parentid' => '0',
+      'categoryname' => '日结',
+      'stat_jobs' => '',
+      'stat_resume ' => NULL,
+    ),
+    435 => 
+    array (
+      'id' => '435',
+      'parentid' => '0',
+      'categoryname' => '周结',
+      'stat_jobs' => '',
+      'stat_resume ' => NULL,
+    ),
+    436 => 
+    array (
+      'id' => '436',
+      'parentid' => '0',
+      'categoryname' => '半月结',
+      'stat_jobs' => '',
+      'stat_resume ' => NULL,
+    ),
+    437 => 
+    array (
+      'id' => '437',
+      'parentid' => '0',
+      'categoryname' => '月结',
+      'stat_jobs' => '',
+      'stat_resume ' => NULL,
+    ),
+    438 => 
+    array (
+      'id' => '438',
+      'parentid' => '0',
+      'categoryname' => '完工结',
       'stat_jobs' => '',
       'stat_resume ' => NULL,
     ),

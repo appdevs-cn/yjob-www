@@ -25,20 +25,20 @@
 				<div class="header-center flex2"><span class="title-only">个人中心</span></div>
 				{#include file="m/company/navi.html"#}
 			</header>
-			<article class="infohead flex-box">
-				<div class="flexinfoheadlogo">
-					{#if $user.avatars==""#}
-					<img src="{#$QISHI.main_domain#}templates/{#$QISHI.template_dir#}images/06.jpg" width="59" height="64" border="0" />
-					{#else#}
-					<img src="{#$QISHI.main_domain#}data/avatar/100/{#$user.avatars#}" width="59" height="64" border="0" />
-					{#/if#}
-				</div>
-				<div class='flex2'>
-					<div class="infolist d">{#$user.username#} | {#$resume_info.sex_cn#} | {#$resume_info.age#}岁</div>
-					<div class="infolist {#if $user.mobile_audit==1#}m{#else#}my{#/if#}" url="../personal/account_security.php">手机号：{#$resume_info.phone#}</div>
-					<div class="infolist {#if $user.email_audit==1#}e{#else#}ey{#/if#}">邮箱：{#$resume_info.email#}</div>
-				</div>
-			</article>
+			<!--<article class="infohead flex-box">-->
+				<!--<div class="flexinfoheadlogo">-->
+					<!--{#if $user.avatars==""#}-->
+					<!--<img src="{#$QISHI.main_domain#}templates/{#$QISHI.template_dir#}images/06.jpg" width="59" height="64" border="0" />-->
+					<!--{#else#}-->
+					<!--<img src="{#$QISHI.main_domain#}data/avatar/100/{#$user.avatars#}" width="59" height="64" border="0" />-->
+					<!--{#/if#}-->
+				<!--</div>-->
+				<!--<div class='flex2'>-->
+					<!--<div class="infolist d">{#$user.username#} | {#$resume_info.sex_cn#} | {#$resume_info.age#}岁</div>-->
+					<!--<div class="infolist {#if $user.mobile_audit==1#}m{#else#}my{#/if#}" url="../personal/account_security.php">手机号：{#$resume_info.phone#}</div>-->
+					<!--<div class="infolist {#if $user.email_audit==1#}e{#else#}ey{#/if#}">邮箱：{#$resume_info.email#}</div>-->
+				<!--</div>-->
+			<!--</article>-->
 			<article class="optionlist">
 				<section class="flex-box list" url="http://www.yjob.net/m">
 

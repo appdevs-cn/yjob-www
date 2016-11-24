@@ -563,9 +563,27 @@
                                 </thead>
                                 <tbody role="alert" aria-live="polite" aria-relevant="all">
                                 <!-- 新起一行 -->
+                                {#if $phone#}
+                                {#foreach from=$phone item=list#}
                                 <tr>
                                     <td >
-                                        <input  type="text" class="form-control bank-input" value="" placeholder="请输入手机号">
+                                        <input type="text" class="form-control bank-input" value="{#$list#}" placeholder="请输入手机号">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <a onclick="jiazai(this)" class="text-primary">加载</a>
+                                    </td>
+                                </tr>
+                                {#/foreach#}
+                                {#/if#}
+                                <tr>
+                                    <td >
+                                        <input type="text" class="form-control bank-input" value="" placeholder="请输入手机号">
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -603,8 +621,8 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <div class="pull-left bottom-btn-group">
-                                <div class="btn-group">
+                            <div class="pull-left bottom-btn-group" style="width: 100%">
+                                <div class="btn-group" style="float:left;">
                                     <input type="button" class="btn" id="btn1" value="增加">
 
                                     </input>
@@ -622,12 +640,17 @@
                                     </div>
                                 </div>
 
-                                <button type="button" class="btn">
-                                    导入卡号信息
-                                </button>
-                                <button type="button" class="btn" >
-                                    导出卡号信息
-                                </button>
+                                <form action="admin_set_export_excel.php?act=import" method="post" enctype="multipart/form-data" style="float:left;">
+                                    <abbr class="sub-ulpload-bg btn btn-white btn-file">
+                                        <input type="file" name='excel' class="default">
+                                    </abbr>
+                                    <input type="submit" value="导入卡号信息" class="btn">
+                                </form>
+                                <form id="myForm2" action="admin_set_export_excel.php?act=export" method="post" style="float:left;">
+                                    <input type="hidden" id="export-excel1" name="phonestr" />
+                                    <input type="submit" value="导出卡号信息" class="btn" id="export-excel">
+                                </form>
+                                <button onclick="oneKeyLoading(this)" class="btn" style="display:block;margin-right:80px;float:right">一键加载</button>
                             </div>
                         </div>
                         </li>
@@ -664,6 +687,8 @@
             },
             success: function(data){
 //                console.log(data);
+                var odlVal = $('#export-excel1').val();
+                $('#export-excel1').val(odlVal + "'" + phoneVal + "',")
                 if(!data){
                     $(index).closest('tr').children('td').eq(4).html("<span style='color:red;'>账号错误</span>");
                 }else{
@@ -671,9 +696,51 @@
                     $(index).closest('tr').children('td').eq(2).html(data.bank_name);
                     $(index).closest('tr').children('td').eq(3).html(data.card_num);
                     $(index).closest('tr').children('td').eq(4).html("<span style='color:darkgreen;'>账号正确</span>");
+                    $('#export-excel1').val(odlVal + "'" + phoneVal + "',")
                 }
             }
         })
+    }
+
+    // 导出银行卡信息
+//    $('#export-excel').on('click', function(){
+//        // 获取以录入的手机号
+//        var phoneStr = $('#export-excel1').html();
+//        if(phoneStr == ''){
+//            alert('请先进行卡号查询');
+//        }
+////        else{
+////            $.ajax({
+////                url: 'admin_set_export_excel.php?act=export',
+////                type: 'post',
+//////                dataType: 'json',
+////                data: {
+////                    phonestr: phoneStr
+////                },
+////                success: function(data){
+////                    console.log(data);
+////                }
+////            })
+////        }
+//    })
+    $('#myForm2').submit(function(){
+        var phoneStr = $('#export-excel1').val();
+        if(phoneStr == ''){
+            alert('请进行卡号查询或没有提供正确数据');
+            return mySubmit(false);
+        }
+    })
+    function mySubmit(flag){
+        return flag;
+    }
+
+
+    // 一键加载
+    function oneKeyLoading(index){
+        var allPhone = [];
+        $(".table-hover input[type='text']").each(function(i, e){
+            jiazai(e);
+        });
     }
 </script>
 </html>

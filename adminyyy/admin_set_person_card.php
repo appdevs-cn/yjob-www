@@ -39,6 +39,13 @@ elseif($act == 'get_bank'){
 	}
 	echo urldecode(json_encode($result));
 }
+// 加载导入手机号的数据页面
+elseif($act == 'import'){
+	$phone = isset($_POST['phone'])?$_POST['phone']:'';
+	$phone = explode(',', $phone);
+	$smarty->assign('phone', $phone);
+	$smarty->display('set/admin_set_person_card.htm');
+}
 elseif($act == 'site_setsave')
 {
 	check_token();
