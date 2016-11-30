@@ -162,7 +162,7 @@
 					{#else#}
 					<h2>{#$show.wage_cn#}</h2>
 					{#/if#}
-					<h4>已报<span>{#$show.counts#}</span>名</h4>
+					<h4>{#if $show.is_enroll != ''#}已报名{#else#}未报名{#/if#}</h4>
 				</div>
 				<input type="hidden" value="{#$rid#}" id="rid"/>
 			</div>

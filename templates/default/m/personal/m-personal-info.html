@@ -74,7 +74,8 @@
 				});
 				// ajax提交保存简历
 				$("#resume_save").click(function(event) {
-					var pid = {#$smarty.get.pid#};
+					var pid = {#$userprofile.uid#};
+//					console.log(pid);return false;
 					var title = $("input[name=title]").val();
 					var fullname = $("input[name=fullname]").val();
 					var sex = $("input[name=sex]").val();
@@ -109,7 +110,7 @@
 							if (data == "ok") {
 								layer.msg('修改基本信息成功！', {icon: 1});
 								setTimeout(function () {
-								    window.location.href = "user.php?act=resume_one&pid=" + pid;
+								    window.location.href = "user.php?act=resume_basic";
 								}, 2000);
 							} else if(data == "err") {
 								layer.msg('修改基本信息失败！', {icon: 2});
@@ -135,7 +136,7 @@
 		                return false;
 		            }
 					$.ajaxFileUpload ({
-						url:'?act=logo_save&pid='+{#$smarty.get.pid#},
+						url:'?act=logo_save&pid='+{#$userprofile.uid#},
 						secureuri :false,
 						fileElementId :'logo_img',
 						dataType : 'json',
@@ -284,95 +285,95 @@
 				</div> 
 					 
 			</article>-->
-			<article class="formDiv">
-				<div class="formChild" id="showNotrequired">
-					<div class="lt row">展开选填信息，填写更加分</div>
-				</div>
-				<div class="formChild notRformChild">
-					<div class="lt">身高</div>
-					<div class="mt"><input id="height" name="height" placeholder="请填写" value="{#if $resume_basic.height#}{#$resume_basic.height#}{#/if#}"/>cm</div>
-				</div>
-				<div class="formChild notRformChild">
-					<div class="lt">籍贯</div>
-					<div class="mt">
-						<select id="householdaddress" placeholder="请填写" name="householdaddress" >
-							
-	              		
-	              			{#qishi_get_classify  set="类型:jiguan,列表名:c_education"#}
-	              			{#foreach from=$c_education item=list#}
-							{#if $resume_basic.householdaddress==$list.categoryname#}
-							<option id="{#$list.id#}" title="{#$list.categoryname#}" selected="selected">{#$list.categoryname#}</option>
-							{#else#}
-							<option id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</option>
-							{#/if#}
-	              			
-	              			{#/foreach#}
-	              		
-						</select>
-					</div>
-				</div>
-				
-				<div class="formChild notRformChild">
-					<div class="lt ltsmall">目前状态</div>
-					<label id="currentTxt" data-type="current" data-text="选择目前状态" class="mt check mbs">{#if $resume_one.current_cn#}{#$resume_one.current_cn#}{#/if#}</label>
-					<input type="hidden" id="current" name="current" value="{#$resume_one.current#}" />
-					<input type="hidden" id="current_cn" name="current_cn" value="{#$resume_one.current_cn#}" />
-				</div>
-				<div class="formChild add" style="display:none;padding-left:20px;">
-					毕业时间：
-					<select style="width:174px;" name="biyeshijian"  id="biyeshijian"  value="{#$resume_basic.biyetime#}" >
-							
-	              		
-	              			{#qishi_get_classify  set="类型:gradata,列表名:c_education"#}
-	              			{#foreach from=$c_education item=list#}
-	              			{#if $list.categoryname==$resume_basic.biyetime#}
-							<option id="{#$list.categoryname#}" selected="selected">{#$list.categoryname#}</option>
-							{#else#}
-							<option id="{#$list.categoryname#}">{#$list.categoryname#}</option>
-							{#/if#}
-							
-	              			{#/foreach#}
-					</select>
-				</div>
-				<div class="formChild add" style="display:none;padding-left:20px;">
-					
-					学校名称：<input type="text" id="schoolname" name="schoolname" value="{#$resume_one.studyschool#}" style="width:174px;"/>
-					
-					
-					<script>
-							$(document).ready(function(){
-									$("#currentTxt").bind('DOMNodeInserted', function(e) {  
-										var id=$(this).text();
-										if(id=="在校学生"){
-											$(".add").show();
-										}else{
-											$(".add").hide();
-										}  
-									});  
-									
-							})
-						</script>
-				</div>
-				<div class="formChild notRformChild">
-					<div class="lt">自我描述</div>
-					<div class=""><textarea id="miaoshu" name="height" style="width:80%;margin:10px auto;" placeholder="请填写" />{#if $resume_basic.specialty#}{#$resume_basic.specialty#}{#/if#}</textarea></div>
-				</div>
-				<!-- <div class="formChild notRformChild">
-					<div class="lt">邮箱<span></span></div>
-					<div class="mt"><input id="email" name="email" placeholder="请填写" value="{#$userprofile.email#}" readonly /><input type="button" class="audit_mobile1" value="修改"></div>
-				</div> -->
-				<!-- <div class="xianshi1 " style="display:none;color:red;width:140px;height:40px;margin:auto auto;">请到账号安全里修改<br />
-					<input type="button" id="queding1" value="确定"/>
-				</div> -->
-				<!-- <div class="formChild notRformChild">
-					<div class="lt">婚姻状况</div>
-					<label id="marriageTxt" data-type="marriage" data-text="选择婚姻状况" class="mt check mbs">{#if $resume_basic.marriage_cn#}{#$resume_basic.marriage_cn#}{#else#}请选择{#/if#}</label>
-					<input type="hidden" id="marriage" name="marriage" value="{#$resume_basic.marriage#}" />
-					<input type="hidden" id="marriage_cn" name="marriage_cn" value="{#$resume_basic.marriage_cn#}" />
-				</div> -->
-				<input type="hidden" name="title" value="{#$resume_basic.title#}"/>
-			</article>
-			
+			<!--<article class="formDiv">-->
+				<!--<div class="formChild" id="showNotrequired">-->
+					<!--<div class="lt row">展开选填信息，填写更加分</div>-->
+				<!--</div>-->
+				<!--<div class="formChild notRformChild">-->
+					<!--<div class="lt">身高</div>-->
+					<!--<div class="mt"><input id="height" name="height" placeholder="请填写" value="{#if $resume_basic.height#}{#$resume_basic.height#}{#/if#}"/>cm</div>-->
+				<!--</div>-->
+				<!--<div class="formChild notRformChild">-->
+					<!--<div class="lt">籍贯</div>-->
+					<!--<div class="mt">-->
+						<!--<select id="householdaddress" placeholder="请填写" name="householdaddress" >-->
+
+
+	              			<!--{#qishi_get_classify  set="类型:jiguan,列表名:c_education"#}-->
+	              			<!--{#foreach from=$c_education item=list#}-->
+							<!--{#if $resume_basic.householdaddress==$list.categoryname#}-->
+							<!--<option id="{#$list.id#}" title="{#$list.categoryname#}" selected="selected">{#$list.categoryname#}</option>-->
+							<!--{#else#}-->
+							<!--<option id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</option>-->
+							<!--{#/if#}-->
+
+	              			<!--{#/foreach#}-->
+
+						<!--</select>-->
+					<!--</div>-->
+				<!--</div>-->
+
+				<!--<div class="formChild notRformChild">-->
+					<!--<div class="lt ltsmall">目前状态</div>-->
+					<!--<label id="currentTxt" data-type="current" data-text="选择目前状态" class="mt check mbs">{#if $resume_one.current_cn#}{#$resume_one.current_cn#}{#/if#}</label>-->
+					<!--<input type="hidden" id="current" name="current" value="{#$resume_one.current#}" />-->
+					<!--<input type="hidden" id="current_cn" name="current_cn" value="{#$resume_one.current_cn#}" />-->
+				<!--</div>-->
+				<!--<div class="formChild add" style="display:none;padding-left:20px;">-->
+					<!--毕业时间：-->
+					<!--<select style="width:174px;" name="biyeshijian"  id="biyeshijian"  value="{#$resume_basic.biyetime#}" >-->
+
+
+	              			<!--{#qishi_get_classify  set="类型:gradata,列表名:c_education"#}-->
+	              			<!--{#foreach from=$c_education item=list#}-->
+	              			<!--{#if $list.categoryname==$resume_basic.biyetime#}-->
+							<!--<option id="{#$list.categoryname#}" selected="selected">{#$list.categoryname#}</option>-->
+							<!--{#else#}-->
+							<!--<option id="{#$list.categoryname#}">{#$list.categoryname#}</option>-->
+							<!--{#/if#}-->
+
+	              			<!--{#/foreach#}-->
+					<!--</select>-->
+				<!--</div>-->
+				<!--<div class="formChild add" style="display:none;padding-left:20px;">-->
+
+					<!--学校名称：<input type="text" id="schoolname" name="schoolname" value="{#$resume_one.studyschool#}" style="width:174px;"/>-->
+
+
+					<!--<script>-->
+							<!--$(document).ready(function(){-->
+									<!--$("#currentTxt").bind('DOMNodeInserted', function(e) {-->
+										<!--var id=$(this).text();-->
+										<!--if(id=="在校学生"){-->
+											<!--$(".add").show();-->
+										<!--}else{-->
+											<!--$(".add").hide();-->
+										<!--}-->
+									<!--});-->
+
+							<!--})-->
+						<!--</script>-->
+				<!--</div>-->
+				<!--<div class="formChild notRformChild">-->
+					<!--<div class="lt">自我描述</div>-->
+					<!--<div class=""><textarea id="miaoshu" name="height" style="width:80%;margin:10px auto;" placeholder="请填写" />{#if $resume_basic.specialty#}{#$resume_basic.specialty#}{#/if#}</textarea></div>-->
+				<!--</div>-->
+				<!--&lt;!&ndash; <div class="formChild notRformChild">-->
+					<!--<div class="lt">邮箱<span></span></div>-->
+					<!--<div class="mt"><input id="email" name="email" placeholder="请填写" value="{#$userprofile.email#}" readonly /><input type="button" class="audit_mobile1" value="修改"></div>-->
+				<!--</div> &ndash;&gt;-->
+				<!--&lt;!&ndash; <div class="xianshi1 " style="display:none;color:red;width:140px;height:40px;margin:auto auto;">请到账号安全里修改<br />-->
+					<!--<input type="button" id="queding1" value="确定"/>-->
+				<!--</div> &ndash;&gt;-->
+				<!--&lt;!&ndash; <div class="formChild notRformChild">-->
+					<!--<div class="lt">婚姻状况</div>-->
+					<!--<label id="marriageTxt" data-type="marriage" data-text="选择婚姻状况" class="mt check mbs">{#if $resume_basic.marriage_cn#}{#$resume_basic.marriage_cn#}{#else#}请选择{#/if#}</label>-->
+					<!--<input type="hidden" id="marriage" name="marriage" value="{#$resume_basic.marriage#}" />-->
+					<!--<input type="hidden" id="marriage_cn" name="marriage_cn" value="{#$resume_basic.marriage_cn#}" />-->
+				<!--</div> &ndash;&gt;-->
+				<!--<input type="hidden" name="title" value="{#$resume_basic.title#}"/>-->
+			<!--</article>-->
+
 			<div class="select_bar_div"></div>
 			<article class="flex-box arlogout"><a id="resume_save" class="logout" href="javascript:;">保存</a></article>
 		</div>

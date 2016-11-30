@@ -74,7 +74,8 @@ elseif ($act=='login')
 	$smarty->display('m/login.html');
 }
 elseif ($act == 'do_login')
-{	
+{
+
 	require_once(QISHI_ROOT_PATH.'include/fun_wap.php');
 	$_POST=array_map("utf8_to_gbk", $_POST);
 	if($_POST['username']=="用户名/邮箱/手机号" || $_POST['passWord']==""|| $_POST['username']=="" )
@@ -106,10 +107,10 @@ elseif ($act == 'do_login')
 				if(!empty($_SESSION['url']) && !strpos($_SESSION['url'],'user_get_pass')){
 					$url  = $_SESSION['url'];
 					unset($_SESSION['url']);
-					exit($url);
+//					exit($url);
 				}
 				if($_SESSION['utype']==2)	exit("personal/user.php");
-				if($_SESSION['utype']==1)	exit("company/user.php");
+				if($_SESSION['utype']==1)	exit("http://www.yjob.net/user/company/company_index.php");
 			}
 			else
 			{

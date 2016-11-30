@@ -93,7 +93,8 @@ $new_jobs = $jobTmp['data'];
 foreach ($new_jobs as $key => $jobs) 
 {
     unset($new_jobs[$key]['job_desc']);
-	$new_jobs[$key]['url'] = wap_url_rewrite("jobs-show",array("id"=>$jobs['id']),1,$jobs['publish_city_id']);
+//	$new_jobs[$key]['url'] = wap_url_rewrite("jobs-show",array("id"=>$jobs['id']),1,$jobs['publish_city_id']);
+	$new_jobs[$key]['url'] = wap_url_rewrite("jobs-show",array("id"=>$jobs['id']),1,'');
 	$new_jobs[$key]['r_time'] = daterange(time(),$jobs['refreshtime'],'Y-m-d',"#FF3300");
 	$new_jobs[$key]['work_start'] = date("n.j",$jobs['work_start']);
 	$new_jobs[$key]['work_end'] = date("n.j",$jobs['work_end']);
@@ -164,6 +165,7 @@ foreach ($new_jobs as $key => $jobs)
         $new_jobs[$key]['experience'] = $jobs['experience'];
         $new_jobs[$key]['experience_cn'] = $jobs['experience_cn'];
 }
+//var_dump($new_jobs);exit;
 $smarty->assign('new_jobs',$new_jobs);
 //名企推荐广告位
 $ad_list = $db->getall("SELECT id,img_path,img_url FROM ".table('ad')." WHERE alias='QS_yellowpage'  ORDER BY `show_order` DESC,`id` DESC LIMIT 6");
@@ -179,5 +181,9 @@ foreach ($subsite as $key => $value) {
 	$subsitelist[] = $value;
 }
 $smarty->assign('subsitelist',$subsitelist);
+if($_GET['act'] == 'all'){
+    $smarty->display("m/m-jobs-list.html");
+    exit;
+}
 $smarty->display("m/m-index.html");
 ?>

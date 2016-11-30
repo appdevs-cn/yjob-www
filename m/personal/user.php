@@ -33,6 +33,7 @@ if($_CFG['login_per_audit_mobile'] && $user['mobile_audit']=="0" && $act != 'ind
 }
 if ($act == 'index')
 {
+	
 	$smarty->cache = false;
 	$cjl="select * from ".table('resume')." where uid=".$_SESSION['uid'];
 	$cdjl=$db->getone($cjl);
@@ -307,7 +308,7 @@ elseif($act == "resume_one")
 }
 elseif($act == "resume_basic")
 {
-	
+
 	$smarty->cache = false;
 	$cjl="select * from ".table('resume')." where uid=".$_SESSION['uid'];
 	$cdjl=$db->getone($cjl);
@@ -699,7 +700,15 @@ elseif($act == "work_card") {
         if($pyInfo['data']['dd_uid']) {
             $ddInfo = get_user_info($pyInfo['data']['dd_uid']);
         }
-        $pyInfo['data']['dd_name'] = $ddInfo['username'];
+		if($ddInfo) {
+			$cjl = "select fullname from " . table('resume') . " where uid=" . $ddInfo['uid'];
+			$cdjl = $db->getone($cjl);
+		}
+		if($cdjl){
+			$pyInfo['data']['dd_name'] = $cdjl['fullname'];
+		}else {
+			$pyInfo['data']['dd_name'] = '';
+		}
         $pyInfo['data']['dd_mobile'] = $ddInfo['mobile'];
         $pyInfo['data']['job_info_id'] = $job_info_id;
         $pyInfo['data']['enroll_id'] = $_GET['id'];
@@ -786,7 +795,15 @@ elseif($act == "signIn_manage") {
          if($ptInfo['data']['dd_uid']) {
             $ddInfo = get_user_info($ptInfo['data']['dd_uid']);
         }
-        $ptInfo['data']['dd_name'] = $ddInfo['username'];
+		if($ddInfo) {
+			$cjl = "select fullname from " . table('resume') . " where uid=" . $ddInfo['uid'];
+			$cdjl = $db->getone($cjl);
+		}
+		if($cdjl){
+			$ptInfo['data']['dd_name'] = $cdjl['fullname'];
+		}else {
+			$ptInfo['data']['dd_name'] = '';
+		}
         $ptInfo['data']['dd_mobile'] = $ddInfo['mobile'];
         $ptInfo['data']['job_info_id'] = $job_info_id;
         $jobInfoTmp = https_request_api('job/info/'.$ptInfo['data']['job_id']);
@@ -1368,6 +1385,7 @@ elseif($act == 'my_bank_card'){
 	}
 	$smarty->display('m/personal/my-bank-card.html');
 }
+
 
 function create_guid() {
 	static $guid = '';

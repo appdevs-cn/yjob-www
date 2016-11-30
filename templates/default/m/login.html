@@ -116,7 +116,7 @@
 				var passWord =$("input[name=passWord]").val();
 				$.post("?act=do_login",{username:username,passWord:passWord},function(data){
 					
-					//alert(data);
+//					alert(data);
 					if(data=="1")
 					{
 						var html ='<div class="user-form-error" style="display: block;"><i class="error-icon"></i>请输入用户名密码</div>';

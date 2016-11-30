@@ -13,7 +13,24 @@
 <link rel="stylesheet" href="../css/m_common.css">
 <link rel="stylesheet" href="../css/m_style.css">
 <link rel="stylesheet" href="../css/m_wallet.css">
-
+	<style>
+		.wallet_body li .hd h4 img{
+			display: inline-block;
+			height: 40px;
+			position: relative;
+			top: 12px;
+		}
+	</style>
+	{#if $my_bank_card.bank_logo#}
+	<style>
+		.wallet_body li .hd h4{
+			padding-left: 0px;
+		}
+		.wallet_body li .hd h4.n1{
+			background-image:none!important;
+		}
+	</style>
+	{#/if#}
 </head>
 <div class="layout pb100">
 	<div class="city_nav wallet">
@@ -26,7 +43,7 @@
 	
 	<div class="wallet_head">
 		<h4>可提现金额（元）</h4>
-		<h2>563.00</h2>
+		<h2>0.00</h2>
 		<a href="#">提现</a>
 	</div>
 	
@@ -37,29 +54,29 @@
 				<div class="hd">
 					<input name="radio" type="radio" value="0" id="radio1" checked><label for="radio1"></label>
              
-					<h4 class="n1">添加一张银行卡</h4>
+					<h4 class="n1">{#if $my_bank_card.bank_logo#}<img src="{#$my_bank_card.bank_logo#}">{#/if#}添加一张银行卡</h4>
 					<em></em>
 				</div>
 				<div class="bd">
 					<dl>
 						<dd>
 							<h5><span>*</span>姓名：</h5>
-							<input type="text" class="txt readonly" name="bank-username" id="bank-username" {#if $my_bank_card.username#}value="{#$my_bank_card.username#}"{#else#}value="马梓达"{#/if#} readonly="readonly" />
+							<input type="text" class="txt readonly" name="bank-username" id="bank-username" {#if $my_bank_card.username#}value="{#$my_bank_card.username#}"{#/if#} readonly="readonly" />
 							<input type="hidden" id="bank-userid" name="bank-userid" value="{#$uid#}">
 							<input type="hidden" id="user-mobile" name="user-mobile" value="{#$mobile#}">
 						</dd>
 						<dd>
 							<h5><span>*</span>卡号：</h5>
-							<input type="text" class="txt readonly" name="cardid" id="cardid" {#if $my_bank_card.username#}value="{#$my_bank_card.card_num#}"{#else#}value="622 848 001 9424 585"{#/if#} readonly="readonly" />
+							<input type="text" class="txt readonly" name="cardid" id="cardid" {#if $my_bank_card.card_num#}value="{#$my_bank_card.card_num#}"{#/if#} readonly="readonly" />
 						</dd>
 						<dd>
 							<h5><span>*</span>银行：</h5>
-							<input type="text" class="txt nojs readonly" name="bankname" id="bankname" {#if $my_bank_card.username#}value="{#$my_bank_card.bank_name#}"{#else#}value="北京银行"{#/if#} readonly="readonly" />
+							<input type="text" class="txt nojs readonly" name="bankname" id="bankname" {#if $my_bank_card.hand_bank_name#}value="{#$my_bank_card.hand_bank_name#}"{#else#}value="{#$my_bank_card.bank_name#}"{#/if#} readonly="readonly" />
 							<a href="#">银行不对 ?</a>
 						</dd>
 						<dd class="nshow">
 							<h5><span> &nbsp; </span>手动添加：</h5>
-							<input type="text" class="txt" name="hand-add" id="hand-add" {#if $my_bank_card.username#}value="{#$my_bank_card.hand_bank_name#}"{#/if#} />
+							<input type="text" class="txt" name="hand-add" id="hand-add" />
 						</dd>
 						<dd class="last">
 							<input type="button" class="btn btn1" id="" value="编辑" />
@@ -128,37 +145,37 @@
 		</ul>
 	</div>
 		
-	<div class="wallet_foot">
-		<h2>流水信息：</h2>
-		<ul>
-			<li>
-				<h4>传单派发传单派发传单派发传单派发</h4>
-				<h5>+150.00</h5>
-				<span>待支付</span>
-			</li>
-			<li>
-				<h4>模特礼仪</h4>
-				<h5>+1,000.50</h5>
-				<span class="c1">已支付</span>
-			</li>
-			<li>
-				<h4>外卖送餐</h4>
-				<h5>+1,200.80</h5>
-				<span>待支付</span>
-			</li>
-			<li>
-				<h4>传单派发</h4>
-				<h5>+1,660.00</h5>
-				<span class="c1">已支付</span>
-			</li>
-			<li>
-				<h4>外卖送餐</h4>
-				<h5>+3,159.30</h5>
-				<span class="c1">已支付</span>
-			</li>
-		</ul>
-	</div>	
-		
+	<!--<div class="wallet_foot">-->
+		<!--<h2>流水信息：</h2>-->
+		<!--<ul>-->
+			<!--<li>-->
+				<!--<h4>传单派发传单派发传单派发传单派发</h4>-->
+				<!--<h5>+150.00</h5>-->
+				<!--<span>待支付</span>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<h4>模特礼仪</h4>-->
+				<!--<h5>+1,000.50</h5>-->
+				<!--<span class="c1">已支付</span>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<h4>外卖送餐</h4>-->
+				<!--<h5>+1,200.80</h5>-->
+				<!--<span>待支付</span>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<h4>传单派发</h4>-->
+				<!--<h5>+1,660.00</h5>-->
+				<!--<span class="c1">已支付</span>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<h4>外卖送餐</h4>-->
+				<!--<h5>+3,159.30</h5>-->
+				<!--<span class="c1">已支付</span>-->
+			<!--</li>-->
+		<!--</ul>-->
+	<!--</div>-->
+
 	<div class="navs">
 		<ul>
 			<li>

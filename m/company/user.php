@@ -52,7 +52,8 @@ elseif ($act == 'index')
 			$consultant = $db->getone("SELECT * FROM ".table('consultant')." WHERE id=".intval($member_info['consultant']));
 			$smarty->assign('consultant',$consultant['qq']);
 		}
-		$smarty->display("m/company/m-user-company-index.html");
+//		$smarty->display("m/company/m-user-company-index.html");
+		header("Location:http://www.yjob.net/user/company/company_index.php");
 	}
 }
 // 企业信息

@@ -15,7 +15,6 @@ $_POST['handAdd'] = mb_convert_encoding($_POST['handAdd'], 'GBK', $encode);
 $uid = isset($_POST['userId'])?$_POST['userId']:'2';
 $sql = "select id from ys_my_bank_card where uid=" . $uid;
 $result = $db->getone($sql);
-
 if($_POST['userName'] && $_POST['userId'] && $_POST['cardId'] && $_POST['bankName']){
     $arr = [];
     $arr['uid'] = $_POST['userId'];
@@ -23,6 +22,7 @@ if($_POST['userName'] && $_POST['userId'] && $_POST['cardId'] && $_POST['bankNam
     $arr['user_mobile'] = $_POST['userMobile'];
     $arr['card_num'] = $_POST['cardId'];
     $arr['bank_name'] = $_POST['bankName'];
+    $arr['bank_logo'] = $_POST['bankLogo'];
     $arr['hand_bank_name'] = $_POST['handAdd'];
 }
 
