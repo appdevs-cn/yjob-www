@@ -757,8 +757,8 @@ elseif($act == "work_card") {
     $smarty->assign('isxy', $isxy);
     $smarty->assign('companyId', $jobInfoTmp['data']['company_id']);
     $smarty->assign('workList', $workList);
-    $smarty->assign('signOuted', $signOuted ? $signOuted : false);
-    $smarty->assign('signIned', $signIned ? $signIned : false);
+//    $smarty->assign('signOuted', $signOuted ? $signOuted : false);
+//    $smarty->assign('signIned', $signIned ? $signIned : false);
     $smarty->assign('xxDate', strtotime("+1 days", time()));
     $smarty->assign('signInList', $signIn);
     $smarty->assign('signOutList', $signOut ? $signOut : array());
