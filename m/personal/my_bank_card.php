@@ -20,6 +20,7 @@ if($_POST['userName'] && $_POST['userId'] && $_POST['cardId'] && $_POST['bankNam
     $arr['uid'] = $_POST['userId'];
     $arr['username'] = $_POST['userName'];
     $arr['user_mobile'] = $_POST['userMobile'];
+    $arr['userid_card'] = $_POST['useridCard'];
     $arr['card_num'] = $_POST['cardId'];
     $arr['bank_name'] = $_POST['bankName'];
     $arr['bank_logo'] = $_POST['bankLogo'];

@@ -11,7 +11,6 @@ $phoneStr = str_replace("\\",'',$phoneStr);
 $phoneArr = explode(',', $phoneStr);
 $phoneArr = array_unique($phoneArr);
 $phoneStr = implode(',', $phoneArr);
-
 if($act == 'export'){
     // 导出数据
     $phoneStr = trim($phoneStr, ',');
@@ -19,8 +18,9 @@ if($act == 'export'){
     $phoneArr1 = explode(',', $phoneStr1);
     $sql = "select * from ys_my_bank_card where user_mobile in (".$phoneStr.")";
     $data = $db->getall($sql);
-    $str = "ID号,UID,姓名,手机号,卡号,银行,状态\n";
+    $str = "日期,客户负责人,负责人联系方式,负责内容,兼职姓名,联系方式,工作时间,工作时长(小时/天）,基本工资,奖励/加班（元）,扣款（元）,实发工资,备注或其他信息,回款金额,持卡人姓名,银行卡号,开户银行,身份证,银行状态\n";
     $str = iconv('utf-8','gb2312',$str);
+    $i = 1;
     foreach ($data as $key => $value) {
         $uesrname = $data[$key]['username'];
         $bank_name = str_replace('·', '/', $data[$key]['bank_name']);
@@ -28,7 +28,8 @@ if($act == 'export'){
         if($hand_bank_name != ''){
             $bank_name = $hand_bank_name;
         }
-        $str .= $data[$key]['id'].",\t".$data[$key]['uid'].",\t".$uesrname.",\t".$data[$key]['user_mobile'].",\t".$data[$key]['card_num'].",".$bank_name.",".$data[$key]['bank_status']."\n";
+        $i += 1;
+        $str .= $_POST['inputarr5'].",\t".$_POST['inputarr1'].",\t".$_POST['inputarr2'].",\t".$_POST['inputarr6'].",\t".$uesrname.",\t".$data[$key]['user_mobile'].",\t".$_POST['inputarr3'].",\t".$_POST['inputarr4'].",".$_POST['inputarr7'].',,,'.'=I'.$i.'+J'.$i.'-K'.$i.",\t,\t".$_POST['inputarr8'].",\t".$uesrname.",\t".$data[$key]['card_num'].",\t".$data[$key]['bank_name'].",\t".$data[$key]['userid_card'].",\t".$data[$key]['bank_status']."\n";
     }
     // 结果要提交过来的手机号但不在数据库中，进行返回false
     $sql = "select user_mobile from ys_my_bank_card";
@@ -38,9 +39,9 @@ if($act == 'export'){
         $libMarr[$key] = $value['user_mobile'];
     }
     $diffArr = array_diff($phoneArr1, $libMarr);
-    $str .= iconv('utf-8','gb2312', "错误手机号或没有绑定银行卡\n");
+    $str .= iconv('utf-8','gb2312', ",,,,,错误手机号或没有绑定银行卡\n");
     foreach($diffArr as $v){
-        $str .= $v."\n";
+        $str .= ',,,,,'.$v."\n";
     }
 //    echo $str;exit;
     date_default_timezone_set('PRC');

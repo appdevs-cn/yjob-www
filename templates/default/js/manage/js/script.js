@@ -639,6 +639,7 @@ function showLocalAddress(ele) {
 					url: "http://api.map.baidu.com/geocoder/v2/?ak=1wvtkXp4ETKwIy3Byu2Ou3cOYBGuqdYL&&location="+ lat + "," + lng +",&output=json&pois=1",
 					dataType: 'jsonp',
 					success:function (data) {
+						console.log(data);
 						ele.text(data.result.formatted_address);
 					}
 				});

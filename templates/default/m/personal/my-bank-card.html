@@ -66,6 +66,10 @@
 							<input type="hidden" id="user-mobile" name="user-mobile" value="{#$mobile#}">
 						</dd>
 						<dd>
+							<h5><span>*</span>…Ì∑›÷§:</h5>
+							<input type="text" class="txt readonly" name="userid-card" id="userid-card" {#if $my_bank_card.userid_card#}value="{#$my_bank_card.userid_card#}"{#/if#} readonly="readonly" />
+						</dd>
+						<dd>
 							<h5><span>*</span>ø®∫≈£∫</h5>
 							<input type="text" class="txt readonly" name="cardid" id="cardid" {#if $my_bank_card.card_num#}value="{#$my_bank_card.card_num#}"{#/if#} readonly="readonly" />
 						</dd>

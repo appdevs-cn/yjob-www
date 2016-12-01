@@ -1,7 +1,6 @@
 <graph divlinecolor='FEDD69' numdivlines='4' showAreaBorder='1' areaBorderColor='cccccc' numberPrefix='' showNames='1' numVDivLines='29' vDivLineAlpha='30' formatNumberScale='0' rotateNames='1'  decimalPrecision='0' bgColor='' yAxisName=''  showAlternateVGridColor='0' canvasBorderThickness='0' decimalPrecision='0' areaBorderColor='cccccc'>
 >
 <categories fontSize='9'>
-<category name='10/31'/>
 <category name='11/01'/>
 <category name='11/02'/>
 <category name='11/03'/>
@@ -31,10 +30,10 @@
 <category name='11/27'/>
 <category name='11/28'/>
 <category name='11/29'/>
+<category name='11/30'/>
 </categories>
 <dataset  color='00CC00' showValues='0' areaAlpha='30' showAreaBorder='1' areaBorderThickness='1' areaBorderColor='006600'>
 <set value='0' />
-<set value='2' />
 <set value='3' />
 <set value='0' />
 <set value='2' />
@@ -59,6 +58,7 @@
 <set value='0' />
 <set value='3' />
 <set value='6' />
+<set value='0' />
 <set value='0' />
 <set value='0' />
 <set value='0' />
