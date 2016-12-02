@@ -239,6 +239,7 @@ elseif($act == 'users_set')
 elseif($act == 'users_set_save')
 {
 	check_token();
+//	var_dump($_REQUEST);exit;
 	$id=intval($_POST['id']);
 	if ($_SESSION['admin_purview']<>"all")adminmsg("È¨ÏÞ²»×ã£¡",1);
 	$setsqlarr['purview']=$_POST['purview'];

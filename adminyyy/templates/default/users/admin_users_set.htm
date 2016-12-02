@@ -1402,7 +1402,11 @@ $(document).ready(function()
 <input name="purview[]" type="checkbox"  value="site_set" {#if "site_set"|in_array:$admin_set#}checked="checked"{#/if#} />网站配置 
 </label>
 </li>
-
+<li  class="user_box_li">
+  <label>
+      <input name="purview[]" type="checkbox"  value="set_bank" {#if "set_bank"|in_array:$admin_set#}checked="checked"{#/if#} />个人银行卡
+  </label>
+</li>
 <!-- -->
 <li  class="user_box_li">
 <label>

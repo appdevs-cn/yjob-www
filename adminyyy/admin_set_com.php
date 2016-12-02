@@ -20,7 +20,7 @@ if($_CFG['subsite_id']>0){
 }
 check_permissions($_SESSION['admin_purview'],"set_com");
 if($act == 'set')
-{	
+{
 	get_token();
 	$smarty->assign('navlabel',"set");
 	$smarty->assign('config',$_CFG);
