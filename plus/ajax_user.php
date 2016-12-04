@@ -69,6 +69,9 @@ if($act =='do_login')
 	{
 		$login=user_login($username,$password,$account_type,true,$expire);
 		$url=$url?$url:$login['qs_login'];
+		if($url == '/user/personal/personal_index.php'){
+			$url = '/m/personal/user.php';
+		}
 		if ($login['qs_login'])
 		{
 			if($login['qs_login'] == 'false'){

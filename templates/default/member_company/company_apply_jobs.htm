@@ -47,7 +47,7 @@ $(document).ready(function(){
 	$('.state-list .state').on('click', function(e){
 		var resume_id =$(this).attr('resume_id');
 		var jobs_id =$(this).attr('jobs_id');
-                var state = $(this).attr('state')
+		var state = $(this).attr('state');
 		$.post('{#$QISHI.site_dir#}user/user_label_resume.php', {"status":state, "resume_id":resume_id,"jobs_id":jobs_id}, function(data) 
 		{
 			if(data=="ok")
@@ -163,6 +163,7 @@ $(document).ready(function(){
 		.c-data-top.apply_jobs .top-item4, .c-data-content.apply_jobs .content4{ width:150px;}
 		.top-item7-1, .content7-1{ width:110px;}
 		.c-data-top.apply_jobs .top-item7, .c-data-content.apply_jobs .content7{ width:110px;}
+		.c-data-top.apply_jobs .top-item3, .c-data-content.apply_jobs .content3{width:50px;}
 		</style>
         <div style="padding:15px;" class="apply_sels">选择职位： 
         <select class="select_sort" name="job_id" id="job_id">
@@ -212,8 +213,9 @@ $(document).ready(function(){
                 <div class="item f-left top-item1-1">岗位</div>
                 <div class="item f-left top-item2">姓名</div>
                 <div class="item f-left top-item2-1">电话</div>
-                <div class="item f-left top-item3">基本信息</div>
-                <div class="item f-left top-item7" >点位</div>
+                <div class="item f-left top-item3">个人信息</div>
+                <div class="item f-left top-item3">状态</div>
+                <div class="item f-left top-item7" >点位信息</div>
                 <div class="item f-left top-item7" style="width:200px;">申请时间</div>
                 <div class="item f-left top-item7">是否续约</div>
                 <div class="item f-left top-item7-1">
@@ -260,6 +262,7 @@ $(document).ready(function(){
                         	{#$list.telephone#}
                         </div>
 						<div class="c-item f-left content3">{#if $list.age#}{#$list.age#}岁/{#/if#}{#$list.education_cn#}/{#$list.experience_cn#}/{#$list.sex_cn#}</div>
+						<div class="c-item f-left content3">{#if $list.status == 200#}通过{#elseif $list.status == 400#}弃用{#elseif $list.status == 600#}备用{#elseif $list.status == 500#}取消报名{#elseif $list.status == 302#}放鸽子{#else#}待操作{#/if#}</div>
 						<div class="c-item f-left content7" style="width:200px;">
                         <select name="station" id="station_{#$list.id#}" class="u_change bdr0" resume_id="{#$list.id#}">
                             {#foreach from=$list.station_options item=position#}

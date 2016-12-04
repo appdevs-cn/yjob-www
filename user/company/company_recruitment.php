@@ -87,6 +87,7 @@ if ($act=='apply_jobs')
     {
             $smarty->assign('page',$page->show(3));
     }
+//	var_dump($resumeList['data']['list']);exit;
     //$smarty->assign('jobsid',$jobsid);
     $smarty->assign('work_date', $work_date);
     $smarty->assign('count', $resumeList['data']['totalCount']);

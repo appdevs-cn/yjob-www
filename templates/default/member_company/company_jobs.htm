@@ -363,7 +363,7 @@ $(document).ready(function(){
                 <div class="c-item f-left content1">
                         <div class="job-ma-block">
 <!--							<div><a href="/jobs/jobs-show.php?id={#$li.id#}" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>-->
-<div style="margin-top:24px;"><a href="#" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>
+<div style="margin-top:24px;"><a href="../../m/jobs-show.php?id={#$li.id#}" target="_blank" class="name-link underline" title="{#$li.jobs_name_#}">{#$li.job_name#}</a></div>
 <!--                                <p>应聘简历：<a href="company_recruitment.php?act=apply_jobs&jobsid={#$li.id#}&jobname={#$li.jobs_name_#}" class="data-ctrl underline">{#$li.countresume#}</a></p>-->
                         </div>
                 </div>
@@ -375,7 +375,8 @@ $(document).ready(function(){
                 <div class="job-ma-ctrl">
                     {#if $li.status == 100#}
                     <a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a url="?act=jobs_perform&display2=1&y_id={#$li.id#}" href="javascript:;" class="data-ctrl underline ctrl-close">关闭</a>&nbsp;<a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a><br>
-                    <a  href="javascript:;" jobsid="{#$li.id#}" class="data-ctrl underline refresh">刷新</a>
+                    <a  href="javascript:;" jobsid="{#$li.id#}" class="data-ctrl underline refresh">刷新</a>&nbsp;
+					<a  href="./company_recruitment.php?act=apply_jobs&job_id={#$li.id#}" class="data-ctrl underline">报名管理</a>
                     {#else $li.status == 301 || $li.status == 302#}
                      <a href="?act=editjobs&id={#$li.id#}" class="data-ctrl underline">修改</a>&nbsp;<a href="?act=jobs_perform&display1=1&y_id={#$li.id#}" class="data-ctrl underline">恢复</a>&nbsp;
 <!--                     <a href="javascript:;" class="data-ctrl underline ctrl-del" url="?act=jobs_perform&delete=1&y_id={#$li.id#}">删除</a><br>-->
