@@ -87,7 +87,7 @@ if($act == 'sign')
     exit($rst['msg']);
 } elseif($act == 'uplode_img') {
     $img = isset($_POST['img'])? $_POST['img'] : '';  
-    // 获取图片  
+    // 获取图片
     list($type, $data) = explode(',', $img);  
 
     // 判断类型  
@@ -96,12 +96,14 @@ if($act == 'sign')
     }elseif(strstr($type,'image/gif')!==''){  
         $ext = '.gif';  
     }elseif(strstr($type,'image/png')!==''){  
-        $ext = '.png';  
-    }  
+        $ext = '.png';
+    }
+//    echo strlen($data);exit;
     // 生成的文件名  
-    $photo = time().$ext;  
+    $photo = time().$ext;
+    $img = base64_decode($data);
     // 生成文件  
-    file_put_contents(QISHI_ROOT_PATH.'upload/'.$photo, base64_decode($data), true);  
+    $ss = file_put_contents(QISHI_ROOT_PATH.'upload/'.$photo, $img, true);
     // 返回  
     echo 'http://www.yjob.net/upload/'.$photo;
     

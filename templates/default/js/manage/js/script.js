@@ -504,6 +504,7 @@ $(function(){
                 pics.push(obj.val());
 
 	})
+		console.log(pics);return false;
         $.post("personal_ajax.php", {"act":"sign","signTime":$("#signInTime").html(),"signAddr":$("#signInAddr").html(),"signDesc":$("#signDesc").val(),"jobInfoId":$("#job_info_id").val(),"jobId":$("#job_id").val(),"type":$(this).attr('data-type'),"enrollId":$("#enroll_id").val(), "pics":pics},
 		function (data,textStatus)
 		 {
@@ -639,7 +640,7 @@ function showLocalAddress(ele) {
 					url: "http://api.map.baidu.com/geocoder/v2/?ak=1wvtkXp4ETKwIy3Byu2Ou3cOYBGuqdYL&&location="+ lat + "," + lng +",&output=json&pois=1",
 					dataType: 'jsonp',
 					success:function (data) {
-						console.log(data);
+						// console.log(data);
 						ele.text(data.result.formatted_address);
 					}
 				});
@@ -651,28 +652,34 @@ function showLocalAddress(ele) {
 function uploadImg(file) {
 	if(!file.files || !file.files[0])
 		return;
-	if($(".ui-upload-img").children(".img").length >= 4){
-		alert("最多可传四张！");
+	if($(file).closest('dl').children(".img").length >= 3){
+		alert("最多可传三张！");
 		return;
 	}
 	var reader = new FileReader();
 	reader.onload = function(evt){
             if(evt.target.result.match(/image/)){
+				// console.log(evt.target.result);return false;
+				var imgBase64Data = evt.target.result;
+				var pos = imgBase64Data.indexOf("4")+2;
+				imgBase64Data = imgBase64Data.substring(pos, imgBase64Data.length - pos);//去掉Base64:开头的标识字符
+				console.log(evt.target.result);
                  $.post("personal_ajax.php", {"act":"uplode_img","img":evt.target.result},
-                    function(ret){  
+                    function(ret){
+						console.log(ret);
                          if(ret!=''){  
                              var file_ele = $('<dd class="img">'
                             +'<img src="'+ret+'"/>'
-                            +'<i class="remove"></i>'
+                            +'<i class="remove" onclick="removePdd(this)"></i>'
                             +'<input type="hidden" value="'+ret + '" name=pics />'
                             + '</dd>');
-                            $(".ui-upload-img").children(".file").before(file_ele);
-                            file_ele.find(".remove").on("click",function () {
-                                    $(this).parent().fadeOut(function(){
-                                            $(this).remove();
-                                    });
-                            });
-                             $('#showimg').html('<img src="' + ret + '">');  
+                            $(file).closest('dl').children(".file").before(file_ele);
+                            // file_ele.find(".remove").on("click",function () {
+                            //         $(this).parent().fadeOut(function(){
+                            //                 $(this).remove();
+                            //         });
+                            // });
+                             $('#showimg').html('<img src="' + ret + '">');
                          }else{
                              alert('upload fail');  
                          }  
@@ -685,6 +692,9 @@ function uploadImg(file) {
 	reader.readAsDataURL(file.files[0]);
 }
 
+function removePdd(index){
+	$(index).closest('dd').remove();
+}
 
 $(function(){
 	$('.data_time table').each(function(){

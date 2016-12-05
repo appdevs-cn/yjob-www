@@ -220,17 +220,19 @@ $(function(){
 		if(!pass) alert(tip);
 		return pass;
 	}
+
+	var resMsg = false;
 	// 身份证验证
 	$('#userid-card').keyup(function () {
 		useridCard = $('#userid-card').val().replace(/[ ]/g,"");
 		if(!$.isNumeric(useridCard)){
 			if(useridCard.length>0 && useridCard.length<18) {
 				alert('输入的内容不合法！');
-				return false;
+				return resMsg;
 			}
 		}
 		if(useridCard.length<18){
-			return false;
+			return resMsg;
 		}
 		if(useridCard.length == 18){
 			maxValc = $('#userid-card').val();
@@ -238,33 +240,41 @@ $(function(){
 		if(useridCard.length>18){
 			alert('您输入的长度有误！');
 			$('#userid-card').val(maxValc);
-			return false;
+			return resMsg;
 		}
 
-		var res= IdentityCodeValid(useridCard);
+		res = IdentityCodeValid(useridCard);
+
+		if(res){
+			resMsg = true;
+		}else{
+			resMsg = false;
+		}
+		
 	})
 
 	$('#userid-card').on('blur',function(){
 		var thisVin = $('#userid-card').val().replace(/[ ]/g,"");
 		if(thisVin.length == 15){
-			var res= IdentityCodeValid(thisVin);
+			res= IdentityCodeValid(thisVin);
 			if(res == false){
 				alert('身份证号输入有误');
 			}
 		}
 	})
 
+	var bankMsg = false;
 	//判断银行
 	$('#cardid').keyup(function(){
 		sendValue = $('#cardid').val().replace(/[ ]/g,"");
 		if(!$.isNumeric(sendValue)){
 			if(sendValue.length>0) {
 				alert('输入的内容不合法！');
-				return false;
+				return bankMsg;
 			}
 		}
 		if(sendValue.length<16){
-			return false;
+			return bankMsg;
 		}
 		if(sendValue.length == 19){
 			maxVal = $('#cardid').val();
@@ -273,6 +283,7 @@ $(function(){
 			alert('您输入的卡号有误！');
 			$('#cardid').val(maxVal);
 		}
+		bankMsg = false;
 		$.ajax({
 			type: "POST",
 
@@ -286,8 +297,8 @@ $(function(){
 			// 成功状态
 			success: function(msg){
 				var msg = JSON.parse(msg);
-				// console.log(msg);
 				if(msg.validated) {
+					bankMsg = true;
 					$('#bankname').val(msg.bankName);
 					$('.wallet_body li .hd h4.n1').removeClass();
 					$('.wallet_body li .hd h4').css({"padding-left":0});
@@ -312,8 +323,26 @@ $(function(){
 		var bankName = $('#bankname').val();
 		var handAdd = $('#hand-add').val();
 		if(userName=='' || useridCard=='' || cardId==''){
-			alert('请填写数据');
+			alert('请填写正确数据');
 			return false;
+		}
+		if(useridCard.length == 15 || useridCard.length == 18){
+			resMsg = true;
+		}else{
+			resMsg = false;
+		}
+
+		if(typeof(resMsg)!='undefined'){
+			if(resMsg==false){
+				alert('请填写正确数据');
+				return false;
+			}
+		}
+		if(typeof(bankMsg)!='undefined'){
+			if(bankMsg==false){
+				alert('请填写正确数据');
+				return false;
+			}
 		}
 		// 获取银行的logo
 		if('.wallet_body li .hd h4 img'){
@@ -336,7 +365,7 @@ $(function(){
 			},
 			// dataType: 'josn',
 			success: function(data) {
-				console.log(data);
+				// console.log(data);
 				if(data == 1){
 					$('.wallet_body li.selected').removeClass('selected');
 				}
@@ -540,7 +569,7 @@ $(function(){
 		$('.download').fadeOut();
 	},5000)
 
-	var YDB = new YDBOBJ();
+	// var YDB = new YDBOBJ();
 	//app中不显示下载提示
 	var ua = navigator.userAgent.toLowerCase();
 	if(ua.indexOf('ck 2.0')>=0){
