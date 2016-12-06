@@ -856,7 +856,7 @@ elseif($act == "signIn_manage") {
                 }
                 $userSignInfo[$passInfo['uid']]['info']['passCount'] = $userSignInfo[$passInfo['uid']]['info']['passCount'] ? $userSignInfo[$passInfo['uid']]['info']['passCount'] : 0;
                 $userSignInfo[$passInfo['uid']]['info']['refuseCount'] = $userSignInfo[$passInfo['uid']]['info']['refuseCount'] ? $userSignInfo[$passInfo['uid']]['info']['refuseCount'] : 0;
-                $passInfo['sign_time'] = date("H:i", $passInfo['sign_time']);
+                $passInfo['sign_time'] = date("m/d H:i", $passInfo['sign_time']);
                 $userSignInfo[$passInfo['uid']]['list'][] = $passInfo;
             }
         }

@@ -501,15 +501,15 @@ $(function(){
         var pics = [];
         $('input[name="pics"]').each(function(){
 		var obj = $(this);
-                pics.push(obj.val());
+        pics.push(obj.val());
 
 	})
-		console.log(pics);return false;
+
         $.post("personal_ajax.php", {"act":"sign","signTime":$("#signInTime").html(),"signAddr":$("#signInAddr").html(),"signDesc":$("#signDesc").val(),"jobInfoId":$("#job_info_id").val(),"jobId":$("#job_id").val(),"type":$(this).attr('data-type'),"enrollId":$("#enroll_id").val(), "pics":pics},
-		function (data,textStatus)
+		function (data)
 		 {
-                     alert(data);
-                     location.reload();
+			 alert(data);
+			 location.reload();
 		 }
 	);
 	});
