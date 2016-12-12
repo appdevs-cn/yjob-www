@@ -17,11 +17,13 @@ if ($act=='apply_jobs')
     $_GET['look'] && $listData['check_status'] = $_GET['look'];
     $_GET['job_id'] && $listData['job_id'] = $_GET['job_id'];
     $_GET['date'] && $listData['date'] = $_GET['date'];
+    $_GET['work_date'] && $listData['date'] = $_GET['work_date'];
     $_GET['position_type'] && $listData['position_type'] = $_GET['position_type'];
     $_GET['sid'] && $listData['job_info_id'] = $_GET['sid'];
 
     $companyInfo = get_company_by_uid($_SESSION['uid']);
     $listData['company_id'] = $companyInfo['id'];
+	// 获取职位报名列表
     $resumeList = https_request_api('/enroll/list', $listData);
     require_once(QISHI_ROOT_PATH.'include/page.class.php');
     if($resumeList['codes']) {
@@ -71,7 +73,24 @@ if ($act=='apply_jobs')
         $resume['job_info_id'] = $resume['job_info_id'];
         $resume['station_options'] = $station_list_tmp[$resume['job_id']];
     }
-    asort($sData);
+
+	// 根据job_id获取工作的极端时间
+	if(!empty($_GET['job_id'])){
+		$sData = array();
+		$eData = array();
+		$station_list = array();
+		$jobinfoTmp = https_request_api('job/info/'.$_GET['job_id']);
+		if(!$jobinfoTmp['codes'] && $jobinfoTmp['data']['list']) {
+			foreach($jobinfoTmp['data']['list'] as $mj => $mjob) {
+				if($mjob) {
+					$sData[] = $mjob['start_date'];
+					$eData[] = $mjob['end_date'];
+					$station_list[] = $mjob;
+				}
+			}
+		}
+	}
+	asort($sData);
     arsort($eData);
     $startDate = current($sData);
     $endDate = current($eData);
@@ -89,6 +108,8 @@ if ($act=='apply_jobs')
     }
 //	var_dump($resumeList['data']['list']);exit;
     //$smarty->assign('jobsid',$jobsid);
+	
+	$smarty->assign('mcpositons', $mcpositons);
     $smarty->assign('work_date', $work_date);
     $smarty->assign('count', $resumeList['data']['totalCount']);
     $smarty->assign('count1', $resumeList['data']['nvcount']);

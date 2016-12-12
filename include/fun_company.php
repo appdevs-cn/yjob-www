@@ -13,6 +13,8 @@
  {
  	die('Access Denied!');
  }
+require_once('common.inc.php');
+
  //获取职位列表
 function get_jobs($offset,$perpage,$get_sql= '',$countresume=false)
 {
@@ -1105,12 +1107,22 @@ function set_apply($id,$uid,$setlook)
 	if (!preg_match("/^(\d{1,10},)*(\d{1,10})$/",$sqlin)) return false;
 	$setsqlarr['personal_look']=intval($setlook);
 	$wheresql=" did IN (".$sqlin.") AND company_uid=".intval($uid)."";
+
+	$udata['enroll_ids'] = $id;
+	$udata['status'] = 200;
+	$uRst = https_request_api('enroll/status', $udata);
+
 		foreach($id as $aid)
 		{
 			$sql="select m.username from ".table('personal_jobs_apply')." AS a JOIN ".table('members')." AS m ON a.personal_uid=m.uid WHERE a.did='{$aid}' LIMIT 1";
 			$user=$db->getone($sql);
 			$user = array_map("addslashes", $user);
 			write_memberslog($_SESSION['uid'],1,2006,$_SESSION['username'],"查看了 {$user['username']} 的职位申请");
+
+			$usdata['check_status'] = 200;
+			$usdata['enroll_id'] = $aid;
+			$curst = https_request_api('enroll/update', $usdata);
+			
 		}
 	return $db->updatetable(table('personal_jobs_apply'),$setsqlarr,$wheresql);
 }

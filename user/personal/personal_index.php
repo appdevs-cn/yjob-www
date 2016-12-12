@@ -14,6 +14,9 @@ require_once(dirname(__FILE__) . '/personal_common.php');
 $smarty->assign('leftmenu',"index");
 if ($act=='index')
 {
+	// 暂时阻断会员登录网页版，直接跳转到m端
+	header("Location:/m/personal/user.php");
+	exit;
 	$uid=intval($_SESSION['uid']);
 	$smarty->assign('title','个人会员中心 - '.$_CFG['site_name']);
 	$smarty->assign('user',$user);

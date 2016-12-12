@@ -9,6 +9,7 @@
  * 使用；不允许对程序代码以任何形式任何目的的再发布。
  * ============================================================================
 */
+
 define('IN_QISHI', true);
 define('REQUEST_MOBILE',true);
 $alias="QS_login";
@@ -109,8 +110,8 @@ elseif ($act == 'do_login')
 					unset($_SESSION['url']);
 //					exit($url);
 				}
-				if($_SESSION['utype']==2)	exit("personal/user.php");
-				if($_SESSION['utype']==1)	exit("http://www.yjob.net/user/company/company_index.php");
+					if($_SESSION['utype']==2)	exit("personal/user.php");
+					if($_SESSION['utype']==1)	exit("http://www.yjob.net/user/company/company_index.php");
 			}
 			else
 			{

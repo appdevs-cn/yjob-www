@@ -19,12 +19,14 @@ $smarty->cache = false;
 $db = new mysql($dbhost,$dbuser,$dbpass,$dbname);
 require_once(dirname(__FILE__).'/weixin_share.php');
 wap_weixin_logon($_GET['from']);
+// 获取职位详情
 $infoRst = https_request_api('job/info/'.$_GET['id']);
 if($infoRst['codes']) {
     showmsg($infoRst['msg']);
 }
 $row=$infoRst['data'];
-check_m_url($row['publish_city_id'],$smarty,$_CFG['m_job_url']);
+// 判断当前地理位置，进行二级域名跳转
+//check_m_url($row['publish_city_id'],$smarty,$_CFG['m_job_url']);
 ////感兴趣的职位
 $interest_show=interest_jobs($row['topclass'],$row['category'],$row['subclass'],$_GET['id']);
 if($_SESSION["uid"] && $_SESSION["utype"]==2){

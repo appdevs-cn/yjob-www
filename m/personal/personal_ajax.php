@@ -8,21 +8,86 @@ require_once(QISHI_ROOT_PATH.'include/fun_personal.php');
 $smarty->cache = false;
 $db = new mysql($dbhost,$dbuser,$dbpass,$dbname);
 $act = !empty($_REQUEST['act']) ? trim($_REQUEST['act']) : 'index';
+function ResizeImage($im,$maxwidth,$maxheight,$name){
+    //取得当前图片大小
+    $width = imagesx($im);
+    $height = imagesy($im);
+    //生成缩略图的大小
+    if(($width > $maxwidth) || ($height > $maxheight)){
+        $widthratio = $maxwidth/$width;
+        $heightratio = $maxheight/$height;
+        if($widthratio < $heightratio){
+            $ratio = $widthratio;
+        }else{
+            $ratio = $heightratio;
+        }
+        $newwidth = $width * $ratio;
+        $newheight = $height * $ratio;
+
+        if(function_exists("imagecopyresampled")){
+            $newim = imagecreatetruecolor($newwidth, $newheight);
+            imagecopyresampled($newim, $im, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        }else{
+            $newim = imagecreate($newwidth, $newheight);
+            imagecopyresized($newim, $im, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        }
+        ImageJpeg ($newim, $name . ".jpg");
+        ImageDestroy ($newim);
+    }else{
+        ImageJpeg ($im,$name . ".jpg");
+    }
+}
+
 if($act == 'sign')
 {
+
     $data['uid'] = $_SESSION['uid'];
     $data['job_info_id'] = $_POST['jobInfoId'];
     $data['enroll_id'] = $_POST['enrollId'];
     $data['job_id'] = $_POST['jobId'];
     $data['sign_time'] = strtotime($_POST['signTime']);
-    $data['sign_address'] = iconv("utf-8", "gbk", $_POST['signAddr']);
-    $data['remark'] = iconv("utf-8", "gbk", $_POST['signDesc']);
+//    $data['sign_address'] = iconv("utf-8", "gbk", $_POST['signAddr']);
+    $data['sign_address'] = $_POST['signAddr']?$_POST['signAddr']:'没有获取到地理位置';
+//    $data['remark'] = iconv("utf-8", "gbk", $_POST['signDesc']);
+    $data['remark'] = $_POST['signDesc'];
     $data['sign_type'] = $_POST['type'];
-    if($_POST['pics']) {
-        $data['sign_pic'] = implode("\n", $_POST['pics']);
+    $pic_name=date("YmdHis");
+    if($_FILES['pics']['size']){
+        $num = count($_FILES['pics']['name'])-1;
+        $pic_arr = array();
+        for($i=0;$i<$num;$i++){
+            if($_FILES['pics']['type'][$i] == "image/pjpeg" || $_FILES['pics']['type'][$i] == "image/jpg" || $_FILES['pics']['type'][$i] == "image/jpeg"){
+                $im = imagecreatefromjpeg($_FILES['pics']['tmp_name'][$i]);
+            }elseif($_FILES['pics']['type'][$i] == "image/x-png" || $_FILES['pics']['type'][$i] == "image/png"){
+                $im = imagecreatefrompng($_FILES['pics']['tmp_name'][$i]);
+            }elseif($_FILES['pics']['type'][$i] == "image/gif"){
+                $im = imagecreatefromgif($_FILES['pics']['tmp_name'][$i]);
+            }
+
+            if($im){
+                if(file_exists($pic_name.$i.'.jpg')){
+                    unlink($pic_name.$i.'.jpg');
+                }
+                $pic_str = 'http://www.yjob.net/upload/'.$pic_name.$i.'.jpg';
+                ResizeImage($im,600,600,'../../upload/'.$pic_name.$i); // 统一生成100 * 100 的jpg图片
+                ImageDestroy ($im);
+                array_push($pic_arr,$pic_str);
+            }
+        }
     }
+    if($pic_arr) {
+        $data['sign_pic'] = implode("\n", $pic_arr);
+    }
+//    var_dump($data);exit;
     $rst = https_request_api('/job/past', $data);
-    exit($rst['msg']);
+//    exit($rst['msg']);
+    if($rst['msg']=='签到成功!'){
+        header("Location:user.php?act=work_card&id=".$_POST['enrollId']."&type=success");
+    }elseif($rst['msg']=='签退成功!'){
+        header("Location:user.php?act=work_card&id=".$_POST['enrollId']."&type=tui");
+    }else{
+        header("Location:user.php?act=work_card&id=".$_POST['enrollId']."&type=false");
+    }
 } elseif($act == 'stood') {
     $data['enroll_id']  = $_POST['eid'];
     $data['status']  = $_POST['status'];

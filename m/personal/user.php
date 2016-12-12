@@ -33,7 +33,6 @@ if($_CFG['login_per_audit_mobile'] && $user['mobile_audit']=="0" && $act != 'ind
 }
 if ($act == 'index')
 {
-	
 	$smarty->cache = false;
 	$cjl="select * from ".table('resume')." where uid=".$_SESSION['uid'];
 	$cdjl=$db->getone($cjl);
@@ -688,15 +687,19 @@ elseif($act == "resume_train")
 }
 elseif($act == "work_card") {
     if($_GET['id']) {
+		// 获取职位报名信息
         $einfo = https_request_api('enroll/info', array('enroll_id' => $_GET['id']));
         if($einfo['codes'] || empty($einfo['data'])) {
           showmsg($einfo['msg']);  
         }
         $job_info_id = $einfo['data']['job_info_id'];
+		// 获取职位详情
         $pyInfo = https_request_api('job/jobPtInfo', array('job_info_id' => $job_info_id));
+
         if($pyInfo['codes']) {
             showmsg($pyInfo['msg']);  
         }
+		// 获取督导信息
         if($pyInfo['data']['dd_uid']) {
             $ddInfo = get_user_info($pyInfo['data']['dd_uid']);
         }
@@ -763,6 +766,13 @@ elseif($act == "work_card") {
     $smarty->assign('signInList', $signIn);
     $smarty->assign('signOutList', $signOut ? $signOut : array());
     $smarty->assign('ptInfo', $pyInfo['data']);
+	if($_GET['type'] == 'success'){
+		$smarty->assign('status', 'success');
+	}elseif($_GET['type'] == 'tui'){
+		$smarty->assign('status', 'tui');
+	}elseif($_GET['type'] == 'false'){
+		$smarty->assign('status', 'false');
+	}
     $smarty->display('m/personal/m-work-card.html');
 }elseif($act == "work_manage") {
     if($_GET['id']) {

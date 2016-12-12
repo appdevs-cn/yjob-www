@@ -48,7 +48,7 @@ $(document).ready(function(){
 		var resume_id =$(this).attr('resume_id');
 		var jobs_id =$(this).attr('jobs_id');
 		var state = $(this).attr('state');
-		$.post('{#$QISHI.site_dir#}user/user_label_resume.php', {"status":state, "resume_id":resume_id,"jobs_id":jobs_id}, function(data) 
+		$.post('{#$QISHI.site_dir#}user/user_label_resume.php', {"status":state, "resume_id":resume_id,"jobs_id":jobs_id}, function(data)
 		{
 			if(data=="ok")
 			{
@@ -76,7 +76,7 @@ $(document).ready(function(){
 		var desc= $("#desc_"+resume_id).val();
                 var position_type= $("#user_position_type_"+resume_id).val();
                 var station= $("#station_"+resume_id).val();
-                $.post('{#$QISHI.site_dir#}user/company/company_recruitment.php?act=update_enroll', {"desc":desc, "position_type":position_type,"station":station, "resume_id":resume_id}, function(data) 
+                $.post('{#$QISHI.site_dir#}user/company/company_recruitment.php?act=update_enroll', {"desc":desc, "position_type":position_type,"station":station, "resume_id":resume_id}, function(data)
 		{
 			if(data=="ok")
 			{
@@ -89,9 +89,9 @@ $(document).ready(function(){
 			}
 		});
 	});
-        
-        
-        
+
+
+
 	// 删除弹出
 	delete_dialog('.ctrl-del','#form1');
 	//邀请面试弹出
@@ -174,6 +174,7 @@ $(document).ready(function(){
         </select>
 		 工作日期：
         <select class="select_sort" name="work_date" id="work_date">
+			<option value="">不限</option>
             {#foreach from=$work_date item=date#}
                 <option value="{#$date#}" {#if $smarty.get.work_date == $date#}selected{#/if#}>{#$date|date_format:"%m-%d"#}</option>
             {#/foreach#}
@@ -228,7 +229,8 @@ $(document).ready(function(){
 				{#if $list.sex_cn || $list.fullname#}
 				<div class="c-data-row">
 					<div class="c-data-content apply_jobs clearfix {#if $list.personal_look=="1" && $smarty.get.look==""#}data-no-read{#/if#}">
-						<div class="c-item f-left check-item"><input name="y_id[]" type="checkbox" id="y_id"  value="{#$list.resume_id#}"/></div>
+						<!--<div class="c-item f-left check-item"><input name="y_id[]" type="checkbox" id="y_id"  value="{#$list.resume_id#}"/></div>-->
+						<div class="c-item f-left check-item"><input name="y_id[]" type="checkbox" id="y_id"  value="{#$list.id#}"/></div>
 						<div class="c-item f-left content1">
 							<div class="data-state">
 								<span title="{#$list.resume_state_cn#}" class="state-icon {#if $list.resume_state>0#}s{#$list.is_reply#}{#else#}default{#/if#}"></span>

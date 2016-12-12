@@ -494,6 +494,12 @@ $(function(){
 		
 		history.back();
 	})
+
+	// 我认为点击按钮就是返回工作列表
+	$('.user_head .ico_prev').on('click', function(){
+		window.location.href="../user-jobs.php";
+	})
+
 })
 
 $(function(){
@@ -598,6 +604,14 @@ $(function(){
 		_select.find("option").eq(index+1).attr("selected",true);
 	});
 })
+// 设置签到或签退的状态
+$('#submit_1').on('click',function(){
+	$('#signDesc_1').val($('#signDesc').val());
+})
+
+$('#submit_2').on('click',function(){
+	$('#signDesc_2').val($('#signOutDesc_2').val());
+})
 //打开弹窗
 function openDiv(id){
 	$('#'+ id).show();
@@ -615,6 +629,7 @@ function closeDiv(id){
 function showCurrent(ele) {
 	var _now = new Date();
 	ele.html(_now.getHours() + ":" + _now.getMinutes() +":" + _now.getSeconds());
+	ele.next('input').val(_now.getHours() + ":" + _now.getMinutes() +":" + _now.getSeconds());
 }
 
 
@@ -630,18 +645,19 @@ function reenroll(jobid, jobinfo_id, cid) {
 
 function showLocalAddress(ele) {
 	$.ajax({
-		url: "http://api.map.baidu.com/highacciploc/v1?qterm=pc&ak=1wvtkXp4ETKwIy3Byu2Ou3cOYBGuqdYL&coord=bd09ll&callback_type=jsonp",
+		url: "http://api.map.baidu.com/highacciploc/v1?qterm=pc&ak=4gnoKDHXpz6RHUXS9zMZfxGnI69m4IdP&coord=bd09ll&callback_type=jsonp",
 		dataType: 'jsonp',
 		success:function (data) {
 			if(data){
 				var lat = data.content.location.lat,
 					lng = data.content.location.lng;
 				$.ajax({
-					url: "http://api.map.baidu.com/geocoder/v2/?ak=1wvtkXp4ETKwIy3Byu2Ou3cOYBGuqdYL&&location="+ lat + "," + lng +",&output=json&pois=1",
+					url: "http://api.map.baidu.com/geocoder/v2/?ak=4gnoKDHXpz6RHUXS9zMZfxGnI69m4IdP&&location="+ lat + "," + lng +",&output=json&pois=1",
 					dataType: 'jsonp',
 					success:function (data) {
 						// console.log(data);
 						ele.text(data.result.formatted_address);
+						ele.next('input').val(data.result.formatted_address);
 					}
 				});
 			}
@@ -659,32 +675,15 @@ function uploadImg(file) {
 	var reader = new FileReader();
 	reader.onload = function(evt){
             if(evt.target.result.match(/image/)){
-				// console.log(evt.target.result);return false;
-				var imgBase64Data = evt.target.result;
-				var pos = imgBase64Data.indexOf("4")+2;
-				imgBase64Data = imgBase64Data.substring(pos, imgBase64Data.length - pos);//去掉Base64:开头的标识字符
-				console.log(evt.target.result);
-                 $.post("personal_ajax.php", {"act":"uplode_img","img":evt.target.result},
-                    function(ret){
-						console.log(ret);
-                         if(ret!=''){  
-                             var file_ele = $('<dd class="img">'
-                            +'<img src="'+ret+'"/>'
-                            +'<i class="remove" onclick="removePdd(this)"></i>'
-                            +'<input type="hidden" value="'+ret + '" name=pics />'
-                            + '</dd>');
-                            $(file).closest('dl').children(".file").before(file_ele);
-                            // file_ele.find(".remove").on("click",function () {
-                            //         $(this).parent().fadeOut(function(){
-                            //                 $(this).remove();
-                            //         });
-                            // });
-                             $('#showimg').html('<img src="' + ret + '">');
-                         }else{
-                             alert('upload fail');  
-                         }  
-                     }); 
-                    
+				var base64 = evt.target.result;
+					var file_ele = $('<dd class="img">'
+						+'<img src="'+base64+'"/>'
+						+'<i class="remove" onclick="removePdd(this)"></i>'
+						+ '</dd>');
+					$(file).parent('dd').before(file_ele);
+				var newInput = $("<dd class='file'><input type=\"file\" name=\"pics[]\" onchange=\"uploadImg(this)\" /></dd>");
+				$(file).parent('dd').after(newInput);
+				$(file).parent('dd').hide();
             }
             else
                 alert("请上传正确格式的图片！")
@@ -693,6 +692,7 @@ function uploadImg(file) {
 }
 
 function removePdd(index){
+	$(index).parent('dd').next().remove();
 	$(index).closest('dd').remove();
 }
 
@@ -722,5 +722,6 @@ $(function(){
 		
 		
 		
-	})		   
+	})
 })
+
