@@ -280,6 +280,7 @@ elseif ($act=='addjobs')
 }
 elseif ($act=='addjobs_save')
 {
+//	var_dump($_POST);exit;
 	$captcha=get_cache('captcha');
 	$postcaptcha = trim($_POST['postcaptcha']);
 	if($captcha['verify_addjob']=='1' && empty($postcaptcha))
@@ -360,11 +361,9 @@ elseif ($act=='addjobs_save')
             $addData['stations_info'][] = $stationTmp;
         }
     }
-
+//	var_dump($addData);exit;
     $addRst = https_request_api('job/create', $addData);
 
-//	var_dump($addData);
-//	var_dump($addRst);exit;
     $pid = $addRst['data']['id'];
     header("location:?act=jobs&addjobs_save_succeed=".$pid);
 }

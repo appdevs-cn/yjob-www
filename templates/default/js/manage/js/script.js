@@ -96,13 +96,15 @@ $(function(){
 			if(i==4){
 				var txt = '很好';
 			}
-                        $.post("personal_ajax.php", {"act":"eveluate","eid":obj.data('eid'), "typekey":obj.data('key'), "uid":obj.data('uid'),"score":i+1},
-                            function (data,textStatus)
-                             {
-                                //location.reload();
-                             }
-                        );
+
 			obj.find('span').html(txt);
+			$.post("personal_ajax.php", {"act":"eveluate","job_id":$('#job_id').val(),"job_info_id":$('#job_info_id').find("option:selected").val(),"eid":obj.data('eid'), "typekey":obj.data('key'), "uid":obj.data('uid'),"score":i+1},
+				// ,"content":$(this).closest('dl').next('.txtarea').find('textarea').val()
+				function (data)
+				 {
+					//location.reload();
+				 }
+			);
 		})
 	})
 	
@@ -118,12 +120,12 @@ $(function(){
 				$(this).val(num); 
 			}
 			obj.find('h4 i').html(l2);
-                        $.post("personal_ajax.php", {"act":"eveluate","eid":$(this).data('eid'),"uid":$(this).data('uid'),"content":$(this).val()},
-                            function (data,textStatus)
-                             {
-                                //location.reload();
-                             }
-                        );
+			$.post("personal_ajax.php", {"act":"eveluate","eid":$(this).data('eid'),"job_id":$('#job_id').val(),"job_info_id":$('#job_info_id').find("option:selected").val(),"uid":$(this).data('uid'),"content":$(this).val()},
+				function (data)
+				 {
+					//location.reload();
+				 }
+			);
 		})
 	})
 	
@@ -157,7 +159,9 @@ $(function(){
 			}
 		})
 	})
-	
+
+
+	//  签退管理
 	$('.sign_mgr_t .body li').each(function(){
 		
 		var obj = $(this);
@@ -166,14 +170,14 @@ $(function(){
 			
 			if($(this).hasClass('selected')){
                             $.post("personal_ajax.php", {"act":"leaveEarly","eid":$(this).attr('data-eid'), "status":200},
-                                function (data,textStatus)
+                                function (data)
                                  {
                                     location.reload();
+									 // console.log(data);
                                  }
                             );
 			}
 			else{
-                            alert('ss');
                             $.post("personal_ajax.php", {"act":"leaveEarly","eid":$(this).attr('data-eid'), "status":100},
                                 function (data,textStatus)
                                  {
@@ -645,14 +649,14 @@ function reenroll(jobid, jobinfo_id, cid) {
 
 function showLocalAddress(ele) {
 	$.ajax({
-		url: "http://api.map.baidu.com/highacciploc/v1?qterm=pc&ak=4gnoKDHXpz6RHUXS9zMZfxGnI69m4IdP&coord=bd09ll&callback_type=jsonp",
+		url: "http://api.map.baidu.com/highacciploc/v1?qterm=pc&ak=ysbsEgam5CgpqSTupKTYxGRIgoD13WpY&callback_type=jsonp",
 		dataType: 'jsonp',
 		success:function (data) {
 			if(data){
 				var lat = data.content.location.lat,
 					lng = data.content.location.lng;
 				$.ajax({
-					url: "http://api.map.baidu.com/geocoder/v2/?ak=4gnoKDHXpz6RHUXS9zMZfxGnI69m4IdP&&location="+ lat + "," + lng +",&output=json&pois=1",
+					url: "http://api.map.baidu.com/geocoder/v2/?ak=wcAkbiTlQPP1uehrqFyh8yQhSM5AmXfv&location="+ lat + "," + lng +",&output=json&pois=1",
 					dataType: 'jsonp',
 					success:function (data) {
 						// console.log(data);

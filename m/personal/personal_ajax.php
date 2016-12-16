@@ -102,17 +102,20 @@ if($act == 'sign')
     $data['status']  = $_POST['status'];
     $rst = https_request_api('job/confirm', $data);
     exit($rst['msg']);
-} elseif($act == 'leaveEarly') {
+} elseif($act == 'leaveEarly') {  // 修改放鸽子、早退等状态
     $data['enroll_id']  = $_POST['eid'];
     $data['status']  = $_POST['status'];
-    $rst = https_request_api('enroll/leaveEarly', $data);
+        $rst = https_request_api('enroll/leaveEarly', $data);
     exit($rst['msg']);
-} elseif($act == 'eveluate') {
+} elseif($act == 'eveluate') {  // 督导通过ajax评价管理
     $data['enroll_id'] = $_POST['eid'];
+    $data['job_id'] = $_POST['job_id'];
+    $data['job_info_id'] = $_POST['job_info_id'];
     $data['uid'] = $_POST['uid'];
-    $typekey = $_POST['typekey'];
+    $typeKey = $_POST['typekey'];
     $data['evaluate_uid'] = $_SESSION['uid'];
-    $_POST['content'] && $data['evaluate_content'] = iconv('utf8', 'gbk', $_POST['content']);
+//    $_POST['content'] && $data['evaluate_content'] = iconv('utf8', 'gbk', $_POST['content']);
+    $data['evaluate_content'] = iconv('utf-8', 'gbk', $_POST['content']);
     $_POST['score'] && $data['score'] = $_POST['score'];
     switch($typeKey) {
         case 'punctual':
@@ -131,7 +134,16 @@ if($act == 'sign')
             $data['type'] = 105;
             break;
     }
+//    $data['job_id'] = 100;
+//    $data['job_info_id'] = 101;
+//    $data['enroll_id'] = 305;
+//    $data['uid'] = 895;
+//    $data['type'] = 102;
+//    $data['evaluate_uid'] = $_SESSION['uid'];
+//    $data['evaluate_content'] = 'sss1111111';
+//    $data['score'] = 2;
     $rst = https_request_api('/job/evaluate', $data);
+    var_dump($rst);exit;
 } elseif($act == 're_enroll') {
     if(!$_POST['jobid']) {
         exit('jobid不能为空!');

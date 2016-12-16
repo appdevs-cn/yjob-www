@@ -21,7 +21,7 @@
 <div class="layout">
 	<div class="user_head">
 		<div class="left">
-			<a href="#" class="ico ico_prev"></a>
+			<a href="../user-jobs.php"></a>
 		</div>
 		<h2>工作卡</h2>
 	</div>
@@ -92,7 +92,7 @@
                                 {#foreach from=$signInList item=signIn#}
                                     <tr>
                                       <td width="38%">{#$signIn.sign_time#}</td>
-                                      <td width="45%"><a href="img.html" class="addr">{#$signIn.sign_address#}</a></td>
+                                      <td width="45%"><a href="?act=imghtml&job_info_id={#$signIn.job_info_id#}&uid={#$signIn.uid#}&id={#$signIn.id#}&rewrite={#$rewrite#}&rewrite_id={#$rewrite_id#}{#if $oneid#}&oneid={#$oneid#}{#/if#}">{#$signIn.sign_address#}</a></td>
                                       <td width="17%" align="right" class="{#if $signIn.confirm_status == 100 #}wait {#elseif $signIn.confirm_status == 200#}yes{#elseif $signIn.confirm_status == 300#}no{#/if#}">{#if $signIn.confirm_status == 100 #}待确认 {#elseif $signIn.confirm_status == 200#}已确认{#elseif $signIn.confirm_status == 300#}已拒绝{#/if#}</td>
                                     </tr>
                                 {#/foreach#}
@@ -121,7 +121,7 @@
                                     {#foreach from=$signOutList item=signOut#}
                                    <tr>
                                       <td width="38%">{#$signOut.sign_time#}</td>
-                                      <td width="45%"><a href="img.html" class="addr">{#$signOut.sign_address#}</a></td>
+                                      <td width="45%"><a href="?act=imghtml&job_info_id={#$signOut.job_info_id#}&uid={#$signOut.uid#}&id={#$signOut.id#}&rewrite={#$rewrite#}&rewrite_id={#$rewrite_id#}{#if $oneid#}&oneid={#$oneid#}{#/if#}">{#$signOut.sign_address#}</a></td>
                                       <td width="17%" align="right" class="{#if $signOut.confirm_status == 100 #}wait {#elseif $signOut.confirm_status == 200#}yes{#elseif $signOut.confirm_status == 300#}no{#/if#}">{#if $signOut.confirm_status == 100 #}待确认 {#elseif $signOut.confirm_status == 200#}已确认{#elseif $signOut.confirm_status == 300#}已拒绝{#/if#}</td>
                                     </tr>
                                     {#/foreach#}

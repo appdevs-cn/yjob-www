@@ -18,7 +18,8 @@
     <div class="layout">
 	<div class="user_head">
 		<div class="left">
-			<a href="#" class="ico ico_prev"></a>
+			<!--<a href="#" class="ico ico_prev"></a>-->
+			<a href="?act=work_manage&id={#if $rewrite_id#}{#$rewrite_id#}{#else#}{#$oneid#}{#/if#}"></a>
 		</div>
 		<h2>签退管理</h2>
 		<h4 id="pl">批量操作</h4>
@@ -42,7 +43,7 @@
                                             <div class="tels">
                                                 <dl> 
                                                     <dd>
-                                                        {#$ptInfo.dd_name#}<a href="tel:{#$ptInfo.dd_mobile#}">{#$ptInfo.dd_mobile#}</a>
+                                                        {#$ptInfo.dd_name#} <a href="tel:{#$ptInfo.dd_mobile#}">{#$ptInfo.dd_mobile#}</a>
                                                     </dd>
                                                 </dl>
                                             </div>
@@ -113,8 +114,8 @@
                                                             <img src="{#$past.info.avatars#}"/>
                                                             <i></i>						</div>
                                                     <div class="txt">
-                                                            <h4>{#$past.info.name#}　<a href="tel:{#$pass.mobile#}">{#$pass.info.mobile#}</a></h4>
-                                                            {#if $past.info.leaveEarly#}
+                                                            <h4>{#$past.info.name#}　<a href="tel:{#$past.info.mobile#}">{#$past.info.mobile#}</a></h4>
+                                                            {#if $past.info.leaveEarly == 0#}
                                                             							<h5>被标记为早退</h5>
 
                                                             {#else#}
@@ -127,7 +128,7 @@
                                                             {#/if#}
                                                            
                                                     </div>
-                                                        {#if !$past.info.leaveEarly#}
+                                                        {#if $past.info.leaveEarly == 1#}
                                                             <div class="ico selected" data-eid="{#$past.info.enroll_id#}">
                                                                 <h4>早退</h4>
                                                             </div>
@@ -137,7 +138,7 @@
                                                             </div>
                                                         {#/if#}
                                             </div>
-                                            {#if !$past.info.leaveEarly#}
+                                            {#if $past.info.leaveEarly == 1#}
 
                                                 <div class="bd">
                                                     <dl>
@@ -148,7 +149,8 @@
                                                                     <label for="n{#$lk#}"></label>
                                                                 </span>
                                                                 <div class="c1">
-                                                                        <i></i>{#$list.sign_address#}								</div>
+                                                                        <i></i><a href="?act=imghtml&job_info_id={#$list.job_info_id#}&uid={#$list.uid#}&id={#$list.id#}&rewrite={#$act#}&rewrite_id={#$act_id#}&oneid={#if $rewrite_id#}{#$rewrite_id#}{#else#}{#$oneid#}{#/if#}{#if $type#}&type={#$type#}{#/if#}">{#$list.sign_address#}</a>
+                                                                </div>
                                                                 <div class="c2">
                                                                         {#$list.sign_time#}								</div>
                                                                 <div class="c3 {#if $list.confirm_status == 200#}c3_2{#elseif $list.confirm_status == 300#}c3_3{#else#}c3_1{#/if#}" data-sid="{#$list.id#}">                                                                                           </div>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=750" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="">
+<meta name="format-detection" content="telephone=no">
+<title>03-图片查看页</title>
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/glide.css">
+	<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/common.css">
+	<link rel="stylesheet" href="{#$QISHI.site_template#}css/manage/css/user.css">
+<style>
+	html,body,.layout{
+		/*height: 100%;*/ background:#000;
+	}
+	.user_head{ position:relative; z-index:2}
+	.layout{ overflow-x:hidden;}
+	
+	.slides{
+		overflow:visible;
+	}
+	.slide{ height:auto;}
+	.pic_desc{ width:690px; left:50%; margin-left:-375px; position:fixed;}
+	.pic_view{
+		position:relative;
+	}
+	.view img{
+		width:100%;
+	}
+</style>
+
+</head>
+<body>
+<div class="layout">
+	<div class="user_head">
+		<div class="left">
+			<!--<a href="#" class="ico ico_prev nojs"></a>-->
+			<a href="http://www.yjob.net/m/personal/user.php?act={#$rewrite#}&id={#$rewrite_id#}{#if $oneid#}&oneid={#$oneid#}{#/if#}{#if $type#}&type={#$type#}{#/if#}"></a>
+		</div>
+		<h2>查看大图</h2>
+	</div>
+	<div class="pic_view">
+		<ul class="slides">
+			{#foreach from=$picInfo.sign_pic item=list#}
+			<li class="slide">
+				<div class="view">
+				{#if $list#}<img src="{#$list#}"/>{#/if#}
+				</div>
+			</li>
+			{#/foreach#}
+		</ul>
+	</div>
+	<div class="pic_desc">
+				<h2>{#$picInfo.remark#}</h2>
+				<h4><i></i>{#$picInfo.sign_address#}<br/>
+					{#$picInfo.sign_time|date_format:"%m月%d日 %H:%I"#}
+				</h4>
+		</div>
+</div>
+	
+<!--loyout结束-->
+
+
+
+
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/jquery.glide.js"></script>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/manage/js/script.js"></script>
+
+<script>
+	$(function(){
+		//$('.layout').css('min-height',$(document).height());
+		$('.ico_prev').click(function(){
+			$(window.parent.document).find('#ifm').hide();
+			return false;
+		})
+	})
+</script>
+
+</body>
+</html>
+

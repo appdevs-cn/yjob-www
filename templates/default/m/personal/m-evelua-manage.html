@@ -18,7 +18,8 @@
     <div class="layout">
 	<div class="user_head">
 		<div class="left">
-                    <a href="#" class="ico ico_prev"></a>
+                    <!--<a href="#" class="ico ico_prev"></a>-->
+                    <a href="?act={#$rewrite#}&id={#$rewrite_id#}" ></a>
 		</div>
 		<h2>评价管理</h2>
                 <h4 id="zk">全部展开</h4>
@@ -27,8 +28,9 @@
 		<form>
 		<div class="head">
 			<a href="#" class="prev"></a>
-			<select name="">
-				<option value="">{#$ptInfo.job_name#}</option>
+            <input type="hidden" id="job_id" value="{#$jobs.job_id#}">
+			<select name="" id="job_info_id">
+				<option value="{#$jobs.job_info_id#}">{#$ptInfo.job_name#}</option>
 			</select>
 			<a href="#" class="next"></a>
 		</div>
@@ -42,7 +44,7 @@
                                             <div class="tels">
                                                 <dl> 
                                                     <dd>
-                                                        {#$ptInfo.dd_name#}<a href="tel:{#$ptInfo.dd_mobile#}">{#$ptInfo.dd_mobile#}</a>
+                                                        {#$ptInfo.dd_name#} <a href="tel:{#$ptInfo.dd_mobile#}">{#$ptInfo.dd_mobile#}</a>
                                                     </dd>
                                                 </dl>
                                             </div>
@@ -120,7 +122,7 @@
                                         <h4>绩效率</h4>							
                                          <span>{#$evaluateInfo.performance_txt#}</span>
                                         <div class="stars">
-                                               {#$evaluateInfo.performance#}
+                                            {#$evaluateInfo.performance#}
                                         </div>
                                     </dd>
                                     <dd data-key='ability' data-uid='{#$uid#}' data-eid='{#$evaluateInfo.enroll_id#}'>

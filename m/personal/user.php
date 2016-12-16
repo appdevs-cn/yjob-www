@@ -720,7 +720,6 @@ elseif($act == "work_card") {
             showmsg($jobInfoTmp['msg']);  
         }
         $signList = https_request_api('job/pastList', array('job_info_id' => $job_info_id, 'uid' => $einfo['data']['uid']));
-
         if($signList['data']['list']) {
             foreach($signList['data']['list'] as $sk => $sv) {
                 if($sv['sign_type'] == 100) {
@@ -764,7 +763,8 @@ elseif($act == "work_card") {
 //    $smarty->assign('signIned', $signIned ? $signIned : false);
     $smarty->assign('xxDate', strtotime("+1 days", time()));
     $smarty->assign('signInList', $signIn);
-    $smarty->assign('signOutList', $signOut ? $signOut : array());
+//	var_dump($signIn);exit;
+	$smarty->assign('signOutList', $signOut ? $signOut : array());
     $smarty->assign('ptInfo', $pyInfo['data']);
 	if($_GET['type'] == 'success'){
 		$smarty->assign('status', 'success');
@@ -773,6 +773,8 @@ elseif($act == "work_card") {
 	}elseif($_GET['type'] == 'false'){
 		$smarty->assign('status', 'false');
 	}
+	$smarty->assign('rewrite','work_card');
+	$smarty->assign('rewrite_id',$_GET['id']);
     $smarty->display('m/personal/m-work-card.html');
 }elseif($act == "work_manage") {
     if($_GET['id']) {
@@ -791,8 +793,11 @@ elseif($act == "work_card") {
         $statisticsRst = https_request_api('job/jobStatistics', $sdata);
         $statistics = $statisticsRst['data']['list'] ? current($statisticsRst['data']['list']) : array();
     }
+	$statistics['total_rate'] = sprintf("%.2f", $statistics['total_rate']);  // 保留两位小数点
     $smarty->assign('statistics', $statistics ? $statistics : array());
     $smarty->assign('ptInfo', $pyInfo['data']);
+	$smarty->assign('rewrite_id',$_GET['id']);
+	$smarty->assign('rewrite',"work_manage");
     $smarty->display('m/personal/m-work-manage.html');
 }
 elseif($act == "signIn_manage") {
@@ -802,9 +807,9 @@ elseif($act == "signIn_manage") {
         if($ptInfo['codes']) {
             showmsg($ptInfo['msg']);  
         }
-         if($ptInfo['data']['dd_uid']) {
-            $ddInfo = get_user_info($ptInfo['data']['dd_uid']);
-        }
+		if($ptInfo['data']['dd_uid']) {
+			$ddInfo = get_user_info($ptInfo['data']['dd_uid']);
+		}
 		if($ddInfo) {
 			$cjl = "select fullname from " . table('resume') . " where uid=" . $ddInfo['uid'];
 			$cdjl = $db->getone($cjl);
@@ -845,7 +850,8 @@ elseif($act == "signIn_manage") {
                 break;
         }
         $passListTmp = https_request_api('job/pastList', $sdata);
-        if($passListTmp['data']['totalCount'] > 0) {
+
+		if($passListTmp['data']['totalCount'] > 0) {
             foreach($passListTmp['data']['list'] as $pk => &$passInfo) {
                 $resumeInfo = get_resume_basic_by_uid($passInfo['uid']);
                 $userInfo = get_user_info($passInfo['uid']);
@@ -874,8 +880,17 @@ elseif($act == "signIn_manage") {
     $smarty->assign('workdate', $_GET['work_date']);
     $smarty->assign('show_type', $_GET['show_type']);
     $smarty->assign('passList', $userSignInfo);
+//	var_dump($userSignInfo[895]['list']);exit;
     $smarty->assign('ptInfo', $ptInfo['data']);
     $smarty->assign('cdate', $_GET['work_date'] ? $_GET['work_date'] : 0);
+	$smarty->assign('rewrite',$_GET['rewrite']);
+	$smarty->assign('rewrite',$_GET['rewrite']);
+	$smarty->assign('rewrite_id',$_GET['rewrite_id']);
+	$smarty->assign('act',$act);
+	$smarty->assign('act_id',$_GET['id']);
+	if($_GET['oneid']){
+		$smarty->assign('oneid',$_GET['oneid']);
+	}
     $smarty->display('m/personal/m-signIn-manage.html');
 }
 elseif($act == "signOut_manage") {
@@ -885,10 +900,19 @@ elseif($act == "signOut_manage") {
         if($ptInfo['codes']) {
             showmsg($ptInfo['msg']);  
         }
-         if($ptInfo['data']['dd_uid']) {
-            $ddInfo = get_user_info($ptInfo['data']['dd_uid']);
-        }
-        $ptInfo['data']['dd_name'] = $ddInfo['username'];
+		if($ptInfo['data']['dd_uid']) {
+			$ddInfo = get_user_info($ptInfo['data']['dd_uid']);
+		}
+		if($ddInfo) {
+			$cjl = "select fullname from " . table('resume') . " where uid=" . $ddInfo['uid'];
+			$cdjl = $db->getone($cjl);
+		}
+		if($cdjl){
+			$ptInfo['data']['dd_name'] = $cdjl['fullname'];
+		}else {
+			$ptInfo['data']['dd_name'] = '';
+		}
+//        $ptInfo['data']['dd_name'] = $ddInfo['username'];
         $ptInfo['data']['dd_mobile'] = $ddInfo['mobile'];
         $ptInfo['data']['job_info_id'] = $job_info_id;
         $jobInfoTmp = https_request_api('job/info/'.$ptInfo['data']['job_id']);
@@ -933,34 +957,92 @@ elseif($act == "signOut_manage") {
                 } elseif($passInfo['confirm_status'] == 100) {
                     $userSignInfo[$passInfo['uid']]['info']['refuseCount'] += 1;
                 }
-                //是否放鸽子
                 $stwhere['enroll_id'] = $passInfo['enroll_id'];
                 $enrollInfoTmp = https_request_api('enroll/info', $stwhere);
+//				var_dump($enrollInfoTmp);
                 if(!empty($enrollInfoTmp['data'])) {
+					// 判断是否为早退状态
                     $userSignInfo[$passInfo['uid']]['info']['leaveEarly'] = $enrollInfoTmp['data']['leaveEarly'] == 100 ? 1 : 0;
                 }
                 $userSignInfo[$passInfo['uid']]['info']['passCount'] = $userSignInfo[$passInfo['uid']]['info']['passCount'] ? $userSignInfo[$passInfo['uid']]['info']['passCount'] : 0;
                 $userSignInfo[$passInfo['uid']]['info']['refuseCount'] = $userSignInfo[$passInfo['uid']]['info']['refuseCount'] ? $userSignInfo[$passInfo['uid']]['info']['refuseCount'] : 0;
-                $passInfo['sign_time'] = date("H:i", $passInfo['sign_time']);
+                $passInfo['sign_time'] = date("m/d H:i", $passInfo['sign_time']);
                 $userSignInfo[$passInfo['uid']]['list'][] = $passInfo;
             }
         }
+//		exit;
     }
     $smarty->assign('passList', $userSignInfo);
     $smarty->assign('ptInfo', $ptInfo['data']);
     $smarty->assign('cdate', $_GET['work_date'] ? $_GET['work_date'] : 0);
+	$smarty->assign('rewrite',$act);
+	$smarty->assign('rewrite_id',$_GET['rewrite_id']);
+	$smarty->assign('act',$act);
+	$smarty->assign('act_id',$_GET['id']);
+	if($_GET['oneid']){
+		$smarty->assign('oneid',$_GET['oneid']);
+	}
+	if($_GET['type']){
+		$smarty->assign('type',$_GET['type']);
+	}
     $smarty->display('m/personal/m-signOut-manage.html');
-} elseif($act == "evelua_manage") {
+}
+elseif($act == "imghtml") {
+	if($_GET['job_info_id']) {
+		$signList = https_request_api('job/pastList', array('job_info_id' => $_GET['job_info_id'], 'uid' => $_GET['uid']));
+		if($signList['data']['list']) {
+			$data = array();
+			foreach($signList['data']['list'] as $sk => $sv) {
+				if($sv['id'] == $_GET['id']) {
+					$data = $sv;
+					if($data['sign_pic']){
+						$data['sign_pic'] = explode("\n",$data['sign_pic']);
+					}
+				}
+			}
+		}
+	}
+
+	if($_GET['rewrite']){
+		$smarty->assign('rewrite',$_GET['rewrite']);
+	}
+	if($_GET['rewrite_id']){
+		$smarty->assign('rewrite_id',$_GET['rewrite_id']);
+	}
+	if($_GET['oneid']){
+		$smarty->assign('oneid',$_GET['oneid']);
+	}
+	if($_GET['type']){
+		$smarty->assign('type',$_GET['type']);
+	}
+	$smarty->assign('picInfo', $data);
+	$smarty->display('m/personal/img.html');
+}
+elseif($act == "evelua_manage") {
     if($_GET['id']) {
         $job_info_id = $_GET['id'];
         $ptInfo = https_request_api('job/jobPtInfo', array('job_info_id' => $job_info_id));
         if($ptInfo['codes']) {
             showmsg($ptInfo['msg']);  
         }
-         if($ptInfo['data']['dd_uid']) {
-            $ddInfo = get_user_info($ptInfo['data']['dd_uid']);
-        }
-        $ptInfo['data']['dd_name'] = $ddInfo['username'];
+		if($ptInfo['data']['dd_uid']) {
+			$ddInfo = get_user_info($ptInfo['data']['dd_uid']);
+		}
+		if($ddInfo) {
+			$cjl = "select fullname from " . table('resume') . " where uid=" . $ddInfo['uid'];
+			$cdjl = $db->getone($cjl);
+		}
+		if($cdjl){
+			$ptInfo['data']['dd_name'] = $cdjl['fullname'];
+		}else {
+			$ptInfo['data']['dd_name'] = '';
+		}
+		$jobs = array();
+		if($ptInfo['data']['job_id']){
+			$jobs['job_id'] = $ptInfo['data']['job_id'];
+			$jobs['job_info_id'] = $job_info_id;
+		}
+//        $ptInfo['data']['dd_name'] = $ddInfo['username'];
         $ptInfo['data']['dd_mobile'] = $ddInfo['mobile'];
         $ptInfo['data']['job_info_id'] = $job_info_id;
         $jobInfoTmp = https_request_api('job/info/'.$ptInfo['data']['job_id']);
@@ -994,125 +1076,125 @@ elseif($act == "signOut_manage") {
                 if($enrollInfo['evaluate_status'] == 200) {
                     $enrollInfoTmp = https_request_api('job/evaluateInfo', ['enroll_id' => $enrollInfo['id']]);
                     for($i=1;$i<=5;$i++) {
-                        if($i < $enrollInfoTmp['data']['punctual']) {
+                        if($i <= $enrollInfoTmp['data']['punctual']) {
                             $userEvaluateInfo[$enrollInfo['uid']]['punctual'] .= '<i class="selected"></i>';
                         } else {
                             $userEvaluateInfo[$enrollInfo['uid']]['punctual'] .= '<i></i>';
 
                         }
                     }
-                    switch ($userEvaluateInfo[$enrollInfo['uid']]['punctual']) {
-                        case 0:
+                    switch ($enrollInfoTmp['data']['punctual']) {
+                        case 1:
                             $userEvaluateInfo[$enrollInfo['uid']]['punctual_txt'] = '很差';
                             break;
-                        case 1:
+                        case 2:
                             $userEvaluateInfo[$enrollInfo['uid']]['punctual_txt'] = '差';
                             break;
-                        case 2:
+                        case 3:
                             $userEvaluateInfo[$enrollInfo['uid']]['punctual_txt'] = '一般';
                             break;
-                        case 3:
+                        case 4:
                             $userEvaluateInfo[$enrollInfo['uid']]['punctual_txt'] = '好';
                             break;
-                        case 4:
+                        case 5:
                             $userEvaluateInfo[$enrollInfo['uid']]['punctual_txt'] = '很好';
                             break;
                     }
                     for($i=1;$i<=5;$i++) {
-                        if($i < $enrollInfoTmp['data']['earnest']) {
+                        if($i <= $enrollInfoTmp['data']['earnest']) {
                             $userEvaluateInfo[$enrollInfo['uid']]['earnest'] .= '<i class="selected"></i>';
                         } else {
                             $userEvaluateInfo[$enrollInfo['uid']]['earnest'] .= '<i></i>';
 
                         }
                     }
-                     switch ($userEvaluateInfo[$enrollInfo['uid']]['earnest']) {
-                        case 0:
+                     switch ($enrollInfoTmp['data']['earnest']) {
+                        case 1:
                             $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '很差';
                             break;
-                        case 1:
+                        case 2:
                             $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '差';
                             break;
-                        case 2:
+                        case 3:
                             $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '一般';
                             break;
-                        case 3:
+                        case 4:
                             $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '好';
                             break;
-                        case 4:
+                        case 5:
                             $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '很好';
                             break;
                     }
                     for($i=1;$i<=5;$i++) {
-                        if($i < $enrollInfoTmp['data']['effect']) {
+                        if($i <= $enrollInfoTmp['data']['effect']) {
                             $userEvaluateInfo[$enrollInfo['uid']]['effect'] .= '<i class="selected"></i>';
                         } else {
                             $userEvaluateInfo[$enrollInfo['uid']]['effect'] .= '<i></i>';
                         }
                     }
-                    switch ($userEvaluateInfo[$enrollInfo['uid']]['earnest']) {
-                        case 0:
-                            $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '很差';
-                            break;
+                    switch ($enrollInfoTmp['data']['effect']) {
                         case 1:
-                            $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '差';
+                            $userEvaluateInfo[$enrollInfo['uid']]['effect_txt'] = '很差';
                             break;
                         case 2:
-                            $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '一般';
+                            $userEvaluateInfo[$enrollInfo['uid']]['effect_txt'] = '差';
                             break;
                         case 3:
-                            $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '好';
+                            $userEvaluateInfo[$enrollInfo['uid']]['effect_txt'] = '一般';
                             break;
                         case 4:
-                            $userEvaluateInfo[$enrollInfo['uid']]['earnest_txt'] = '很好';
+                            $userEvaluateInfo[$enrollInfo['uid']]['effect_txt'] = '好';
+                            break;
+                        case 5:
+                            $userEvaluateInfo[$enrollInfo['uid']]['effect_txt'] = '很好';
                             break;
                     }
                     for($i=1;$i<=5;$i++) {
-                        if($i < $enrollInfoTmp['data']['performance']) {
+                        if($i <= $enrollInfoTmp['data']['performance']) {
                             $userEvaluateInfo[$enrollInfo['uid']]['performance'] .= '<i class="selected"></i>';
                         } else {
                             $userEvaluateInfo[$enrollInfo['uid']]['performance'] .= '<i></i>';
 
                         }
                     }
-                    switch ($userEvaluateInfo[$enrollInfo['uid']]['performance']) {
-                        case 0:
+                    switch ($enrollInfoTmp['data']['performance']) {
+                        case 1:
                             $userEvaluateInfo[$enrollInfo['uid']]['performance_txt'] = '很差';
                             break;
-                        case 1:
+                        case 2:
                             $userEvaluateInfo[$enrollInfo['uid']]['performance_txt'] = '差';
                             break;
-                        case 2:
+                        case 3:
                             $userEvaluateInfo[$enrollInfo['uid']]['performance_txt'] = '一般';
                             break;
-                        case 3:
+                        case 4:
                             $userEvaluateInfo[$enrollInfo['uid']]['performance_txt'] = '好';
                             break;
-                        case 4:
+                        case 5:
                             $userEvaluateInfo[$enrollInfo['uid']]['performance_txt'] = '很好';
                             break;
                     }
                     for($i=1;$i<=5;$i++) {
-                        if($i < $enrollInfoTmp['data']['ability']) {
+                        if($i <= $enrollInfoTmp['data']['ability']) {
                             $userEvaluateInfo[$enrollInfo['uid']]['ability'] .= '<i class="selected"></i>';
                         } else {
                             $userEvaluateInfo[$enrollInfo['uid']]['ability'] .= '<i></i>';
                         }
                     }
-                    switch ($userEvaluateInfo[$enrollInfo['uid']]['ability']) {
-                        case 0:
+                    switch ($enrollInfoTmp['data']['ability']) {
+                        case 1:
                             $userEvaluateInfo[$enrollInfo['uid']]['ability_txt'] = '很差';
                             break;
-                        case 1:
+                        case 2:
                             $userEvaluateInfo[$enrollInfo['uid']]['ability_txt'] = '差';
                             break;
-                        case 2:
+                        case 3:
                             $userEvaluateInfo[$enrollInfo['uid']]['ability_txt'] = '一般';
                             break;
-                        case 3:
+                        case 4:
                             $userEvaluateInfo[$enrollInfo['uid']]['ability_txt'] = '好';
                             break;
-                        case 4:
+                        case 5:
                             $userEvaluateInfo[$enrollInfo['uid']]['ability_txt'] = '很好';
                             break;
                     }
@@ -1121,9 +1203,13 @@ elseif($act == "signOut_manage") {
             }
         }
     }
+
     $smarty->assign('evaluateList', $userEvaluateInfo);
     $smarty->assign('ptInfo', $ptInfo['data']);
     $smarty->assign('cdate', $_GET['work_date'] ? $_GET['work_date'] : 0);
+	$smarty->assign('jobs', $jobs);
+	$smarty->assign('rewrite',$_GET['rewrite']);
+	$smarty->assign('rewrite_id',$_GET['rewrite_id']);
     $smarty->display('m/personal/m-evelua-manage.html');
 }
 elseif($act == "resume_train_add")
