@@ -648,25 +648,96 @@ function reenroll(jobid, jobinfo_id, cid) {
 }
 
 function showLocalAddress(ele) {
+	// $.ajax({
+	// 	url: "http://api.map.baidu.com/highacciploc/v1?qterm=pc&ak=b9K3XrZ7mWeX4HQxg5HGGA6pW7qq5jG1&callback_type=jsonp",
+	// 	dataType: 'jsonp',
+	// 	success:function (data) {
+	// 		if(data){
+	// 			var lat = data.content.location.lat,
+	// 				lng = data.content.location.lng;
+	// 			$.ajax({
+	// 				url: "http://api.map.baidu.com/geocoder/v2/?ak=ysbsEgam5CgpqSTupKTYxGRIgoD13WpY&location="+ lat + "," + lng +",&output=json&pois=1",
+	// 				dataType: 'jsonp',
+	// 				success:function (data) {
+	// 					// console.log(data);
+	// 					ele.text(data.result.formatted_address);
+	// 					ele.next('input').val(data.result.formatted_address);
+	// 				}
+	// 			});
+	// 		}
+	// 	}
+	// });
+	pos = ele;
+	if (navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(showPosition,showError);
+	}else{
+		alert("浏览器不支持地理定位！");
+	}
+}
+
+
+function showPosition(position){
+	var latlon = position.coords.longitude + ',' + position.coords.latitude;
 	$.ajax({
-		url: "http://api.map.baidu.com/highacciploc/v1?qterm=pc&ak=ysbsEgam5CgpqSTupKTYxGRIgoD13WpY&callback_type=jsonp",
-		dataType: 'jsonp',
-		success:function (data) {
+		type: "GET",
+		url: "http://api.map.baidu.com/geoconv/v1/?coords=" + latlon + "&ak=ysbsEgam5CgpqSTupKTYxGRIgoD13WpY&output=json",
+		dataType: "jsonp",
+		success: function(data){
 			if(data){
-				var lat = data.content.location.lat,
-					lng = data.content.location.lng;
+				pX = data.result[0].x;
+				pY = data.result[0].y;
 				$.ajax({
-					url: "http://api.map.baidu.com/geocoder/v2/?ak=wcAkbiTlQPP1uehrqFyh8yQhSM5AmXfv&location="+ lat + "," + lng +",&output=json&pois=1",
-					dataType: 'jsonp',
-					success:function (data) {
-						// console.log(data);
-						ele.text(data.result.formatted_address);
-						ele.next('input').val(data.result.formatted_address);
+					type: "GET",
+					url: "http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location="+ pY + ',' + pX +"&output=json&ak=ysbsEgam5CgpqSTupKTYxGRIgoD13WpY",
+					dataType: "jsonp",
+					success: function(data){
+						pos.html(data.result.formatted_address);
 					}
-				});
+				})
 			}
 		}
-	});
+	})
+
+	// return false;
+	//  //google
+	//  var url = 'http://maps.google.cn/maps/api/geocode/json?latlng='+latlon+'&language=CN';
+	//  $.ajax({
+	//  	type: "GET",
+	//  	url: url,
+	//  	beforeSend: function(){
+	//  		pos.html('正在定位...');
+	//  	},
+	//  	success: function (json) {
+	//  		if(json.status=='OK'){
+	//  			var results = json.results;
+	//  			$.each(results,function(index,array){
+	//  				if(index==0){
+	//  					pos.html(array['formatted_address']);
+	//  				}
+	//  			});
+	//  		}
+	//  	},
+	//  	error: function (XMLHttpRequest, textStatus, errorThrown) {
+	//  		pos.html(latlon+"地址位置获取失败");
+	//  	}
+	//  });
+}
+
+function showError(error){
+	switch(error.code) {
+		case error.PERMISSION_DENIED:
+			alert("定位失败,用户拒绝请求地理定位");
+			break;
+		case error.POSITION_UNAVAILABLE:
+			alert("定位失败,位置信息是不可用");
+			break;
+		case error.TIMEOUT:
+			alert("定位失败,请求获取用户位置超时");
+			break;
+		case error.UNKNOWN_ERROR:
+			alert("定位失败,定位系统失效");
+			break;
+	}
 }
 
 function uploadImg(file) {
