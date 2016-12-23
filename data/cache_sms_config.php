@@ -1,6 +1,6 @@
 <?php
 $data = array (
-  'open' => '0',
+  'open' => '1',
   'captcha_sms_name' => 'yjobnet',
   'captcha_sms_key' => 'BojLkrx83SYDxtmu',
   'set_applyjobs' => '1',

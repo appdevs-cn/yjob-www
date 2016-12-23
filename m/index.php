@@ -41,18 +41,20 @@ $smarty->assign('redirect_url',$redirect_url);
 $smarty->assign('redirect_disname',$redirect_disname);
 $smarty->assign('redirect_sitename',$redirect_sitename);
 $db = new mysql($dbhost,$dbuser,$dbpass,$dbname);
+
 require_once(dirname(__FILE__).'/weixin_share.php');
 if($_CFG['subsite_id']>0){
 	$subsite_wheresql = ' subsite_id='.intval($_CFG['subsite_id']).' ';
 }else{
 	$subsite_wheresql = ' 1=1 ';
 }
+
 //公告
-$notice_list = $db->getall("SELECT * FROM ".table('notice')." where ".$subsite_wheresql."  ORDER BY `sort` DESC,`id` DESC LIMIT 5");	
+$notice_list = $db->getall("SELECT * FROM ".table('notice')." where ".$subsite_wheresql."  ORDER BY `sort` DESC,`id` DESC LIMIT 5");
 $smarty->assign('notice_list',$notice_list);
 //紧急职位
 $emergency_jobs = $db->getall("SELECT id,subsite_id,jobs_name,district_cn,work_start,work_end,wage_amount,companyname,jobspecial_cn,wage_cn,refreshtime FROM ".table('jobs')." WHERE emergency=1 and ".$subsite_wheresql." ORDER BY `refreshtime` DESC,`id` DESC LIMIT 5");
-foreach ($emergency_jobs as $key => $value) 
+foreach ($emergency_jobs as $key => $value)
 {
 	$emergency_jobs[$key]['url'] = wap_url_rewrite("jobs-show",array("id"=>$value['id']),1,$value['subsite_id']);
 	$emergency_jobs[$key]['r_time'] = daterange(time(),$value['refreshtime'],'Y-m-d',"#FF3300");
@@ -69,7 +71,7 @@ foreach ($emergency_jobs as $key => $value)
 $smarty->assign('emergency_jobs',$emergency_jobs);
 //推荐职位
 $recommend_jobs = $db->getall("SELECT id,subsite_id,jobs_name,district_cn,work_start,work_end,jobspecial_cn,wage_amount,companyname,wage_cn,refreshtime FROM ".table('jobs')." WHERE recommend=1 and ".$subsite_wheresql." ORDER BY `refreshtime` DESC,`id` DESC LIMIT 5");
-foreach ($recommend_jobs as $key => $value) 
+foreach ($recommend_jobs as $key => $value)
 {
 	$recommend_jobs[$key]['url'] = wap_url_rewrite("jobs-show",array("id"=>$value['id']),1,$value['subsite_id']);
 	$recommend_jobs[$key]['r_time'] = daterange(time(),$value['refreshtime'],'Y-m-d',"#FF3300");
@@ -180,6 +182,7 @@ $smarty->assign('ad_list',$ad_list);
 $sql="select w_word,w_hot from ".table("hotword")." order by w_hot desc limit 15 ";
 $hotword_list = $db->getall($sql);
 $smarty->assign('hotword',$hotword_list);
+
 //分站
 $subsite=get_cache('subsite');
 $subsitelist =array();
